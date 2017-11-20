@@ -1,5 +1,44 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  // Section début Inscription texte d'accueil
+  p.textconnect Déjà client ? Vous pouvez vous connecter en cliquant sur le bouton ci-joint  
+    a(href="/login" class="btn jaune btconnect") Se connecter
+  section.sectioninscription
+    p Avec le formulaire ci-dessous, vous pouvez vous inscrire pour découvrir notre plateforme de création de chatbots.
+  // Section fin Inscription texte d'accueil
+  // Section début Le formulaire d'inscription
+  section.sectionform
+    .containerform
+      form#form(method="POST" enctype="multipart/form-data")
+        p.required Tous les champs obligatoires sont signalés par une *.
+        p.required Merci de veiller à bien les renseigner.
+        .form-group
+          label(for='prenom') Prénom *
+          input#prenom.form-control(type='text', required='', placeholder='Votre prénom' name="prenom")
+        .form-group 
+          label(for='nom') Nom *
+          input#nom.form-control(type='text', required='', placeholder='Votre nom' name="nom")
+        .form-group
+          label(for='identifiant') Identifiant *
+          input#email.form-control(type='email', required='', placeholder="Votre identifiant c'est votre email" name="email")
+        .form-group
+          label(for='motdepasse') Mot de passe *
+          input#motdepasse.form-control(type='password', required='', placeholder='Choisissez votre mot de passe' name="motdepasse")
+        .form-group
+          label(for='naissance') Entreprise
+          input#naissance.form-control(type='text', required='', placeholder='Votre entreprise' name="naissance")
+        .form-group
+          label(for='adresse') Adresse
+          input#adresse.form-control(type='text', required='', placeholder="Adresse" name="adresse")
+        .form-group
+          label(for='codepostal') Code postal
+          input#codepostal.form-control(type='text', required='', placeholder='Code postal' name="codepostal")
+        .form-group
+          label(for='ville') Ville
+          input#ville.form-control(type='text', required='', placeholder='Ville' name="ville")
+        .form-group
+          label(for='Telephone') Téléphone
+          input#ville.form-control(type='text', required='', placeholder='Téléphone' name="telephone")
+        button.btn.orange(type='submit') Inscription
+  // Section fin Le formulaire d'inscription
