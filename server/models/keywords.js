@@ -2,12 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   var keywords = sequelize.define('keywords', {
     text: DataTypes.TEXT
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
   });
+
+  keywords.associate = function (models) {
+    keywords.belongsToMany(models.modules, {through: 'keyword_has_module', foreignKey: 'keywordId'});
+  };
+
   return keywords;
 };
