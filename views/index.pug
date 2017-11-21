@@ -1,7 +1,6 @@
 extends layout
 
 block content
-  // Section début Inscription texte d'accueil
   p.textconnect Déjà client ? Vous pouvez vous connecter en cliquant sur le bouton ci-joint  
     a(href="/login" class="btn jaune btconnect") Se connecter
   section.sectioninscription
@@ -41,4 +40,4 @@ block content
           label(for='Telephone') Téléphone
           input#ville.form-control(type='text', required='', placeholder='Téléphone' name="telephone")
         button.btn.orange(type='submit') Inscription
-  // Section fin Le formulaire d'inscription
+        // Section fin Le formulaire d'inscription
