@@ -43,7 +43,7 @@ app.use(Session({
 app.use('/', index);
 
 app.use('/main', function (req, res, next) {
-  console.log(req.session);
+  // console.log(req.session);
   if (req.session.connected){
     return next();
   } else {
@@ -68,7 +68,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {connected : req.session.connected});
 });
 
 module.exports = app;
