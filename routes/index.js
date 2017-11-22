@@ -85,22 +85,24 @@ router.get('/motdepasseoublie', function (req, res, next) {
 
 /* POST Prise en compte du login */
 router.post('/connexion', function (req, res, next) {
+    console.log('login en cours');
     console.log(req.body);
-    let name = req.body.identifiant;
+    let login = req.body.email;
     let pass = req.body.motdepasse;
-    console.log(name, pass);
-    // connection.query('SELECT * FROM users WHERE login = ? AND password = ? ;',[name, pass],function (error, results, fields) {
-    //   if (error) throw error;
-    //   if (results.length === 0) {
-    //     res.redirect('/');
-    //   } else {
+    console.log(login, pass);
+    connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
+      if (error) throw error;
+      if (results.length === 0) {
+        console.log('error login');
+        res.redirect('/connexion');
+      } else {
     req.session.connected = true;
     req.session.cookie.maxAge = 3600000; // 1 heure
     req.session.user = results[0].id;
     console.log(req.session);
-    res.redirect('/main');
-    //   }
-    // });
+    res.redirect('/main/botilicious');
+      }
+    });
 
 });
 
