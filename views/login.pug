@@ -2,20 +2,19 @@ extends layout
 
 block content
   // Section début Le formulaire de login
+  
   section.sectionform
     .containerform
       form#form(method="POST")
         .form-group
           label(for='identifiant') Identifiant
-          input#email.form-control(type='email', required='', placeholder="Hello ! Tu vas bien ?" name="email")
+          input#email.form-control(type='email', required='', placeholder="Identifiant" name="email")
         .form-group
           label(for='motdepasse') Mot de passe
-          input#motdepasse.form-control(type='password', required='', placeholder='C\'est sympa de revenir nous voir  👊' name="motdepasse")
-        button.btn.bleu(type='submit') Me connecter
+          input#motdepasse.form-control(type='password', required='', placeholder='Mot de passe' name="motdepasse")
+        button.btn.bleu(type='submit') Se connecter
   section.oubli
-    p Oh ... Tu as oublié ton mot de passe ? 😭
-    p Tout va s'arranger si tu cliques sur le bouton
-    a(href="/motdepasseoublie" class="btn orange") Help me !
-    br
-    img.gifww(src='https://media.giphy.com/media/OUwzqE4ZOk5Bm/giphy.gif', alt='Gif animé de Hermione Granger')
+    p Pour réinitialiser votre mot de passe, cliquez sur le bouto ci-dessous
+    a(href="/motdepasseoublie" class="btn orange") Confirmer
+    
   // Section fin Le formulaire de login
