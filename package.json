@@ -23,6 +23,7 @@
     "serve-favicon": "~2.4.2",
     "session-file-store": "^1.1.2",
     "uuid": "^3.1.0",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "validator": "^9.1.1"
   }
 }
