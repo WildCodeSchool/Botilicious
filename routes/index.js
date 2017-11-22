@@ -24,6 +24,38 @@ router.get('/', function (req, res, next) {
     res.render('index');
 });
 
+
+router.post('/', function (req, res, next) {
+    let error=[];
+    console.log(validator.isEmpty(req.body.prenom));
+    if(validator.isEmpty(req.body.prenom) ){
+        error[0] = "Veuillez renseigner votre prenom";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.nom) ){
+        error[1] = "Veuillez renseigner votre nom";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.email) ){
+        error[2] = "Veuillez renseigner votre identifiant";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.motdepasse) ){
+        error[3] = "Veuillez renseigner votre mot de passe";
+        console.log(error.length);
+    }
+    if(error.length>0){
+            console.log(error);
+            res.render('index', {error: error});    
+        }else{
+            res.redirect('/confirminscription');
+        }
+    
+        
+    
+});
+
+
 router.get('/emailsending', function(req, res, next) {
 var transport = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
@@ -47,6 +79,7 @@ console.log("Message sent: " + response.message);
       }
   });
 });
+
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
 /* A mettre à jour pour le projet Botilicious
