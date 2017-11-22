@@ -7,6 +7,16 @@ const connection = mysql.createConnection(config);
 
 connection.connect();
 
+
+/* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
+
+
+/* GET Affichage de la page d'erreur 404 */
+router.get('/erreur404', function (req, res, next) {
+    res.render('error');
+});
+
+
 /* GET Affichage de la page d'inscription avec le formulaire */
 router.get('/', function (req, res, next) {
     console.log('render index');
@@ -27,10 +37,23 @@ router.post('/', function (req, res, next) {
 }); */
 
 
+/* GET Affichage de la page de confirmation d'inscription */
+router.get('/confirmationinscription', function (req, res, next) {
+    res.render('confirminscription');
+});
+
+
 /* GET Affichage de la page de login */
 router.get('/connexion', function (req, res, next) {
     res.render('login');
 });
+
+
+/* GET Affichage de la page de mise à jour pour le mot de passe oublié qui fonctionne */
+router.get('/motdepasseoublie', function (req, res, next) {
+    res.render('oubli');
+});
+
 
 /* POST Prise en compte du login */
 router.post('/connexion', function (req, res, next) {
@@ -53,21 +76,8 @@ router.post('/connexion', function (req, res, next) {
 
 });
 
-/* Voir dans le fichier users.js les routes de connexion et de déconnexion */
 
-
-/* GET Affichage de la page de mise à jour pour le mot de passe oublié qui fonctionne */
-router.get('/motdepasseoublie', function (req, res, next) {
-    res.render('oubli');
-});
-
-/* GET Affichage de la page d'erreur 404 */
-router.get('/erreur404', function (req, res, next) {
-    res.render('error');
-});
-
-
-/* Ajouter la route de confirmation de deconnexion */
+/* Ajouter la route de confirmation de deconnexion, peut-être dans Main */
 
 
 module.exports = router;
