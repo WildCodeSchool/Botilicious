@@ -1,8 +1,16 @@
 extends layout
 
 block content
-  section.secgris
+  a(href="/" class="btn orange") Retour à l'accueil
+  .chatwindow
     p Vous êtes sur la page de configutation de votre nouveau chatbot
-    p Message pour Fabrice : tu peux mettre tes éléments ici, on fera les ajustements de présentation après
-    
-    a(href="/" class="btn orange") Retour à l'accueil
+    br
+    input#message(type="text" name="message")
+    br
+    button#parler Parler
+    br
+    div#chatwindow(style="width:400px;max-height=500px;overflow:auto;border:1px solid black")
+      p Le testeur de chatbot :    
+    br
+  section.secgris
+  script(type='text/javascript', src='/js/chat.js')
