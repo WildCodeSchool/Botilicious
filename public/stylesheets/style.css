@@ -99,6 +99,13 @@ header {
     margin-bottom: 15px;
 }
 
+.chatwindow {
+  color: black;
+  font-size: 1em;
+  text-align: left;
+  background-color: #eee;
+}
+
 .oubli {
     text-align: center;
     color: #FFFAF0;
