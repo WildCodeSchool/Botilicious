@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "m1n2b3V-4",
+    "database": "bot_dev",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "m1n2b3V-4",
+    "database": "bot_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "m1n2b3V-4",
+    "database": "bot_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
