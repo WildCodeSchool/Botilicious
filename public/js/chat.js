@@ -12,15 +12,15 @@ document.onreadystatechange = function () {
 
     xhr.onreadystatechange = function() {
       console.log("test reponse xhr");
+      console.log(xhr);
       if (xhr.readyState == 4 && xhr.status == 200) {
         // Typical action to be performed when the document is ready:
-        console.log(xhr);
         console.log(xhr.responseText);
         document.getElementById('chatwindow').innerHTML = '<p>Chatbot: ' + xhr.responseText + '</p><p>User: ' + document.getElementById("message").value + '</p>' + document.getElementById('chatwindow').innerHTML;
         // var response = JSON.parse(xhr.responseText);
         // console.log('response.list[0] : ', response.list[0]);
       } else {
-        console.log("Statut de la réponse: %d (%s)", xhr.status, xhr.statusText);
+        console.log("Statut de la réponse: %d (%s) state:", xhr.status, xhr.statusText, xhr.readyState);
       }
     }
     console.log(message);
