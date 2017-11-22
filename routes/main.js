@@ -12,7 +12,7 @@ connection.connect();
 
 /* GET Affichage de la page de visualisation */
 router.get('/botilicious', function (req, res, next) {
-    res.render('botilicious');
+    res.render('configchat');
 });
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */
