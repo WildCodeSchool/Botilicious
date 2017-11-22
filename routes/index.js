@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const config = require('../config.js');
+const validator = require('validator');
 
 const connection = mysql.createConnection(config);
 
@@ -12,6 +13,8 @@ router.get('/', function (req, res, next) {
     console.log('render index');
     res.render('index');
 });
+
+
 
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
