@@ -25,6 +25,59 @@ router.get('/', function (req, res, next) {
 });
 
 
+// router.post('/submit', function (req, res, next) {
+//     let error = '';
+//     // connection.query('INSERT INTO wilders (prenom, nom, email, motdepasse, naissance, adresse, codepostal, ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [req.body.prenom, req.body.nom, req.body.email, req.body.motdepasse, req.body.naissance, req.body.adresse, req.body.codepostal, req.body.ville], function (error) {
+// if (validator.isEmpty(req.body.prenom)) {
+//     error = 'Veuillez renseigner votre prénom';
+//     res.render('index');
+//     } else {
+//     res.redirect('/');
+//     }
+// });    
+
+router.post('/', function (req, res, next) {
+    let error=[];
+    
+    // if(validator.isEmpty(req.body.prenom) ){
+    //     error = "Veuillez renseigner votre prenom";
+    //     res.render('index', {error: error});
+    // }
+    // else if(validator.isEmpty(req.body.prenom) ){
+    //     let error = "Veuillez renseigner votre prenom";
+    //     res.render('index', {error: error});
+    // }
+    // else{
+    //     res.redirect('/confirminscription');
+    // }
+    console.log(validator.isEmpty(req.body.prenom));
+    if(validator.isEmpty(req.body.prenom) ){
+        error[0] = "Veuillez renseigner votre prenom";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.nom) ){
+        error[1] = "Veuillez renseigner votre nom";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.email) ){
+        error[2] = "Veuillez renseigner votre identifiant";
+        console.log(error.length);
+    }
+    if(validator.isEmpty(req.body.motdepasse) ){
+        error[3] = "Veuillez renseigner votre mot de passe";
+        console.log(error.length);
+    }
+    if(error.length>0){
+            console.log(error);
+            res.render('index', {error: error});    
+        }else{
+            res.redirect('/confirminscription');
+        }
+    
+        
+    
+});
+
 
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */

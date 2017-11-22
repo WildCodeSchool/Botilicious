@@ -16,10 +16,11 @@
     "morgan": "~1.8.1",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.1",
-    "sequelize": "^4.22.11",
     "pug": "~2.0.0-beta11",
+    "sequelize": "^4.22.11",
     "serve-favicon": "~2.4.2",
     "session-file-store": "^1.1.2",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "validator": "^9.1.1"
   }
 }
