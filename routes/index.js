@@ -27,7 +27,6 @@ router.post('/', function (req, res, next) {
 }); */
 
 
-
 /* GET Affichage de la page de login */
 router.get('/connexion', function (req, res, next) {
     res.render('login');
@@ -35,22 +34,22 @@ router.get('/connexion', function (req, res, next) {
 
 /* POST Prise en compte du login */
 router.post('/connexion', function (req, res, next) {
-  console.log(req.body);
-  let name = req.body.identifiant;
-  let pass = req.body.motdepasse;
-  console.log(name, pass);
-  // connection.query('SELECT * FROM users WHERE login = ? AND password = ? ;',[name, pass],function (error, results, fields) {
-  //   if (error) throw error;
-  //   if (results.length === 0) {
-  //     res.redirect('/');
-  //   } else {
-      req.session.connected = true;
-      req.session.cookie.maxAge = 3600000; // 1 heure
-      req.session.user = results[0].id;
-      console.log(req.session);
-      res.redirect('/main');
-  //   }
-  // });
+    console.log(req.body);
+    let name = req.body.identifiant;
+    let pass = req.body.motdepasse;
+    console.log(name, pass);
+    // connection.query('SELECT * FROM users WHERE login = ? AND password = ? ;',[name, pass],function (error, results, fields) {
+    //   if (error) throw error;
+    //   if (results.length === 0) {
+    //     res.redirect('/');
+    //   } else {
+    req.session.connected = true;
+    req.session.cookie.maxAge = 3600000; // 1 heure
+    req.session.user = results[0].id;
+    console.log(req.session);
+    res.redirect('/main');
+    //   }
+    // });
 
 });
 
