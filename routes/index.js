@@ -3,7 +3,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const config = require('../config.js');
 const validator = require('validator');
-
+const nodemailer = require("nodemailer");
 const connection = mysql.createConnection(config);
 
 connection.connect();
@@ -24,8 +24,29 @@ router.get('/', function (req, res, next) {
     res.render('index');
 });
 
-
-
+router.get('/emailsending', function(req, res, next) {
+var transport = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "bad2f38eae6508",
+      pass: "359d3004ac5407"
+    }
+  });
+transport.sendMail({
+      from: "Botilicious <Botilicious@wild.com>", // Expediteur
+      to: "supermario@gmail.com", // Destinataires
+      subject: "Cookies", // Sujet
+      text: "Hello, to confirm your account on Botilicious, click on the following url :", // plaintext body
+      html: "<b>Hello world ✔</b>" // html body
+  }, (error, response) => {
+if(error){
+console.log(error);
+      }else{
+console.log("Message sent: " + response.message);
+      }
+  });
+});
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
 /* A mettre à jour pour le projet Botilicious
@@ -49,6 +70,10 @@ router.get('/confirmationinscription', function (req, res, next) {
 /* GET Affichage de la page de login */
 router.get('/connexion', function (req, res, next) {
     res.render('login');
+});
+
+router.get('/deconnexion', function (req, res, next) {
+    res.render('deconnexion');
 });
 
 
