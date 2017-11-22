@@ -12,7 +12,7 @@ connection.connect();
 
 /* GET Affichage de la page de visualisation */
 router.get('/botilicious', function (req, res, next) {
-    res.render('botilicious');
+    res.render('configchat');
 });
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */
@@ -52,6 +52,15 @@ router.post('/miseajour/idWilder(\\d+)', function (req, res, next) {
 	});
 }); */
 
+router.get('/configchat', function (req, res, next) {
+    res.render('configchat');
+});
+
+router.post('/postamessage', function(req, res, next) {
+  console.log(req.body);
+  res.send('bob');
+  // res.sendStatus(200);
+});
 
 /* GET /admin/create
 router.get('/create', function(req, res, next) {
