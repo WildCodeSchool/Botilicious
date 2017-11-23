@@ -80,6 +80,8 @@ router.post('/postamessage', function(req, res, next) {
         time = 8*message[1] + Math.round(message[2]/3);
       } else if (message.length == 2){
         time = 8*message[1];
+      } else {
+        time = 0;
       }
       if (time > 39) {
         time = 39;
@@ -88,7 +90,9 @@ router.post('/postamessage', function(req, res, next) {
 
 
       // send back a weather forecast
-      res.send("Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description);
+
+      temp = Math.round(data.list[time].main.temp-273.15);
+      res.send("Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
     }
     else if (xmlhttp.status > 400) {
       console.log("Error > 400");
