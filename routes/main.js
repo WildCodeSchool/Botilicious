@@ -59,14 +59,31 @@ router.get('/configchat', function (req, res, next) {
 
 router.post('/postamessage', function(req, res, next) {
   console.log(req.body.message);
+  let message = req.body.message.split(' ');
   let xmlhttp = new XMLHttpRequest();
   // console.log('bob');
   // console.log(xmlhttp);
+
+  // at each new readystate
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
       let data = JSON.parse(xmlhttp.responseText);
-      console.log(data.list[0].weather[0].description);
-      res.send("Weather in "+req.body.message+": "+data.list[0].weather[0].description);
+      console.log(data);
+      // console.log(data.list[0].weather[0].description);
+
+      // the api call returns a weather forecast with 3 hours increments
+      let time;
+      if (message.length>1){
+        time = 3*Math.round(message[1]/3);
+      } else {
+        time = 1;
+      }
+      if (time > 24) {
+        time = 24;
+      }
+
+      // send back a weather forecast
+      res.send("Weather " + time + " hour(s) from now in " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[0].weather[0].description);
     }
     else if (xmlhttp.status == 400) {
       console.log("Error 400");
@@ -76,7 +93,7 @@ router.post('/postamessage', function(req, res, next) {
     }
     console.log(xmlhttp.status, xmlhttp.readyState);
   };
-  xmlhttp.open("GET", "http://api.openweathermap.org/data/2.5/forecast?q="+req.body.message+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", true);
+  xmlhttp.open("GET", "http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", true);
   xmlhttp.send();
   // $(document).ready(function(){
   // $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=Paris&APPID=7081077244653a5c7f8f9ab6496d6bd3",function(result){
