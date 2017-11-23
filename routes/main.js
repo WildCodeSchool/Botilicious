@@ -69,7 +69,7 @@ router.post('/postamessage', function(req, res, next) {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
       let data = JSON.parse(xmlhttp.responseText);
       console.log(message.length);
-      console.log(data.list);
+      // console.log(data.list);
       console.log(data.list.length);
       // console.log(data.list[0].weather[0].description);
 
@@ -90,7 +90,6 @@ router.post('/postamessage', function(req, res, next) {
 
 
       // send back a weather forecast
-
       temp = Math.round(data.list[time].main.temp-273.15);
       res.send("Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
     }
