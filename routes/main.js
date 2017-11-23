@@ -76,10 +76,10 @@ router.post('/postamessage', function(req, res, next) {
       // the api call returns a weather forecast with 3 hours increments
       //date: number of days from today : one day is 8 slots of 3 hours
       let time;
-      if (message.length == 2){
+      if (message.length == 3){
         time = 8*message[1] + Math.round(message[2]/3);
-      } else {
-        time = 0;
+      } else if (message.length == 2){
+        time = 8*message[1];
       }
       if (time > 39) {
         time = 39;
