@@ -68,25 +68,34 @@ router.post('/postamessage', function(req, res, next) {
   xmlhttp.onreadystatechange = function() {
     if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
       let data = JSON.parse(xmlhttp.responseText);
-      console.log(data);
+      console.log(message.length);
+      // console.log(data.list);
+      console.log(data.list.length);
       // console.log(data.list[0].weather[0].description);
 
       // the api call returns a weather forecast with 3 hours increments
+      //date: number of days from today : one day is 8 slots of 3 hours
       let time;
-      if (message.length>1){
-        time = 3*Math.round(message[1]/3);
+      if (message.length == 3){
+        time = 8*message[1] + Math.round(message[2]/3);
+      } else if (message.length == 2){
+        time = 8*message[1];
       } else {
-        time = 1;
+        time = 0;
       }
-      if (time > 24) {
-        time = 24;
+      if (time > 39) {
+        time = 39;
       }
+      console.log(time);
+
 
       // send back a weather forecast
-      res.send("Weather " + time + " hour(s) from now in " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[0].weather[0].description);
+      temp = Math.round(data.list[time].main.temp-273.15);
+      res.send("Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
     }
-    else if (xmlhttp.status == 400) {
-      console.log("Error 400");
+    else if (xmlhttp.status > 400) {
+      console.log("Error > 400");
+      // res.send('Error : ' + xmlhttp.status);
     }
     else {
       console.log("Statut de la réponse: %d (%s) state:", xmlhttp.status, xmlhttp.statusText, xmlhttp.readyState);
