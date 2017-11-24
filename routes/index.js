@@ -46,13 +46,13 @@ router.post('/', function (req, res, next) {
     }
     if(error.length>0){
             console.log(error);
-            res.render('index', {error: error});    
+            res.render('index', {error: error});
         }else{
             res.redirect('/confirminscription');
         }
-    
-        
-    
+
+
+
 });
 
 
@@ -130,7 +130,6 @@ router.post('/connexion', function (req, res, next) {
         res.redirect('/connexion');
       } else {
     req.session.connected = true;
-    req.session.cookie.maxAge = 3600000; // 1 heure
     req.session.user = results[0].id;
     console.log(req.session);
     res.redirect('/main/botilicious');
