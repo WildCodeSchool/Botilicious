@@ -12,21 +12,25 @@ block content
       form#form(method="POST")
         p.required Tous les champs obligatoires sont signalés par une *.
         p.required Merci de veiller à bien les renseigner.
-        p.warning=error[0]
-        
+        if error
+          p.warning=error[0]
+      
 
         .form-group
           label(for='prenom') Prénom *
           input#prenom.form-control(type='text', placeholder='Votre prénom', name="prenom")
-        p.warning=error[1]
+          if error
+            p.warning=error[1]
         .form-group 
           label(for='nom') Nom *
           input#nom.form-control(type='text', placeholder='Votre nom', name='nom')
-        p.warning=error[2]
+          if error
+            p.warning=error[2]
         .form-group
           label(for='identifiant') Identifiant *
           input#email.form-control(type='email', placeholder="Votre identifiant c'est votre email", name="email")
-        p.warning=error[3]
+          if error
+            p.warning=error[3]
         .form-group
           label(for='motdepasse') Mot de passe *
           input#motdepasse.form-control(type='password', placeholder='Choisissez votre mot de passe', name="motdepasse")
