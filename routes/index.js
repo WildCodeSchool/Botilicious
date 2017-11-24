@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
-const config = require('../config.js');
 const validator = require('validator');
 const nodemailer = require("nodemailer");
-const connection = mysql.createConnection(config);
-
-connection.connect();
 
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
@@ -46,13 +41,13 @@ router.post('/', function (req, res, next) {
     }
     if(error.length>0){
             console.log(error);
-            res.render('index', {error: error});    
+            res.render('index', {error: error});
         }else{
             res.redirect('/confirminscription');
         }
-    
-        
-    
+
+
+
 });
 
 
@@ -123,17 +118,20 @@ router.post('/connexion', function (req, res, next) {
     let login = req.body.email;
     let pass = req.body.motdepasse;
     console.log(login, pass);
-    connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
-      if (error) throw error;
-      if (results.length === 0) {
-        console.log('error login');
-        res.redirect('/connexion');
-      } else {
+
+// requête sequelize sur la table Users
+    // connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
+    //   if (error) throw error;
+    //   if (results.length === 0) {
+    //     console.log('error login');
+    //     res.redirect('/connexion');
+    //   } else {
     req.session.connected = true;
-    req.session.cookie.maxAge = 3600000; // 1 heure
-    req.session.user = results[0].id;
+
+// inscrire l'id de l'utilisateur dans req.session    
+    // req.session.user = results[0].id;
     console.log(req.session);
-    res.redirect('/main/botilicious');
+    res.redirect('/main/');
       }
     });
 

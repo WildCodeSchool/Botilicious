@@ -1,18 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const config = require('../config.js');
-const connection = mysql.createConnection(config);
-connection.connect();
 
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
 
 /* GET Affichage de la page de visualisation */
-router.get('/botilicious', function (req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('configchat');
 });
 

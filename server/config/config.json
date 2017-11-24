@@ -1,17 +1,11 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "bot_dev",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "sqlite",
+    "storage": "db/dev.sqlite"
   },
   "test": {
-    "username": "root",
-    "password": "root",
-    "database": "bot_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "sqlite",
+    "storage": "db/test.sqlite"
   },
   "production": {
     "username": "root",
