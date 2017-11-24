@@ -132,7 +132,7 @@ router.post('/connexion', function (req, res, next) {
     req.session.connected = true;
     req.session.user = results[0].id;
     console.log(req.session);
-    res.redirect('/main/botilicious');
+    res.redirect('/main/');
       }
     });
 

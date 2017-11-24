@@ -12,7 +12,7 @@ connection.connect();
 
 
 /* GET Affichage de la page de visualisation */
-router.get('/botilicious', function (req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('configchat');
 });
 
