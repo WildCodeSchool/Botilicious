@@ -128,14 +128,12 @@ router.post('/connexion', function (req, res, next) {
     //   } else {
     req.session.connected = true;
 
-// inscrire l'id de l'utilisateur dans req.session    
+// inscrire l'id de l'utilisateur dans req.session
     // req.session.user = results[0].id;
     console.log(req.session);
     res.redirect('/main/');
-      }
-    });
+      });
 
-});
 
 
 /* Ajouter la route de confirmation de deconnexion, peut-être dans Main */

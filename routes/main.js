@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
-const config = require('../config.js');
+// const config = require('../config.js');
 
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
@@ -73,23 +73,32 @@ router.post('/postamessage', function(req, res, next) {
       // the api call returns a weather forecast with 3 hours increments
       //date: number of days from today : one day is 8 slots of 3 hours
       let time;
-      if (message.length == 3){
+      let errorsyntaxe;
+      if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
         time = 8*message[1] + Math.round(message[2]/3);
-      } else if (message.length == 2){
+      } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
         time = 8*message[1];
       } else {
         time = 0;
+        let errorsyntaxe='votre syntaxe est incorrecte';
       }
       if (time > 39) {
         time = 39;
       }
-      console.log(time);
-
+      console.log("time:", time);
+      if (isNaN(time)){
+        errorsyntaxe='votre syntaxe est incorrecte';
+        time=0;
+      }
 
       // send back a weather forecast
       temp = Math.round(data.list[time].main.temp-273.15);
-      res.send("Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
+      var reponseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : "("+data.city.country+") ", Weather : data.list[time].weather[0].description+" ", Temperature : temp+" °C"};
+      //res.send(errorsyntaxe + "Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
+      res.send(reponseapi.Time + reponseapi.City + reponseapi.Country + reponseapi.Weather + reponseapi.Temperature);
     }
+
+    // {Weather: data.list[time].dt_txt}
     else if (xmlhttp.status > 400) {
       console.log("Error > 400");
       // res.send('Error : ' + xmlhttp.status);
