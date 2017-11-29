@@ -24,7 +24,6 @@
     "session-file-store": "^1.1.2",
     "sqlite3": "^3.1.13",
     "uuid": "^3.1.0",
-    "validator": "^9.1.1",
-    "xmlhttprequest": "^1.8.0"
+    "validator": "^9.1.1"
   }
 }
