@@ -95,7 +95,7 @@ router.post('/postamessage', function(req, res, next) {
       temp = Math.round(data.list[time].main.temp-273.15);
       var reponseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : "("+data.city.country+") ", Weather : data.list[time].weather[0].description+" ", Temperature : temp+" °C"};
       //res.send(errorsyntaxe + "Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
-      res.send(reponseapi.Time + reponseapi.City + reponseapi.Country + reponseapi.Weather + reponseapi.Temperature);
+      res.send(reponseapi.Time + reponseapi.City + reponseapi.Country + reponseapi.Weather + reponseapi.Temperature); //format JSON qui remplace le format en 'dur'
     }
 
     // {Weather: data.list[time].dt_txt}
