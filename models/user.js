@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var users = sequelize.define('user', {
+  var User = sequelize.define('User', {
     firstname: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -12,9 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING
   });
 
-  user.associate = function (models) {
-    user.hasMany(models.chatbot);
+  User.associate = function(models) {
+    User.belongsToMany(models.Chatbot, {foreignKey:"userId", through:"User_has_Chatbot"});
   };
-
-  return user;
+  return User;
 };

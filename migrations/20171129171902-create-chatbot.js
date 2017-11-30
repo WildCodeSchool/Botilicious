@@ -1,26 +1,15 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('chatbot_has_module', {
+    return queryInterface.createTable('Chatbots', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      chatbotId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'chatbots',
-          key: 'id'
-        }
-      },
-      moduleId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'modules',
-          key: 'id'
-        }
+      name: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('chatbot_has_module');
+    return queryInterface.dropTable('Chatbots');
   }
 };

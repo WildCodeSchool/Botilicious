@@ -18,13 +18,13 @@
     "mysql2": "^1.5.1",
     "nodemailer": "^4.4.0",
     "pug": "~2.0.0-beta11",
+    "request": "^2.83.0",
     "sequelize": "^4.22.11",
     "sequelize-cli": "^3.1.0",
     "serve-favicon": "~2.4.2",
     "session-file-store": "^1.1.2",
     "sqlite3": "^3.1.13",
     "uuid": "^3.1.0",
-    "validator": "^9.1.1",
-    "xmlhttprequest": "^1.8.0"
+    "validator": "^9.1.1"
   }
 }

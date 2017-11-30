@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-// const config = require('../config.js');
-
+const request = require('request');
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
@@ -57,86 +54,46 @@ router.get('/configchat', function (req, res, next) {
 router.post('/postamessage', function(req, res, next) {
   console.log(req.body.message);
   let message = req.body.message.split(' ');
-  let xmlhttp = new XMLHttpRequest();
-  // console.log('bob');
-  // console.log(xmlhttp);
 
-  // at each new readystate
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.status == 200 && xmlhttp.readyState == 4) {
-      let data = JSON.parse(xmlhttp.responseText);
-      console.log(message.length);
-      // console.log(data.list);
-      console.log(data.list.length);
-      // console.log(data.list[0].weather[0].description);
+  let time;
+  let errorsyntaxe;
+  if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
+    time = 8*message[1] + Math.round(message[2]/3);
+  } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
+    time = 8*message[1];
+  } else {
+    time = 0;
+    let errorsyntaxe='votre syntaxe est incorrecte';
+  }
+  if (time > 39) {
+    time = 39;
+  }
+  console.log("time:", time);
+  if (isNaN(time)){
+    errorsyntaxe='votre syntaxe est incorrecte';
+    time=0;
+  }
 
-      // the api call returns a weather forecast with 3 hours increments
-      //date: number of days from today : one day is 8 slots of 3 hours
-      let time;
-      let errorsyntaxe;
-      if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
-        time = 8*message[1] + Math.round(message[2]/3);
-      } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
-        time = 8*message[1];
-      } else {
-        time = 0;
-        let errorsyntaxe='votre syntaxe est incorrecte';
-      }
-      if (time > 39) {
-        time = 39;
-      }
-      console.log("time:", time);
-      if (isNaN(time)){
-        errorsyntaxe='votre syntaxe est incorrecte';
-        time=0;
-      }
+  request("http://api.openweathermap.org/data/2.5/forecast?q=Paris&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
+      console.log(JSON.parse(response.body));
 
-      // send back a weather forecast
-      temp = Math.round(data.list[time].main.temp-273.15);
-      var reponseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : "("+data.city.country+") ", Weather : data.list[time].weather[0].description+" ", Temperature : temp+" °C"};
-      //res.send(errorsyntaxe + "Weather (" + data.list[time].dt_txt + ") " + data.city.name + " (" + data.city.country + ") " + ": " + data.list[time].weather[0].description + " (" + temp + "°C)");
-      res.send(reponseapi.Time + reponseapi.City + reponseapi.Country + reponseapi.Weather + reponseapi.Temperature); //format JSON qui remplace le format en 'dur'
-    }
+      let data = JSON.parse(response.body);
 
-    // {Weather: data.list[time].dt_txt}
-    else if (xmlhttp.status > 400) {
-      console.log("Error > 400");
-      // res.send('Error : ' + xmlhttp.status);
-    }
-    else {
-      console.log("Statut de la réponse: %d (%s) state:", xmlhttp.status, xmlhttp.statusText, xmlhttp.readyState);
-    }
-    console.log(xmlhttp.status, xmlhttp.readyState);
-  };
-  xmlhttp.open("GET", "http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", true);
-  xmlhttp.send();
-  // $(document).ready(function(){
-  // $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q=Paris&APPID=7081077244653a5c7f8f9ab6496d6bd3",function(result){
-  // // $.getJSON("http://api.openweathermap.org/data/2.5/forecast?q="+req.body.message+"&mode=json&units=metric&cnt=10&APPID=7081077244653a5c7f8f9ab6496d6bd3",function(result){
-  //   console.log(result);
-  //   res.send("City: "+ result.city.name +" - Weather: "+ result.list[0].weather[0].description);
-  // });
-  // });
+      let temp = Math.round(data.list[time].main.temp-273.15);
 
+      console.log(temp);
 
-  //api meteo
-  // $.ajax({
-  //   url: "http://api.openweathermap.org/data/2.5/weather",
-  //   jsonp: "callback",
-  //   dataType: "jsonp",
-  //   data: {
-  //     // id: "2172797",
-  //     APPID: "7081077244653a5c7f8f9ab6496d6bd3"
-  //   },
-  //   success: function(response) {
-  //     console.log(response); // server response
-  //     res.send(response.weather[0].main);
+      let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : "("+data.city.country+") ", Weather : data.list[time].weather[0].description+" ", Temperature : temp+" °C"};
+      console.log(responseapi);
+      // res.end();
+
+      res.json(responseapi);
+      });
   //   }
+  // )
+  // .catch(function(err) {
+  //   console.log('Fetch Error :-S', err);
   // });
-
-
-  // res.send('bob');
-  // res.sendStatus(200);
 });
 
 /* GET /admin/create

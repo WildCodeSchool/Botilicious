@@ -1,26 +1,15 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('sentence_has_module', {
+    return queryInterface.createTable('Keywords', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      sentenceId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'sentences',
-          key: 'id'
-        }
-      },
-      moduleId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'modules',
-          key: 'id'
-        }
+      text: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -33,6 +22,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('sentence_has_module');
+    return queryInterface.dropTable('Keywords');
   }
 };
