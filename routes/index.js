@@ -7,14 +7,16 @@ const nodemailer = require("nodemailer");
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
 
 
+
 /* GET Affichage de la page d'erreur 404 */
 router.get('/erreur404', function (req, res, next) {
     res.render('error');
 });
 
 
+
 /* GET Affichage de la page d'inscription avec le formulaire */
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res, next) {    
     console.log('render index');
     res.render('index');
 });
@@ -50,7 +52,7 @@ router.post('/', function (req, res, next) {
 
 });
 
-
+/* Envoie d'un email sur MailTrap depuis la route suivante*/
 router.get('/emailsending', function(req, res, next) {
 var transport = nodemailer.createTransport({
     host: "smtp.mailtrap.io",
@@ -61,7 +63,7 @@ var transport = nodemailer.createTransport({
     }
   });
 transport.sendMail({
-      from: "Botilicious <Botilicious@wild.com>", // Expediteur
+      from: "bob@gmail.com", // Expediteur
       to: "supermario@gmail.com", // Destinataires
       subject: "Cookies", // Sujet
       text: "Hello, to confirm your account on Botilicious, click on the following url :", // plaintext body
@@ -100,6 +102,7 @@ router.get('/connexion', function (req, res, next) {
     res.render('login');
 });
 
+/* GET Affichage de la page de déconnexion */
 router.get('/deconnexion', function (req, res, next) {
     res.render('deconnexion');
 });
