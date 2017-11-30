@@ -74,7 +74,7 @@ router.post('/postamessage', function(req, res, next) {
     time=0;
   }
 
-  request("http://api.openweathermap.org/data/2.5/forecast?q=Paris&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
+  request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
       console.log(JSON.parse(response.body));
 
       let data = JSON.parse(response.body);
@@ -83,8 +83,8 @@ router.post('/postamessage', function(req, res, next) {
 
       console.log(temp);
 
-      let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : "("+data.city.country+") ", Weather : data.list[time].weather[0].description+" ", Temperature : temp+" °C"};
-      console.log(responseapi);
+      let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : data.city.country, Weather : data.list[time].weather[0].description+" ", Temperature : temp};
+      console.log('reponse :',responseapi);
       // res.end();
 
       res.json(responseapi);
