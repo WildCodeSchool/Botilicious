@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  section.secgris
+    p Oups ! Il n'y a rien sur cette adresse
+    if connected
+      a(href="/main/botilicious" class="btn orange") Retour à votre accueil
+    else if true
+      a(href="/" class="btn orange") Retour à l'accueil
