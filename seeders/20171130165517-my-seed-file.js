@@ -7,12 +7,12 @@ module.exports = {
       firstname: faker.name.firstName(),
       name: faker.name.lastName(),
       email: faker.internet.email(),
-      password: faker.lorem.sentence(),
-      dateofbirth: faker.date.recent(),
-      address: faker.lorem.sentence(),
-      zipcode: faker.lorem.sentence(),
-      city: faker.lorem.sentence(),
-      phone: faker.lorem.sentence(),
+      password: faker.internet.password(),
+      dateofbirth: faker.date.past(),
+      address: faker.address.streetAddress(),
+      zipcode: faker.address.zipCode(),
+      city: faker.address.city(),
+      phone: faker.phone.phoneNumber(),
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
     }], {});
