@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  a(href="/" class="btn orange") Retour à l'accueil
+  .chatwindow
+    p Vous êtes sur la page de configuration de votre nouveau chatbot
+    br
+    p input : ville nombre_de_jours nombre_d_heures
+    p (max 4 21)
+    br
+    input#message(type="text" name="message")
+    br
+    button#parler Parler
+    br
+    div#chatwindow(style="width:600px;max-height=500px;overflow:auto;border:1px solid black")
+      p Le testeur de chatbot :    
+    br
+  section.secgris
+  script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(type='text/javascript', src='/js/chat.js')
