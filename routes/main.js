@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 
-var mains = require('../controllers/Mains'); // permet de faire la liaison avec le controlleur 'Mains.js'
-
+// permet de faire la liaison avec les controlleurs
+var configchats = require('../controllers/Configchats');
+var accounts = require('../controllers/Accounts');
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
 
 /* GET Affichage de la page de visualisation */
-router.get('/', mains.index);
+router.get('/', configchats.index);
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */
-router.get('/miseajour', mains.miseajour);
+router.get('/miseajour', accounts.miseajour);
 
 
 /* POST Prise en compte des informations de mise à jour
@@ -27,7 +28,7 @@ res.redirect('/confirmationmaj');
 
 
 /* GET Affichage de la page de confirmation de mise à jour */
-router.get('/confirmationmaj', mains.confirmationmaj);   
+router.get('/confirmationmaj', accounts.confirmationmaj);   
 
 
 /* GET Affichage de la page d'administration des données personnelles dans le formulaire de mise à jour
@@ -43,9 +44,9 @@ wilders = results[0]
 });
 }); */
 
-router.get('/configchat', mains.configchat);
+router.get('/configchat', configchats.configchat);
 
-router.post('/postamessage', mains.postamessage); 
+router.post('/postamessage', configchats.postamessage); 
 
 /* GET /admin/create
 router.get('/create', function(req, res, next) {

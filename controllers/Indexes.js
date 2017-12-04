@@ -5,7 +5,7 @@ var Indexes = {
     
       
     erreur404: function(req, res){
-        res.render('index/error');
+        res.render('error');
     },
 
     indexGet: function (req, res, next) {    
@@ -64,48 +64,7 @@ var Indexes = {
         console.log("Message sent: " + response.message);
               }
           });
-    },
-
-    confirmationinscription: function (req, res, next) {
-            res.render('index/confirminscription');
-    },
-
-    connexionGet: function (req, res, next) {
-        res.render('index/login');
-    },
-
-    deconnexion: function (req, res, next) {
-        res.render('index/deconnexion');
-    },
-    
-    motdepasseoublie: function (req, res, next) {
-        res.render('index/oubli');
-    },
-
-    connexionPost: function (req, res, next) {
-        console.log('login en cours');
-        console.log(req.body);
-        let login = req.body.email;
-        let pass = req.body.motdepasse;
-        console.log(login, pass);
-    
-    // requête sequelize sur la table Users
-        // connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
-        //   if (error) throw error;
-        //   if (results.length === 0) {
-        //     console.log('error login');
-        //     res.redirect('/connexion');
-        //   } else {
-        req.session.connected = true;
-    
-    // inscrire l'id de l'utilisateur dans req.session
-        // req.session.user = results[0].id;
-        console.log(req.session);
-        res.redirect('/main/');
-    },
-
-
-      
+    },        
 };
 
 module.exports = Indexes; 

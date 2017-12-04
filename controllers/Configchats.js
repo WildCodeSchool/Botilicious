@@ -1,24 +1,12 @@
 const request = require('request');
 
-var Mains = {
-    /**
-	  * @param req 
-      * @param res 
-	  */
-      
-      index: function(req, res){
+var Configchats = {
+    
+    index: function(req, res){
         res.render('main/configchat'); 
       },
-      
-      miseajour: function(req, res, next){
-        res.render('main/update');
-      },
-
-      confirmationmaj: function(req, res, next){
-        res.render('main/confirmmaj');
-      },
-
-      configchat: function(req, res, next){
+    
+    configchat: function(req, res, next){
         res.render('main/configchat');
       },
 
@@ -66,7 +54,10 @@ var Mains = {
         //   console.log('Fetch Error :-S', err);
         // });
     },
-      
-};
 
-module.exports = Mains; 
+
+
+
+}; 
+
+module.exports = Configchats; 
