@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 var Logins = {
-    
+
+// route GET '/connexion' -- Affichage de la page de login 
     connexionGet: function (req, res, next) {
         res.render('index/login');
     },
 
+// route POST '/connexion' -- Prise en compte du login
     connexionPost: function (req, res, next) {
         console.log('login en cours');
         console.log(req.body);

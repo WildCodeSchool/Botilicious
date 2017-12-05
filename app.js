@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var main = require('./routes/main');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -42,7 +42,7 @@ app.use(Session({
 
 app.use('/', index);
 
-app.use('/main', function (req, res, next) {
+app.use('/admin', function (req, res, next) {
   // console.log(req.session);
   if (req.session.connected){
     return next();
@@ -50,7 +50,7 @@ app.use('/main', function (req, res, next) {
     return res.redirect('/');
   }
 });
-app.use('/main', main);
+app.use('/admin', admin);
 
 
 // catch 404 and forward to error handler

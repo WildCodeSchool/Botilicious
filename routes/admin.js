@@ -5,10 +5,11 @@ const router = express.Router();
 // permet de faire la liaison avec les controlleurs
 var configchats = require('../controllers/Configchats');
 var accounts = require('../controllers/Accounts');
+
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
 
-/* GET Affichage de la page de visualisation */
+/* GET Affichage de la page de configuration du chatbot */
 router.get('/', configchats.index);
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */

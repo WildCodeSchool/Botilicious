@@ -2,14 +2,18 @@ const request = require('request');
 
 var Configchats = {
     
-    index: function(req, res){
-        res.render('main/configchat'); 
-      },
     
-    configchat: function(req, res, next){
-        res.render('main/configchat');
+// route GET '/admin' -- Affichage de la page de configuration du chatbot
+    index: function(req, res){
+        res.render('admin/configchat'); 
       },
 
+// route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
+    configchat: function(req, res, next){
+        res.render('admin/configchat');
+      },
+
+// route POST '/admin/postamessage' -- soumission d'un message dans la boite de dialogue du chatbot
       postamessage: function(req, res, next) {
         console.log(req.body.message);
         let message = req.body.message.split(' ');

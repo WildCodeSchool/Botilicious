@@ -3,17 +3,18 @@ const nodemailer = require("nodemailer");
 
 var Indexes = {
     
-      
+// route GET '/erreur404' -- Affichage de la page d'erreur 404 
     erreur404: function(req, res){
         res.render('error');
     },
 
+// route GET '/' -- Affichage de la page d'inscription avec le formulaire    
     indexGet: function (req, res, next) {    
         console.log('render index');
         res.render('index/index');
     },
       
-
+// route POST -- Validation des informations saisies dans le formulaire d'inscription 
     indexPost: function (req, res, next) {
         let error=[];
         console.log(validator.isEmpty(req.body.prenom));
@@ -41,7 +42,7 @@ var Indexes = {
             }
     },
 
-
+// route GET -- envoie de mail pour confirmer son inscription
     emailsending: function(req, res, next) {
         var transport = nodemailer.createTransport({
             host: "smtp.mailtrap.io",
