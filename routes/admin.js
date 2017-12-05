@@ -13,7 +13,7 @@ var accounts = require('../controllers/Accounts');
 router.get('/', configchats.index);
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */
-router.get('/miseajour', accounts.miseajour);
+router.get('/update', accounts.update);
 
 
 /* POST Prise en compte des informations de mise à jour
@@ -29,7 +29,7 @@ res.redirect('/confirmationmaj');
 
 
 /* GET Affichage de la page de confirmation de mise à jour */
-router.get('/confirmationmaj', accounts.confirmationmaj);   
+router.get('/updateconfirmation', accounts.updateconfirmation);   
 
 
 /* GET Affichage de la page d'administration des données personnelles dans le formulaire de mise à jour
