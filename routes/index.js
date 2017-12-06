@@ -3,6 +3,8 @@ const router = express.Router();
 const validator = require('validator');
 const nodemailer = require("nodemailer");
 
+const models = require("../models");
+
 var indexes = require('../controllers/Indexes'); // permet de faire la liaison avec le controlleur 'Indexes.js'
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
@@ -13,7 +15,7 @@ router.get('/erreur404', indexes.erreur404);
 
 
 /* GET Affichage de la page d'inscription avec le formulaire */
-router.get('/',  indexes.indexGet); 
+router.get('/',  indexes.indexGet);
 
 
 router.post('/', indexes.indexPost);
@@ -21,7 +23,7 @@ router.post('/', indexes.indexPost);
 // router.post('/', indexes.inscriptionPost);
 
 /* Envoie d'un email sur MailTrap depuis la route suivante*/
-router.get('/emailsending', indexes.emailsending); 
+router.get('/emailsending', indexes.emailsending);
 
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
