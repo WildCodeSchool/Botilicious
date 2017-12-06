@@ -1,4 +1,5 @@
 const request = require('request');
+const models = require("../models");
 
 var Configchats = {
 
@@ -60,7 +61,6 @@ var Configchats = {
   },
 
   postasentence: function(req, res, next) {
-    const models = require("../models");
     console.log(req.body);
     models.Sentence.create(
       {
