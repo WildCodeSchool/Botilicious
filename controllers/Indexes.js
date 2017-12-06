@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 var Indexes = {
     
     erreur404: function(req, res){
-        res.render('index/error');
+        res.render('error');
     },
 
     indexGet: function (req, res, next) {    
@@ -35,9 +35,36 @@ var Indexes = {
                 console.log(error);
                 res.render('index', {error: error});
             }else{
-                res.redirect('/confirminscription');
+                res.redirect('/confirmationinscription');
             }
     },
+
+    inscriptionPost: function(req, res, next) {
+        console.log('toto');
+        let prénom = req.body.firstname;
+        let nom = req.body.name;
+        let mail = req.body.email;
+        let mdp = req.body.password;
+        let datedenaissance = req.body.dateofbirth;
+        let addresse = req.body.address;
+        let codepostal = req.body.zipcode;
+        let ville = req.body.city;
+        let téléphone = req.body.phone;
+
+        console.log('bob');
+        models.User.create(
+            {   firstname : prénom, 
+            name : nom, 
+            email : mail, 
+            password : mdp, 
+            dateofbirth : datedenaissance,
+            address : addresse, 
+            zipcode : codepostal, 
+            city : ville,
+            phone : téléphone
+            });
+    },
+
 
     emailsending: function(req, res, next) {
         var transport = nodemailer.createTransport({
@@ -64,7 +91,7 @@ var Indexes = {
     },
 
     confirmationinscription: function (req, res, next) {
-            res.render('index/confirminscription');
+        res.render('index/confirminscription');
     },
 
     connexionGet: function (req, res, next) {
