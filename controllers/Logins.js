@@ -28,7 +28,7 @@ var Logins = {
     // inscrire l'id de l'utilisateur dans req.session
         // req.session.user = results[0].id;
         console.log(req.session);
-        res.redirect('/main/');
+        res.redirect('/admin');
     },
 
      
