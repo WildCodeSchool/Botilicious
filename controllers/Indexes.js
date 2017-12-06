@@ -3,15 +3,21 @@ const nodemailer = require("nodemailer");
 
 var Indexes = {
 
-  erreur404: function(req, res){
-    res.render('error');
-  },
+    
 
-  indexGet: function (req, res, next) {
-    console.log('render index');
-    res.render('index/index');
-  },
+// route GET '/erreur404' -- Affichage de la page d'erreur 404 
+    erreur404: function(req, res){
+        res.render('error');
+    },
 
+// route GET '/' -- Affichage de la page d'inscription avec le formulaire    
+    indexGet: function (req, res, next) {    
+        console.log('render index');
+        res.render('index/index');
+    },
+
+      
+// route POST -- Validation des informations saisies dans le formulaire d'inscription   
   indexPost: function (req, res, next) {
     let error=[];
     console.log(validator.isEmpty(req.body.prenom));
@@ -62,10 +68,11 @@ var Indexes = {
           phone : téléphone
         }
       );
-      res.redirect('/connexion');
+      res.redirect('/confirmationinscription');
     }
   },
 
+// route GET -- envoie de mail pour confirmer son inscription
     emailsending: function(req, res, next) {
       var transport = nodemailer.createTransport({
         host: "smtp.mailtrap.io",
@@ -83,52 +90,21 @@ var Indexes = {
         html: "<b>Hello world ✔</b>" // html body
       }, (error, response) => {
         if(error){
-          console.log(error);
-        }else{
-          console.log("Message sent: " + response.message);
-        }
-      });
-    },
-
-    confirmationinscription: function (req, res, next) {
-      res.render('index/confirminscription');
-    },
-
-    connexionGet: function (req, res, next) {
-      res.render('index/login');
-    },
-
-
-    deconnexion: function (req, res, next) {
-      res.render('index/deconnexion');
-    },
-
-
-    motdepasseoublie: function (req, res, next) {
-      res.render('index/oubli');
-    },
-
-    connexionPost: function (req, res, next) {
-      let error=[];
-      console.log(validator.isEmpty(req.body.email));
-      if(validator.isEmpty(req.body.email) ){
-        error[0] = "Merci de renseigner votre identifiant";
-        console.log(error.length);
-      }
-      if(validator.isEmpty(req.body.motdepasse) ){
-        error[1] = "Merci de renseigner votre mot de passe";
-        console.log(error.length);
-      }
-      if(error.length>0){
         console.log(error);
-        res.render('login', {error: error});
-      }else{
-        console.log('connexion ok, redirection');
-        req.session.connected = true;
-        // req.session.user = '1';
-        res.redirect('main/configchat');
-      }
+              }else{
+        console.log("Message sent: " + response.message);
+              }
+
+
+          });       
+
+
+
     },
+};
+
+
+
     /* console.log('login en cours');
     console.log(req.body);
     let login = req.body.email;
@@ -152,6 +128,7 @@ var Indexes = {
 
 
 
-  };
+
+ 
 
   module.exports = Indexes;

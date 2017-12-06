@@ -1,27 +1,19 @@
 const request = require('request');
 
-var Mains = {
-    /**
-	  * @param req 
-      * @param res 
-	  */
-      
-      index: function(req, res){
-        res.render('main/configchat'); 
-      },
-      
-      miseajour: function(req, res, next){
-        res.render('main/update');
+var Configchats = {
+    
+    
+// route GET '/admin' -- Affichage de la page de configuration du chatbot
+    index: function(req, res){
+        res.render('admin/configchat'); 
       },
 
-      confirmationmaj: function(req, res, next){
-        res.render('main/confirmmaj');
+// route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
+    configchat: function(req, res, next){
+        res.render('admin/configchat');
       },
 
-      configchat: function(req, res, next){
-        res.render('main/configchat');
-      },
-
+// route POST '/admin/postamessage' -- soumission d'un message dans la boite de dialogue du chatbot
       postamessage: function(req, res, next) {
         console.log(req.body.message);
         let message = req.body.message.split(' ');
@@ -66,7 +58,10 @@ var Mains = {
         //   console.log('Fetch Error :-S', err);
         // });
     },
-      
-};
 
-module.exports = Mains; 
+
+
+
+}; 
+
+module.exports = Configchats; 
