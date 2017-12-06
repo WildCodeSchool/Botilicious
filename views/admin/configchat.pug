@@ -18,6 +18,9 @@ block content
   .sentences
     p Liste des phrases
     input#sentence(type="text" name="sentence")
+    select(name='type')
+      option(value='question') Question
+      option(value='answer') Answer
     br
     button#addSentence Ajouter la phrase
   section.secgris
