@@ -22,6 +22,7 @@ router.post('/', indexes.indexPost);
 /* Envoie d'un email sur MailTrap depuis la route suivante*/
 router.get('/emailsending', indexes.emailsending); 
 
+
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
 /* A mettre à jour pour le projet Botilicious
 router.post('/', function (req, res, next) {
@@ -47,7 +48,7 @@ router.get('/connexion', indexes.connexionGet);
 router.get('/deconnexion', indexes.deconnexion);
 
 
-/* GET Affichage de la page de mise à jour pour le mot de passe oublié qui fonctionne */
+/* GET Affichage de la page de mise à jour pour le mot de passe oublié */
 router.get('/motdepasseoublie', indexes.motdepasseoublie);
 
 
