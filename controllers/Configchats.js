@@ -71,9 +71,12 @@ var Configchats = {
 
     let allsentences = models.Sentence.findAll({});
     // console.log('bobo', allsentences);
-    res.json(req.body);
+    let data = req.body;
+    console.log(data);
+    data.id = 1;
+    console.log(data);
+    res.json(data);
   },
-
 
 
 };

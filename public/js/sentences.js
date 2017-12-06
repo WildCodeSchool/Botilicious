@@ -7,7 +7,7 @@ $("#addSentence").click(function(){
   },
   function(data, status){
     console.log(data);
-    $('#sentences').append('<tr><td>'+data.sentence+'</td><td>'+data.type+'</td></tr>');
+    $('#sentences').append('<tr id="'+data.+'"><td>'+data.sentence+'</td><td>'+data.type+'</td></tr>');
     // $('#sentences').append(JSON.stringify(data));
   });
 });
