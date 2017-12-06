@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & node ./bin/www ; opn http://localhost:3000",
+    "start": "node ./bin/www ; opn http://localhost:3000"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -17,6 +18,7 @@
     "mysql": "^2.15.0",
     "mysql2": "^1.5.1",
     "nodemailer": "^4.4.0",
+    "opn-cli": "^3.1.0",
     "pug": "~2.0.0-beta11",
     "request": "^2.83.0",
     "sequelize": "^4.22.11",
