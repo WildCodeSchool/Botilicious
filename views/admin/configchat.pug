@@ -15,6 +15,12 @@ block content
     div#chatwindow(style="width:600px;max-height=500px;overflow:auto;border:1px solid black")
       p Le testeur de chatbot :    
     br
+  .sentences
+    p Liste des phrases
+    input#sentence(type="text" name="sentence")
+    br
+    button#addSentence Ajouter la phrase
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/chat.js')
+  script(type='text/javascript', src='/js/sentences.js')
