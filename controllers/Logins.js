@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const validator = require('validator');
 
 var Logins = {
 
@@ -11,7 +12,9 @@ var Logins = {
 // route POST '/connexion' -- Prise en compte du login
     connexionPost: function (req, res, next) {
         let error=[];
+        console.log('bob');
         console.log(validator.isEmpty(req.body.email));
+        console.log('bob2');
         if(validator.isEmpty(req.body.email) ){
             error[0] = "Merci de renseigner votre identifiant";
             console.log(error.length);
@@ -24,7 +27,7 @@ var Logins = {
             console.log(error);
             res.render('index/login', {error: error});
         }else{
-            res.redirect('/configchat');
+            res.redirect('admin/configchat');
         }
     },
         /* console.log('login en cours');

@@ -23,6 +23,7 @@ router.get('/',  indexes.indexGet);
 
 router.post('/', indexes.indexPost);
 
+// router.post('/', indexes.inscriptionPost);
 
 /* Envoie d'un email sur MailTrap depuis la route suivante*/
 router.get('/emailsending', indexes.emailsending); 

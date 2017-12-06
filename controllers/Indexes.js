@@ -45,6 +45,36 @@ var Indexes = {
     },
 
 
+
+
+
+    inscriptionPost: function(req, res, next) {
+        console.log('toto');
+        let prénom = req.body.firstname;
+        let nom = req.body.name;
+        let mail = req.body.email;
+        let mdp = req.body.password;
+        let datedenaissance = req.body.dateofbirth;
+        let addresse = req.body.address;
+        let codepostal = req.body.zipcode;
+        let ville = req.body.city;
+        let téléphone = req.body.phone;
+
+        console.log('bob');
+        models.User.create(
+            {   firstname : prénom, 
+            name : nom, 
+            email : mail, 
+            password : mdp, 
+            dateofbirth : datedenaissance,
+            address : addresse, 
+            zipcode : codepostal, 
+            city : ville,
+            phone : téléphone
+            });
+    },
+
+
 // route GET -- envoie de mail pour confirmer son inscription
     emailsending: function(req, res, next) {
         var transport = nodemailer.createTransport({
@@ -67,7 +97,9 @@ var Indexes = {
               }else{
         console.log("Message sent: " + response.message);
               }
+
           });       
+
 
     },
 };
