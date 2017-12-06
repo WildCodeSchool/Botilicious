@@ -29,7 +29,7 @@ res.redirect('/confirmationmaj');
 
 
 /* GET Affichage de la page de confirmation de mise à jour */
-router.get('/confirmationmaj', accounts.confirmationmaj);   
+router.get('/confirmationmaj', accounts.confirmationmaj);
 
 
 /* GET Affichage de la page d'administration des données personnelles dans le formulaire de mise à jour
@@ -47,7 +47,8 @@ wilders = results[0]
 
 router.get('/configchat', configchats.configchat);
 
-router.post('/postamessage', configchats.postamessage); 
+router.post('/postamessage', configchats.postamessage);
+router.post('/postasentence', configchats.postasentence);
 
 /* GET /admin/create
 router.get('/create', function(req, res, next) {

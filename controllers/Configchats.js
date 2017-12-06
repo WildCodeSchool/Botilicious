@@ -60,8 +60,8 @@ var Configchats = {
   },
 
   postasentence: function(req, res, next) {
-    // const models = require("../models");
-    // console.log('bob');
+    const models = require("../models");
+    console.log(req.body);
     models.Sentence.create(
       {
         text : req.body.sentence,
@@ -69,7 +69,9 @@ var Configchats = {
       }
     );
 
-    res.json(responseapi);
+    let allsentences = models.Sentence.findAll({});
+    // console.log('bobo', allsentences);
+    res.json(req.body);
   },
 
 
