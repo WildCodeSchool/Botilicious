@@ -54,16 +54,16 @@ var Indexes = {
         let téléphone = req.body.phone;
 
         console.log('bob');
-        user.create(
-            {   prénom : '', 
-                nom : '', 
-                mail : '', 
-                mdp : '', 
-                datedenaissance : '',
-                addresse : '', 
-                codepostal : '', 
-                ville : '',
-                téléphone : ''
+        models.User.create(
+            {   firstname : prénom, 
+            name : nom, 
+            email : mail, 
+            password : mdp, 
+            dateofbirth : datedenaissance,
+            address : addresse, 
+            zipcode : codepostal, 
+            city : ville,
+            phone : téléphone
             });
     },
 
