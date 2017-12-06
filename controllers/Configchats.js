@@ -59,8 +59,42 @@ var Configchats = {
         // });
     },
 
+      // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+      pattern : function(req, res, next){
+        let texte = req.body.text;
+        let genre = req.body.type;
+        let url = req.body.apiurl;
 
+        models.User.create(
+          {
+            text : texte,
+            type : genre
+          });
+    },
 
+       // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+       modulesEnBdd : function(req, res, next){
+        let nom = req.body.name;
+        let desc = req.body.description;
+        let url = req.body.apiurl;
+
+        models.User.create(
+          {
+            name : nom,
+            description : desc,
+            apiurl : url
+          });
+    },
+
+     // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+     configchatEnBdd : function(req, res, next){
+        let nom = req.body.name;
+
+        models.User.create(
+        {
+            name : nom
+        });
+    },
 
 }; 
 
