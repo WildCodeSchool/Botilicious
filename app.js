@@ -42,8 +42,10 @@ app.use(Session({
 
 app.use('/', index);
 
+
 app.use('/admin', function (req, res, next) {
   // console.log(req.session);
+
   if (req.session.connected){
     return next();
   } else {
