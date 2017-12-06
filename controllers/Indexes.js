@@ -95,7 +95,7 @@ var Indexes = {
     },
 
     connexionGet: function (req, res, next) {
-      res.render('main/configchat');
+      res.render('index/login');
     },
 
 
@@ -123,7 +123,10 @@ var Indexes = {
         console.log(error);
         res.render('login', {error: error});
       }else{
-        res.redirect('/connexion');
+        console.log('connexion ok, redirection');
+        req.session.connected = true;
+        // req.session.user = '1';
+        res.redirect('main/configchat');
       }
     },
     /* console.log('login en cours');
