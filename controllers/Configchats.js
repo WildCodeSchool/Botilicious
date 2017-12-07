@@ -69,8 +69,18 @@ var Configchats = {
       }
     );
 
-    let allsentences = models.Sentence.findAll({});
+    // Sentences = models.Sentence.findAll({});
+    // console.log('toto', Sentences);
+    // let allsentences = models.Sentence
+    //   .findAll({raw: true})
+    //   // sequelize.query("SELECT * FROM Sentences")
+    //   .success(function(results) {
+    //     // query ok
+    //     console.log(results);
+    //   });
+    // let allsentences = sequelize.query("SELECT * FROM Sentences");
     // console.log('bobo', allsentences);
+
     let data = req.body;
     console.log(data);
     data.id = 1;
