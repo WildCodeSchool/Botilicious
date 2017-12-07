@@ -42,15 +42,15 @@ var Indexes = {
       res.render('index', {error: error});
     }else{
       console.log('toto');
-      let prénom = req.body.firstname;
-      let nom = req.body.name;
+      let prénom = req.body.prenom;
+      let nom = req.body.nom;
       let mail = req.body.email;
-      let mdp = req.body.password;
-      let datedenaissance = req.body.dateofbirth;
-      let addresse = req.body.address;
-      let codepostal = req.body.zipcode;
-      let ville = req.body.city;
-      let téléphone = req.body.phone;
+      let mdp = req.body.motdepasse;
+      let datedenaissance = req.body.naissance;
+      let addresse = req.body.adresse;
+      let codepostal = req.body.codepostal;
+      let ville = req.body.ville;
+      let téléphone = req.body.telephone;
 
       const models = require("../models");
 

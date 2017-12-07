@@ -49,6 +49,14 @@ router.get('/configchat', configchats.configchat);
 
 router.post('/postamessage', configchats.postamessage); 
 
+// Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+  router.post('/configchat', configchats.configchatEnBdd);
+
+// Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+  router.post('/modules', configchats.modulesEnBdd);
+
+// Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+  router.post('/pattern', configchats.pattern);
 /* GET /admin/create
 router.get('/create', function(req, res, next) {
 // Formulaire de création d'article
