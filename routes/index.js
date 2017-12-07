@@ -2,25 +2,34 @@ const express = require('express');
 const router = express.Router();
 const validator = require('validator');
 const nodemailer = require("nodemailer");
+const models = require("../models");
 
-var indexes = require('../controllers/Indexes'); // permet de faire la liaison avec le controlleur 'Indexes.js'
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
 
+
+// permet de faire la liaison avec les controlleurs 
+var indexes = require('../controllers/Indexes'); 
+var confirmationinscriptions = require('../controllers/Confirmationinscriptions');
+var deconnexions = require('../controllers/Deconnexions');
+var logins = require('../controllers/Logins');
+var oublis = require('../controllers/Oublis');
 
 /* GET Affichage de la page d'erreur 404 */
 router.get('/erreur404', indexes.erreur404);
 
 
 /* GET Affichage de la page d'inscription avec le formulaire */
-router.get('/',  indexes.indexGet); 
+router.get('/',  indexes.indexGet);
 
 
 router.post('/', indexes.indexPost);
 
+// router.post('/', indexes.inscriptionPost);
 
 /* Envoie d'un email sur MailTrap depuis la route suivante*/
-router.get('/emailsending', indexes.emailsending); 
+router.get('/emailsending', indexes.emailsending);
+
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
 /* A mettre à jour pour le projet Botilicious
@@ -36,23 +45,23 @@ router.post('/', function (req, res, next) {
 
 
 /* GET Affichage de la page de confirmation d'inscription */
-router.get('/confirmationinscription', indexes.confirmationinscription);
+router.get('/confirmationinscription', confirmationinscriptions.confirmationinscription);
 
 
 /* GET Affichage de la page de login */
-router.get('/connexion', indexes.connexionGet);
+router.get('/connexion', logins.connexionGet);
 
 
 /* GET Affichage de la page de déconnexion */
-router.get('/deconnexion', indexes.deconnexion);
+router.get('/deconnexion', deconnexions.deconnexion);
 
 
 /* GET Affichage de la page de mise à jour pour le mot de passe oublié qui fonctionne */
-router.get('/motdepasseoublie', indexes.motdepasseoublie);
+router.get('/motdepasseoublie', oublis.motdepasseoublie);
 
 
 /* POST Prise en compte du login */
-router.post('/connexion', indexes.connexionPost);
+router.post('/connexion', logins.connexionPost);
 
 
 /* Ajouter la route de confirmation de deconnexion, peut-être dans Main */
