@@ -27,6 +27,7 @@ var Logins = {
             console.log(error);
             res.render('index/login', {error: error});
         }else{
+            req.session.connected = true;
             res.redirect('admin/configchat');
         }
     },
