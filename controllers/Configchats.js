@@ -11,7 +11,24 @@ var Configchats = {
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
   configchat: function(req, res, next){
-    res.render('admin/configchat');
+
+    let allsentences = [];
+    models.Sentence
+    // .findAll({raw: true})
+    .findAll({})
+    // query ok
+    .then(results => {
+      // console.log(results);
+      results.map((result, i) => {
+        // allsentences.push(result.dataValues);
+        allsentences[i] = result.dataValues;
+        // console.log('res', i, result.dataValues);
+      });
+      // console.log('tata', allsentences);
+      res.render('admin/configchat', {sentences:allsentences});
+
+    });
+
   },
 
   // route POST '/admin/postamessage' -- soumission d'un message dans la boite de dialogue du chatbot
@@ -61,32 +78,22 @@ var Configchats = {
   },
 
   postasentence: function(req, res, next) {
-    console.log(req.body);
-    models.Sentence.create(
+    // console.log(req.body);
+
+    // insert into
+    models.Sentence.findOrCreate(
       {
-        text : req.body.sentence,
-        type : req.body.type
-      }
-    );
+        where: {text: req.body.sentence, type: req.body.type}
+      })
+      .spread(
+        (sentence, created) => {
+        // console.log('sentence: ',sentence);
 
-    // Sentences = models.Sentence.findAll({});
-    // console.log('toto', Sentences);
-    // let allsentences = models.Sentence
-    //   .findAll({raw: true})
-    //   // sequelize.query("SELECT * FROM Sentences")
-    //   .success(function(results) {
-    //     // query ok
-    //     console.log(results);
-    //   });
-    // let allsentences = sequelize.query("SELECT * FROM Sentences");
-    // console.log('bobo', allsentences);
+        // send back the new sentence to the browser
+        created ? res.json(sentence):res.send('error');
+      })
+    },
 
-    let data = req.body;
-    console.log(data);
-    data.id = 1;
-    console.log(data);
-    res.json(data);
-  },
 
 
   // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
