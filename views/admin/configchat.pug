@@ -32,13 +32,13 @@ block content
         th id
         th Action
       each sentence in sentences
-        tr(id='id' +sentence.id)
-          td= sentence.text
+        tr(id='sentence' +sentence.id)
+          td(id='sentencetext' +sentence.id)= sentence.text
           td= sentence.type
           td= sentence.id
           td
             button(id='delete' +sentence.id name='delete' +sentence.id) Delete
-            button(id='modify' +sentence.id name='modify' +sentence.id) Modify
+            button(id='duplicate' +sentence.id name='duplicate' +sentence.id) Duplicate
     br
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
