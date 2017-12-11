@@ -49,6 +49,7 @@ router.get('/configchat', configchats.configchat);
 
 router.post('/postamessage', configchats.postamessage);
 router.post('/postasentence', configchats.postasentence);
+router.delete('/sentenceDelete', configchats.sentenceDelete);
 
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
   router.post('/configchat', configchats.configchatEnBdd);

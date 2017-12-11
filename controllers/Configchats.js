@@ -24,11 +24,9 @@ var Configchats = {
         allsentences[i] = result.dataValues;
         // console.log('res', i, result.dataValues);
       });
-      // console.log('tata', allsentences);
+      console.log('tata', allsentences);
       res.render('admin/configchat', {sentences:allsentences});
-
     });
-
   },
 
   // route POST '/admin/postamessage' -- soumission d'un message dans la boite de dialogue du chatbot
@@ -102,46 +100,74 @@ var Configchats = {
         })
       },
 
+      //sentenceDelete
+      sentenceDelete: function(req, res, next) {
+        console.log(req.body);
 
-
-      // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
-      pattern : function(req, res, next){
-        let texte = req.body.text;
-        let genre = req.body.type;
-        let url = req.body.apiurl;
-
-        models.User.create(
+        // insert into
+        models.Sentence.destroy(
           {
-            text : texte,
-            type : genre
-          });
-        },
-
-        // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
-        modulesEnBdd : function(req, res, next){
-          let nom = req.body.name;
-          let desc = req.body.description;
-          let url = req.body.apiurl;
-
-          models.User.create(
-            {
-              name : nom,
-              description : desc,
-              apiurl : url
-            });
+            where: {id: req.body.id}
+          })
+          .then(
+            res.status(200).send('delete ok')
+            // (sentence, created) => {
+            //   console.log('sentence: ', sentence.dataValues);
+            //   let data = {sentence};
+            //   // set the error key
+            //   if(created){
+            //     data.error = false;
+            //   } else {
+            //     data.error = true;
+            //     data.serverMessage = 'Error, sentence not added';
+            //   }
+            //
+            //   // send back the new sentence to the browser
+            //   res.json(data)
+            // }
+          )
           },
 
-          // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
-          configchatEnBdd : function(req, res, next){
-            let nom = req.body.name;
+
+
+          // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+          pattern : function(req, res, next){
+            let texte = req.body.text;
+            let genre = req.body.type;
+            let url = req.body.apiurl;
 
             models.User.create(
               {
-                name : nom
+                text : texte,
+                type : genre
               });
             },
 
+            // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+            modulesEnBdd : function(req, res, next){
+              let nom = req.body.name;
+              let desc = req.body.description;
+              let url = req.body.apiurl;
 
-          };
+              models.User.create(
+                {
+                  name : nom,
+                  description : desc,
+                  apiurl : url
+                });
+              },
 
-          module.exports = Configchats;
+              // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+              configchatEnBdd : function(req, res, next){
+                let nom = req.body.name;
+
+                models.User.create(
+                  {
+                    name : nom
+                  });
+                },
+
+
+              };
+
+              module.exports = Configchats;

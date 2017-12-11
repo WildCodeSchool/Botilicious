@@ -12,12 +12,12 @@ block content
     br
     button#parler Parler
     br
-    div#chatwindow(style="width:600px;max-height=500px;overflow:auto;border:1px solid black")
+    div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
       p Le testeur de chatbot :    
     br
   .sentencewindow
     p Liste des phrases
-    input#sentence(type="text" name="sentence")
+    input#sentence(type="text" name="sentence" size="60")
     select#sentenceType(name='sentenceType')
       option(value='question') Question
       option(value='answer') Answer
@@ -25,12 +25,20 @@ block content
     button#addSentence Ajouter la phrase
     div#servermessage
     br
-    table#sentences(style="width:600px;border:1px solid black")
+    table#sentences(style="width:800px;border:1px solid black")
       tr
         th Phrases
         th Type
         th id
         th Action
+      each sentence in sentences
+        tr(id='id' +sentence.id)
+          td= sentence.text
+          td= sentence.type
+          td= sentence.id
+          td
+            button(id='delete' +sentence.id name='delete' +sentence.id) Delete
+            button(id='modify' +sentence.id name='modify' +sentence.id) Modify
     br
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
