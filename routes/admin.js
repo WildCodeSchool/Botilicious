@@ -51,6 +51,9 @@ router.post('/postamessage', configchats.postamessage);
 router.post('/postasentence', configchats.postasentence);
 router.delete('/sentenceDelete', configchats.sentenceDelete);
 
+router.get('/tags', configchats.tagsGet);
+router.post('/tagSentence', configchats.tagSentencePost);
+
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
   router.post('/configchat', configchats.configchatEnBdd);
 

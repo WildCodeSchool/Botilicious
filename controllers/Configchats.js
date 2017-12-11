@@ -92,7 +92,7 @@ var Configchats = {
             data.error = false;
           } else {
             data.error = true;
-            data.serverMessage = 'Error, sentence not added';
+            data.serverMessage = 'Error, sentence not added - Already there or database error';
           }
 
           // send back the new sentence to the browser
@@ -126,48 +126,69 @@ var Configchats = {
             //   res.json(data)
             // }
           )
+        },
+
+
+
+        // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+        pattern : function(req, res, next){
+          let texte = req.body.text;
+          let genre = req.body.type;
+          let url = req.body.apiurl;
+
+          models.User.create(
+            {
+              text : texte,
+              type : genre
+            });
           },
 
+          // Obtenir la liste des tags existants
+          tagsGet : function(req, res, next){
+            console.log('Loading tags');
+            let allcategories = [];
+            models.Category.findAll({})
+            // query ok
+            .then(results => {
+              // console.log(results);
+              results.map((result, i) => {
+                // allcategories.push(result.dataValues);
+                allcategories[i] = result.dataValues;
+                // console.log('res', i, result.dataValues);
+              });
+              console.log('tata', allcategories);
+              res.json({'tags':allcategories});
+            });
+          },
 
+          tagSentencePost : function(req, res, next){
+          },
 
-          // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
-          pattern : function(req, res, next){
-            let texte = req.body.text;
-            let genre = req.body.type;
+          // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+          modulesEnBdd : function(req, res, next){
+            let nom = req.body.name;
+            let desc = req.body.description;
             let url = req.body.apiurl;
 
             models.User.create(
               {
-                text : texte,
-                type : genre
+                name : nom,
+                description : desc,
+                apiurl : url
               });
             },
 
-            // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
-            modulesEnBdd : function(req, res, next){
+            // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+            configchatEnBdd : function(req, res, next){
               let nom = req.body.name;
-              let desc = req.body.description;
-              let url = req.body.apiurl;
 
               models.User.create(
                 {
-                  name : nom,
-                  description : desc,
-                  apiurl : url
+                  name : nom
                 });
               },
 
-              // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
-              configchatEnBdd : function(req, res, next){
-                let nom = req.body.name;
 
-                models.User.create(
-                  {
-                    name : nom
-                  });
-                },
+            };
 
-
-              };
-
-              module.exports = Configchats;
+            module.exports = Configchats;
