@@ -1,19 +1,19 @@
 const validator = require('validator');
 const nodemailer = require("nodemailer");
 
-var Indexes = {
+const Indexes = {
 
     
 
 // route GET '/erreur404' -- Affichage de la page d'erreur 404 
     erreur404: function(req, res){
-        res.render('error');
+        res.render('Indexes/error');
     },
 
 // route GET '/' -- Affichage de la page d'inscription avec le formulaire    
     indexGet: function (req, res, next) {    
         console.log('render index');
-        res.render('index/index');
+        res.render('Indexes/index');
     },
 
       
@@ -39,7 +39,7 @@ var Indexes = {
     }
     if(error.length>0){
       console.log(error);
-      res.render('index', {error: error});
+      res.render('Indexes/index', {error: error});
     }else{
       console.log('toto');
       let prénom = req.body.prenom;
@@ -68,7 +68,7 @@ var Indexes = {
           phone : téléphone
         }
       );
-      res.redirect('/confirmationinscription');
+      res.redirect('Users/confirminscription');
     }
   },
 
@@ -94,15 +94,9 @@ var Indexes = {
               }else{
         console.log("Message sent: " + response.message);
               }
-
-
-          });       
-
-
-
+          });
     },
 };
-
 
 
     /* console.log('login en cours');
@@ -125,10 +119,5 @@ var Indexes = {
     //console.log(req.session);
     //res.redirect('/main/');
     //},
-
-
-
-
- 
 
   module.exports = Indexes;

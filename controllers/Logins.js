@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const validator = require('validator');
 
-var Logins = {
+const Logins = {
 
 // route GET '/connexion' -- Affichage de la page de login 
     connexionGet: function (req, res, next) {
-        res.render('index/login');
+        res.render('Indexes/login');
     },
 
 // route POST '/connexion' -- Prise en compte du login
@@ -25,10 +25,10 @@ var Logins = {
         }
         if(error.length>0){
             console.log(error);
-            res.render('index/login', {error: error});
+            res.render('Indexes/login', {error: error});
         }else{
             req.session.connected = true;
-            res.redirect('admin/configchat');
+            res.redirect('Chatbots/configchat');
         }
     },
         /* console.log('login en cours');
@@ -51,11 +51,6 @@ var Logins = {
         //console.log(req.session);
         //res.redirect('/main/');
     //},
-
-
-    
-
 }; 
-
 
 module.exports = Logins;

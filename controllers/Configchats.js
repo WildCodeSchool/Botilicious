@@ -5,12 +5,12 @@ var Configchats = {
     
 // route GET '/admin' -- Affichage de la page de configuration du chatbot
     index: function(req, res){
-        res.render('admin/configchat'); 
+        res.render('Chatbots/configchat'); 
       },
 
 // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
     configchat: function(req, res, next){
-        res.render('admin/configchat');
+        res.render('Chatbots/configchat');
       },
 
 // route POST '/admin/postamessage' -- soumission d'un message dans la boite de dialogue du chatbot
