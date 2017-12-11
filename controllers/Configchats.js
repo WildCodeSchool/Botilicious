@@ -87,53 +87,61 @@ var Configchats = {
       })
       .spread(
         (sentence, created) => {
-        // console.log('sentence: ',sentence);
+          console.log('sentence: ', sentence.dataValues);
+          let data = {sentence};
+          // set the error key
+          if(created){
+            data.error = false;
+          } else {
+            data.error = true;
+            data.serverMessage = 'Error, sentence not added';
+          }
 
-        // send back the new sentence to the browser
-        created ? res.json(sentence):res.send('error');
-      })
-    },
-
-
-
-  // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
-  pattern : function(req, res, next){
-    let texte = req.body.text;
-    let genre = req.body.type;
-    let url = req.body.apiurl;
-
-    models.User.create(
-      {
-        text : texte,
-        type : genre
-      });
-    },
-
-    // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
-    modulesEnBdd : function(req, res, next){
-      let nom = req.body.name;
-      let desc = req.body.description;
-      let url = req.body.apiurl;
-
-      models.User.create(
-        {
-          name : nom,
-          description : desc,
-          apiurl : url
-        });
+          // send back the new sentence to the browser
+          res.json(data)
+        })
       },
 
-      // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
-      configchatEnBdd : function(req, res, next){
-        let nom = req.body.name;
+
+
+      // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+      pattern : function(req, res, next){
+        let texte = req.body.text;
+        let genre = req.body.type;
+        let url = req.body.apiurl;
 
         models.User.create(
           {
-            name : nom
+            text : texte,
+            type : genre
           });
         },
 
+        // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+        modulesEnBdd : function(req, res, next){
+          let nom = req.body.name;
+          let desc = req.body.description;
+          let url = req.body.apiurl;
 
-      };
+          models.User.create(
+            {
+              name : nom,
+              description : desc,
+              apiurl : url
+            });
+          },
 
-      module.exports = Configchats;
+          // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+          configchatEnBdd : function(req, res, next){
+            let nom = req.body.name;
+
+            models.User.create(
+              {
+                name : nom
+              });
+            },
+
+
+          };
+
+          module.exports = Configchats;

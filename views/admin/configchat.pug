@@ -18,11 +18,12 @@ block content
   .sentencewindow
     p Liste des phrases
     input#sentence(type="text" name="sentence")
-    select(name='type')
+    select#sentenceType(name='sentenceType')
       option(value='question') Question
       option(value='answer') Answer
     br
     button#addSentence Ajouter la phrase
+    div#servermessage
     br
     table#sentences(style="width:600px;border:1px solid black")
       tr
