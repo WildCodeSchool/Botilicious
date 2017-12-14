@@ -16,13 +16,13 @@ block content
       p Le testeur de chatbot :    
     br
     br
-  //- .tagwindow
-  //-   h2 Ici tag de mots
-  //-   button#sentencetag Tag the sentence
-  //-   table#wordsToTag(style="width:400px;border:1px solid black")
-  //-     tr
-  //-       th Mot
-  //-       th Tag
+  .tagwindow
+    h2 Ici tag de mots
+    button#sentencetag Tag the sentence
+    table#wordsToTag(style="width:400px;border:1px solid black")
+      tr#headers
+        th Mot
+        th Tag
   .sentencewindow
     h2 Liste des phrases
     input#sentence(type="text" name="sentence" size="60")

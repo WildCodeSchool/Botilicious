@@ -52,7 +52,7 @@ router.post('/postasentence', configchats.postasentence);
 router.delete('/sentenceDelete', configchats.sentenceDelete);
 
 router.get('/tags', configchats.tagsGet);
-router.post('/tagSentence', configchats.tagSentencePost);
+router.post('/tags', configchats.tagsPost);
 
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
   router.post('/configchat', configchats.configchatEnBdd);

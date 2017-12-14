@@ -1,3 +1,28 @@
+function StartTagging(){
+  let clickedButtonId = $(this).attr('id').substr(3);
+  // let clickedButtonId = '80';
+  console.log('tag words in sentence #:', clickedButtonId);
+  // splitted
+  let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
+  console.log(selectedSentence);
+  $.get('/admin/tags', function(data){
+    // $('#wordsToTag').empty();
+    // console.log($('#tagsentence').html());
+    $('#sentencetag').append(' #: '+clickedButtonId);
+    // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
+    $('#wordsToTag').children().remove();
+    for (let i = 0; i < selectedSentence.length; i++) {
+      $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
+      for (let j = 0; j < data.tags.length; j++) {
+        // console.log(data.tags[j]);
+        $('#select'+i).append('<option value="'+data.tags[j].name+'">'+data.tags[j].name+'</option>')
+      }
+    };
+  });
+  // }
+  // selectedSentence.map( word => $('#wordsToTag').append('<tr><td>'+word+'</td><td><select><option value="'+'tag1'+'">'+'Tag1'+'</option></select></td></tr>'))
+}
+
 // Add a sentence
 $('#addSentence').click(function(){
   $.post('/admin/postasentence',
@@ -10,7 +35,10 @@ $('#addSentence').click(function(){
     if (!data.error){
       $('#sentence').val('');
       $('#servermessage').empty();
-      $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id=tag'+data.sentence.id+'>Tag words</button></td></tr>');
+      $('#sentences').append('<tr><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id="tag'+data.sentence.id+'">Tag words</button></td></tr>');
+      // $("#sentences").on("click", "#tag", StartTagging);
+      $('#tag'+data.sentence.id).click(StartTagging);
+      console.log('');
     } else {
       // $('#servermessage').text(data.serverMessage);
       $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
@@ -51,48 +79,46 @@ $("button[id^='duplicate']").click(function(){
 
 
 // Tag words in a sentence
-$("button[id^='tag']").click(function(){
-  let clickedButtonId = $(this).attr('id').substr(3);
-  console.log('tag words in sentence #:', clickedButtonId);
-  // splitted
-  let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
-  console.log(selectedSentence);
-  $.get('/admin/tags', function(data){
-    // $('#wordsToTag').empty();
-    $('#tagsentence').append(' #: '+clickedButtonId);
-    $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
-    for (let i = 0; i < selectedSentence.length; i++) {
-      $('#wordsToTag').append('<tr id="word'+i+'"><td>'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
-      for (let j = 0; j < data.tags.length; j++) {
-        // console.log(data.tags[j]);
-        $('#select'+i).append('<option value="'+data.tags[j].name+'">'+data.tags[j].name+'</option>')
-      }
-    };
-  });
-  // }
-  // selectedSentence.map( word => $('#wordsToTag').append('<tr><td>'+word+'</td><td><select><option value="'+'tag1'+'">'+'Tag1'+'</option></select></td></tr>'))
-});
+$("button[id^='tag']").click(StartTagging);
 
-$('#sentencetag').click(function(){
-  console.log('toto');
-  let clickedButtonId = $(this).text();
+$("button[id^='sentencetag']").click(function(){
+
+  console.log('tagging');
+  let clickedButtonId = $(this)[0].innerHTML.substr(20);
   console.log(clickedButtonId);
-  //
-  // $.post('/admin/tagSentence',
-  // {
-  //   sentence : $('#sentence').val(),
-  //   type : $('#sentenceType').val()
-  // },
-  // function(data, status){
-  //   console.log(data);
-  //   if (!data.error){
-  //     $('#sentence').val('');
-  //     $('#servermessage').empty();
-  //     $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id=tag'+data.sentence.id+'>Tag words</button></td></tr>');
-  //   } else {
-  //     // $('#servermessage').text(data.serverMessage);
-  //     $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
-  //   }
-  // });
+
+  // let word = $('#word0').html();
+  // let select = $('#select0').val();
+  // console.log(word);
+
+  let tags = {};
+  let word;
+  let wordsToTag = $('#wordsToTag').children();
+  // console.log(wordsToTag.children[0].children[0].innerHTML);
+  // console.log($('#word0').html());
+
+  for (var i = 0; i < wordsToTag.length; i++) {
+    word = $('#word'+i).html();
+    console.log(word);
+    tags[word] = $('#select'+i).val();
+  }
+
+  let datatopost = {
+    id : clickedButtonId,
+    tags : tags
+  };
+
+  $.post('/admin/tags', datatopost, function(resdata, status){
+    console.log(resdata);
+    if (!resdata.error){
+      // $('#sentence').val('');
+      // $('#servermessage').empty();
+      // $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id="tag">Tag words</button></td></tr>');
+      // console.log("tag"+data.sentence.id);
+    } else {
+      // $('#servermessage').text(data.serverMessage);
+      // $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
+    }
+  });
 
 });

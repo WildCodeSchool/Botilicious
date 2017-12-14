@@ -161,7 +161,9 @@ var Configchats = {
             });
           },
 
-          tagSentencePost : function(req, res, next){
+          tagsPost : function(req, res, next){
+            console.log(req.body);
+            res.end();
           },
 
           // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
