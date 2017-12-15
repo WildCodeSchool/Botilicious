@@ -1,17 +1,30 @@
+// générer la liste de mots dans la div "Ici tags de mots"
 function StartTagging(){
+
+  // trouver l'id de la phrase cliquée
   let clickedButtonId = $(this).attr('id').substr(3);
-  // let clickedButtonId = '80';
   console.log('tag words in sentence #:', clickedButtonId);
-  // splitted
+
+  // split de la phrase sélectionnée
   let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
   console.log(selectedSentence);
   console.log($('#sentencetag').html());
+
+  // get pour obtenir la liste des tags
   $.get('/admin/tags', function(data){
     // $('#wordsToTag').empty();
+
+    //changer le texte du bouton
     $('#sentencetag').html('Tag the sentence #: '+clickedButtonId);
     // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
+
+    // effacer le contenu de la div "Ici tags de mots"
     $('#wordsToTag').children().remove();
+
+    // Boucler sur la liste de mots
     for (let i = 0; i < selectedSentence.length-1; i++) {
+
+      // 
       $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
       for (let j = 0; j < data.tags.length; j++) {
         // console.log(data.tags[j]);
