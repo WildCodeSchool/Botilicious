@@ -4,7 +4,7 @@ var faker = require('faker');
 module.exports = {
   up : function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Keywords', [{
-      text: faker.name.lastName(),
+      text: faker.name.firstName(),
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
     }], {});

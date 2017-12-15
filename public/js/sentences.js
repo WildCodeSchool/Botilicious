@@ -5,13 +5,13 @@ function StartTagging(){
   // splitted
   let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
   console.log(selectedSentence);
+  console.log($('#sentencetag').html());
   $.get('/admin/tags', function(data){
     // $('#wordsToTag').empty();
-    // console.log($('#tagsentence').html());
-    $('#sentencetag').val('Tag the sentence #: '+clickedButtonId);
+    $('#sentencetag').html('Tag the sentence #: '+clickedButtonId);
     // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
     $('#wordsToTag').children().remove();
-    for (let i = 0; i < selectedSentence.length; i++) {
+    for (let i = 0; i < selectedSentence.length-1; i++) {
       $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
       for (let j = 0; j < data.tags.length; j++) {
         // console.log(data.tags[j]);
@@ -109,7 +109,7 @@ $("button[id^='sentencetag']").click(function(){
   };
 
   $.post('/admin/tags', datatopost, function(resdata, status){
-    console.log(resdata);
+    console.log(status);
     if (!resdata.error){
       // $('#sentence').val('');
       // $('#servermessage').empty();
