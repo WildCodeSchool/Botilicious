@@ -8,7 +8,7 @@ function StartTagging(){
   $.get('/admin/tags', function(data){
     // $('#wordsToTag').empty();
     // console.log($('#tagsentence').html());
-    $('#sentencetag').append(' #: '+clickedButtonId);
+    $('#sentencetag').val('Tag the sentence #: '+clickedButtonId);
     // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
     $('#wordsToTag').children().remove();
     for (let i = 0; i < selectedSentence.length; i++) {
