@@ -16,9 +16,9 @@ module.exports = {
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
     }], {});
-},
+  },
 
-down: (queryInterface, Sequelize) => {
+  down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Users', null, {});
   }
 };
