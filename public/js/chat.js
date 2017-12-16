@@ -1,6 +1,6 @@
 $("#parler").click(function(){
   console.log($("#message").val());
-  $.post("/admin/postamessage",
+  $.post("/admin/message",
   {
     message : $("#message").val()
   },
