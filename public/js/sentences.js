@@ -66,7 +66,7 @@ $("button[id^='delete']").click(function(){
   let clickedButtonId = $(this).attr('id').substr(6);
   console.log(clickedButtonId);
   $.ajax({
-    url: "/admin/sentenceDelete",
+    url: "/admin/sentence",
     method: "DELETE",
     data: {id : clickedButtonId},
   })
