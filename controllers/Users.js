@@ -1,4 +1,5 @@
 const validator = require('validator');
+const models = require("../models");
 
 var Users = {
 

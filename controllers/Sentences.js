@@ -1,3 +1,5 @@
+const models = require("../models");
+
 var Sentences = {
 
   // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);

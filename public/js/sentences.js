@@ -11,7 +11,7 @@ function StartTagging(){
   console.log($('#sentencetag').html());
 
   // get pour obtenir la liste des tags
-  $.get('/admin/tags', function(data){
+  $.get('/admin/keyword', function(data){
     // $('#wordsToTag').empty();
 
     //changer le texte du bouton
@@ -22,9 +22,9 @@ function StartTagging(){
     $('#wordsToTag').children().remove();
 
     // Boucler sur la liste de mots
-    for (let i = 0; i < selectedSentence.length-1; i++) {
+    for (let i = 0; i < selectedSentence.length; i++) {
 
-      // 
+      //
       $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
       for (let j = 0; j < data.tags.length; j++) {
         // console.log(data.tags[j]);
@@ -38,7 +38,7 @@ function StartTagging(){
 
 // Add a sentence
 $('#addSentence').click(function(){
-  $.post('/admin/postasentence',
+  $.post('/admin/sentence',
   {
     sentence : $('#sentence').val(),
     type : $('#sentenceType').val()
@@ -121,7 +121,7 @@ $("button[id^='sentencetag']").click(function(){
     tags : tags
   };
 
-  $.post('/admin/tags', datatopost, function(resdata, status){
+  $.post('/admin/keyword', datatopost, function(resdata, status){
     console.log(status);
     if (!resdata.error){
       // $('#sentence').val('');
