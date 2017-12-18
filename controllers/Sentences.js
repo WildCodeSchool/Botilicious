@@ -17,7 +17,7 @@ var Sentences = {
     )
     .spread(
       (sentence, created) => {
-        console.log('sentence: ', sentence.dataValues);
+        // console.log('sentence: ', sentence.dataValues);
         let data = {sentence};
         // set the error key
         if(created){
