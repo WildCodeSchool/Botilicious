@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 var admin = require('./routes/admin');
 
 var app = express();
@@ -70,7 +70,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('./error', {connected : req.session.connected});
+  res.render('./index/error', {connected : req.session.connected});
 });
 
 module.exports = app;
