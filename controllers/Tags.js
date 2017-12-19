@@ -1,33 +1,33 @@
-const models = require("../models");
+Tagconst models = require("../models");
 
-var Keywords = {
+var Tags = {
 
   // Obtenir la liste des tags existants
-  keywordGet : function(req, res, next){
-    console.log('Loading keywords');
-    let allkeywords = [];
-    models.Keyword.findAll({})
+  TagGet : function(req, res, next){
+    console.log('Loading Tags');
+    let allTags = [];
+    models.Tag.findAll({})
     // query ok
     .then(results => {
       // console.log(results);
       results.map((result, i) => {
         // allcategories.push(result.dataValues);
-        allKeywords[i] = result.dataValues;
+        allTags[i] = result.dataValues;
         // console.log('res', i, result.dataValues);
       });
       // console.log('tata', allcategories);
-      res.json({'Keywords': allKeywords});
+      res.json({'Tags': allTags});
     });
   },
 
   // Accepter les données du formulaire 'Ici tag de mots';
-  keywordPost : function(req, res, next){
+  TagPost : function(req, res, next){
 
     console.log('req.body: ', req.body);
     res.json(req.body)
 
     // // insert into
-    // models.Keyword.findOrCreate(
+    // models.Tag.findOrCreate(
     //   {
     //     where: {
     //       text: req.body
@@ -35,18 +35,18 @@ var Keywords = {
     //   }
     // )
     // .spread(
-    //   (keywords, created) => {
-    //     console.log('keywords: ', keywords.dataValues);
-    //     let data = {keywords};
+    //   (tags, created) => {
+    //     console.log('tags: ', tags.dataValues);
+    //     let data = {tags};
     //     // set the error key
     //     if(created){
     //       data.error = false;
     //     } else {
     //       data.error = true;
-    //       data.serverMessage = 'Error, keywords not added - Already there or database error';
+    //       data.serverMessage = 'Error, tags not added - Already there or database error';
     //     }
     //
-    //     // send back the new keywords to the browser
+    //     // send back the new tags to the browser
     //     res.json(data)
     //   }
     // )

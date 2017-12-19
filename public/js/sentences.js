@@ -34,7 +34,7 @@ function StartTagging(){
 
   // trouver l'id de la phrase cliquée
   let clickedButtonId = $(this).attr('id').substr(3);
-  console.log('tag words in sentence #:', clickedButtonId);
+  console.log('Tag des mots listés : phrase ', clickedButtonId);
 
   // split de la phrase sélectionnée
   let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
@@ -46,7 +46,7 @@ function StartTagging(){
     // $('#wordsToTag').empty();
 
     //changer le texte du bouton
-    $('#sentencetag').html('Tag the sentence #: '+clickedButtonId);
+    $('#sentencetag').html('Tag des mots listés : phrase '+clickedButtonId);
     // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
 
     // effacer le contenu de la div "Ici tags de mots"
@@ -108,8 +108,8 @@ $("button[id^='tag']").click(StartTagging);
 $("button[id^='sentencetag']").click(function(){
 
   // console.log('tagging');
-  let clickedButtonId = $(this)[0].innerHTML.substr(20);
-  // console.log(clickedButtonId);
+  let clickedButtonId = $(this)[0].innerHTML.substr(29);
+  console.log(clickedButtonId);
 
   // let word = $('#word0').html();
   // let select = $('#select0').val();

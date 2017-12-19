@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Keyword.associate = function(models) {
+    Keyword.belongsTo(models.Tag);
     Keyword.belongsToMany(models.Module, {foreignKey:"keywordId", through:"Keyword_has_Module"});
   };
   return Keyword;

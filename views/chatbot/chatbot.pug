@@ -18,7 +18,7 @@ block content
     br
   .tagwindow
     h2 Ici tag de mots
-    button#sentencetag Tag the sentence
+    button#sentencetag Tag des mots listés
     table#wordsToTag(style="width:400px;border:1px solid black")
       tr#headers
         th Mot
@@ -28,7 +28,7 @@ block content
     input#sentence(type="text" name="sentence" size="60")
     select#sentenceType(name='sentenceType')
       option(value='question') Question
-      option(value='answer') Answer
+      option(value='answer') Réponse
     br
     button#addSentence Ajouter la phrase
     div#servermessage
@@ -45,11 +45,48 @@ block content
           td= sentence.type
           td= sentence.id
           td
-            button(id='delete' +sentence.id) Delete
-            button(id='duplicate' +sentence.id) Duplicate
-            button(id='tag' +sentence.id) Tag words
+            button(id='delete' +sentence.id) Supprimer
+            button(id='duplicate' +sentence.id) Dupliquer
+            button(id='tag' +sentence.id) Tag sur le mots
     br
+  .edittags
+    h2 Edition des tags
+    input#tag(type="text" name="tag" size="60")
+    button#tagadd Ajouter le tag
+    div#servermessagetag
+    br
+    table#tags(style="width:600px;border:1px solid black")
+      tr
+        th Tags
+        th id
+        th Action
+      each tag in tags
+        tr(id='tag' +tag.id)
+          td(id='tagtext' +tag.id)= tag.text
+          td= tag.id
+          td
+            button(id='tagdelete' +tag.id) Supprimer
+            button(id='listkeywords' +tag.id) Liste des mots-clés
+  .editkeywords
+    h2 Edition des keywords
+    input#keyword(type="text" name="keyword" size="60")
+    button#keywordadd Ajouter le keyword
+    div#servermessagekeyword
+    br
+    table#keywords(style="width:600px;border:1px solid black")
+      tr
+        th keywords
+        th id
+        th Action
+      each keyword in keywords
+        tr(id='keyword' +keyword.id)
+          td(id='keywordtext' +keyword.id)= keyword.text
+          td= keyword.id
+          td
+            button(id='keyworddelete' +keyword.id) Supprimer
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/chat.js')
   script(type='text/javascript', src='/js/sentences.js')
+  script(type='text/javascript', src='/js/tags.js')
+  script(type='text/javascript', src='/js/keywords.js')
