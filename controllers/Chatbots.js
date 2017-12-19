@@ -31,18 +31,18 @@ var Chatbots = {
     res.send('Nouveau bot ok');
   },
 
-  // route GET '/chatbot/message' -- liste des messages d'une conversation
+  // route GET '/message' -- liste des messages d'une conversation
   messageGet: function (req, res, next) {
     console.log("toto");
     res.json([
       {
         id: 1,
-        username: "samsepi0l"
+        username: "Exemple 1"
       },
       
       {
         id: 2,
-        username: "D0loresH4ze"
+        username: "Exemple 2"
       }
     ]);
   },

@@ -52,6 +52,11 @@ router.get('/chatbot', Chatbots.chatbotGet);
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', chatbot.configchatEnBdd);
 router.post('/chatbot', Chatbots.chatbotPost);
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
  router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
