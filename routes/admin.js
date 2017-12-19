@@ -8,6 +8,13 @@ var Users = require('../controllers/Users');
 var Modules = require('../controllers/Modules');
 var Sentences = require('../controllers/Sentences');
 
+// Permet de faire communiquer les serveurs react et express ensemble
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
 
@@ -52,13 +59,7 @@ router.get('/chatbot', Chatbots.chatbotGet);
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', chatbot.configchatEnBdd);
 router.post('/chatbot', Chatbots.chatbotPost);
 
-router.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
-
- router.get('/message', Chatbots.messageGet);
+router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
 
 // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
