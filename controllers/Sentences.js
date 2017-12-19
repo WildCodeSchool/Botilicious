@@ -30,7 +30,30 @@ var Sentences = {
         // send back the new sentence to the browser
         res.json(data)
       }
-    )
+    );
+
+    /**
+     * méthode sequelize pour trouver des données de la bdd et qui retourne un model 
+     */ 
+    sentence.findAll({
+      attributes : ['text', 'type']
+    });
+
+    /**
+     * Fonction qui permet de déclencher les réponses par rapport aux questions (tous les deux présents en bdd)
+     */
+    sentence.then(function(res, arr, array) {
+      console.log(res);
+      let item = sentence.text;
+      for(var x=0; x<arr.length; x++)
+          for(var y=0; y<array.length; y++){
+            if(arr[x][y] == string){
+              items = array[x];
+              item = items[Math.floor(Math.random()*items.length)];
+            }
+          }
+      return item;
+    });
   },
 
   //sentenceDelete
