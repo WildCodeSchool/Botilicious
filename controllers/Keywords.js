@@ -4,19 +4,19 @@ var Keywords = {
 
   // Obtenir la liste des tags existants
   keywordGet : function(req, res, next){
-    console.log('Loading tags');
-    let allcategories = [];
-    models.Category.findAll({})
+    console.log('Loading Keywords');
+    let allKeywords = [];
+    models.Keyword.findAll({})
     // query ok
     .then(results => {
       // console.log(results);
       results.map((result, i) => {
         // allcategories.push(result.dataValues);
-        allcategories[i] = result.dataValues;
+        allKeywords[i] = result.dataValues;
         // console.log('res', i, result.dataValues);
       });
       // console.log('tata', allcategories);
-      res.json({'tags':allcategories});
+      res.json({'Keywords': allKeywords});
     });
   },
 
