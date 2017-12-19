@@ -4,9 +4,10 @@ const router = express.Router();
 
 // permet de faire la liaison avec les controlleurs
 var Chatbots = require('../controllers/Chatbots');
-var Users = require('../controllers/Users');
+var Keywords = require('../controllers/Keywords');
 var Modules = require('../controllers/Modules');
 var Sentences = require('../controllers/Sentences');
+var Users = require('../controllers/Users');
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
@@ -47,8 +48,8 @@ wilders = results[0]
 });
 }); */
 
-router.get('/chatbot', Chatbots.chatbotGet);
 
+router.get('/chatbot', Chatbots.chatbotGet);
 // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', chatbot.configchatEnBdd);
 router.post('/chatbot', Chatbots.chatbotPost);
 
@@ -57,9 +58,13 @@ router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
 
 // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
-router.post('/modules', Modules.modulePost);
+router.post('/module', Modules.modulePost);
+
+router.get('/keyword', Keywords.keywordGet);
+router.post('/keyword', Keywords.keywordPost);
 
 // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
 router.post('/sentence', Sentences.sentencePost);
+router.delete('/sentence', Sentences.sentenceDelete);
 
 module.exports = router;

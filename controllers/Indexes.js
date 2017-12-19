@@ -1,5 +1,6 @@
 const validator = require('validator');
 const nodemailer = require("nodemailer");
+const models = require("../models");
 
 var Indexes = {
 

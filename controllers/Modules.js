@@ -1,3 +1,5 @@
+const models = require("../models");
+
 var Modules = {
 
   // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
