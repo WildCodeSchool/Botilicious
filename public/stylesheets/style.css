@@ -5,8 +5,8 @@
 
 @font-face {
     font-family: 'alwynregular';
-    src: url('Fonts/alwyn_regular-webfont.eot');
-    src: url('Fonts/alwyn_regular-webfont.eot?#iefix') format('embedded-opentype'), url('Fonts/alwyn_regular-webfont.woff2') format('woff2'), url('Fonts/alwyn_regular-webfont.woff') format('woff'), url('Fonts/alwyn_regular-webfont.ttf') format('truetype'), url('Fonts/alwyn_regular-webfont.svg#alwynregular') format('svg');
+    src: url('fonts/alwyn_regular-webfont.eot');
+    src: url('fonts/alwyn_regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/alwyn_regular-webfont.woff2') format('woff2'), url('fonts/alwyn_regular-webfont.woff') format('woff'), url('fonts/alwyn_regular-webfont.ttf') format('truetype'), url('fonts/alwyn_regular-webfont.svg#alwynregular') format('svg');
     font-weight: normal;
     font-style: normal;
 }

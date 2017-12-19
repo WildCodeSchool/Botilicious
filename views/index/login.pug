@@ -1,20 +1,24 @@
 extends ../layout
 
 block content
-  // Section début Le formulaire de login
+  //- Section début Le formulaire de login
   
   section.sectionform
     .containerform
       form#form(method="POST")
+        if error
+          p.warning=error[0]
         .form-group
           label(for='identifiant') Identifiant
           input#email.form-control(type='email', required='', placeholder="Identifiant" name="email")
+        if error
+          p.warning=error[1]
         .form-group
           label(for='motdepasse') Mot de passe
           input#motdepasse.form-control(type='password', required='', placeholder='Mot de passe' name="motdepasse")
         button.btn.bleu(type='submit') Se connecter
   section.oubli
     p Pour réinitialiser votre mot de passe, cliquez sur le bouto ci-dessous
-    a(href="/motdepasseoublie" class="btn orange") Confirmer
+    a(href="/forgottenpw" class="btn orange") Confirmer
     
-  // Section fin Le formulaire de login
+  //- Section fin Le formulaire de login

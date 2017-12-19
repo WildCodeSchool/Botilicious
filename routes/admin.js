@@ -2,16 +2,21 @@ const express = require('express');
 const router = express.Router();
 
 
-var mains = require('../controllers/Mains'); // permet de faire la liaison avec le controlleur 'Mains.js'
+// permet de faire la liaison avec les controlleurs
+var Chatbots = require('../controllers/Chatbots');
+var Keywords = require('../controllers/Keywords');
+var Modules = require('../controllers/Modules');
+var Sentences = require('../controllers/Sentences');
+var Users = require('../controllers/Users');
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
 
-/* GET Affichage de la page de visualisation */
-router.get('/', mains.index);
+/* GET Affichage de la page de configuration du chatbot */
+router.get('/', Chatbots.index);
 
 /* GET Affichage de la page de mise à jour de mise à jour des infos personnelles */
-router.get('/miseajour', mains.miseajour);
+router.get('/update', Users.update);
 
 
 /* POST Prise en compte des informations de mise à jour
@@ -27,7 +32,7 @@ res.redirect('/confirmationmaj');
 
 
 /* GET Affichage de la page de confirmation de mise à jour */
-router.get('/confirmationmaj', mains.confirmationmaj);   
+router.get('/updateconfirmation', Users.updateconfirmation);
 
 
 /* GET Affichage de la page d'administration des données personnelles dans le formulaire de mise à jour
@@ -43,14 +48,23 @@ wilders = results[0]
 });
 }); */
 
-router.get('/configchat', mains.configchat);
 
-router.post('/postamessage', mains.postamessage); 
+router.get('/chatbot', Chatbots.chatbotGet);
+// Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', chatbot.configchatEnBdd);
+router.post('/chatbot', Chatbots.chatbotPost);
 
-/* GET /admin/create
-router.get('/create', function(req, res, next) {
-// Formulaire de création d'article
-res.render('admin-create');
-}); */
+
+router.get('/message', Chatbots.messageGet);
+router.post('/message', Chatbots.messagePost);
+
+// Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
+router.post('/module', Modules.modulePost);
+
+router.get('/keyword', Keywords.keywordGet);
+router.post('/keyword', Keywords.keywordPost);
+
+// Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+router.post('/sentence', Sentences.sentencePost);
+router.delete('/sentence', Sentences.sentenceDelete);
 
 module.exports = router;

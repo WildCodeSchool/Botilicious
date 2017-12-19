@@ -1,61 +1,55 @@
 const express = require('express');
 const router = express.Router();
-const validator = require('validator');
-const nodemailer = require("nodemailer");
-
-var indexes = require('../controllers/Indexes'); // permet de faire la liaison avec le controlleur 'Indexes.js'
+// const models = require("../models");
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
 
+// permet de faire la liaison avec les controlleurs
+var Indexes = require('../controllers/Indexes');
+var Users = require('../controllers/Users');
 
 /* GET Affichage de la page d'erreur 404 */
-router.get('/erreur404', indexes.erreur404);
+router.get('/error404', Indexes.error404);
 
 
 /* GET Affichage de la page d'inscription avec le formulaire */
-router.get('/',  indexes.indexGet); 
-
-
-router.post('/', indexes.indexPost);
-
-
-/* Envoie d'un email sur MailTrap depuis la route suivante*/
-router.get('/emailsending', indexes.emailsending); 
+router.get('/',  Indexes.indexGet);
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
+router.post('/', Indexes.indexPost);
 /* A mettre à jour pour le projet Botilicious
 router.post('/', function (req, res, next) {
-	connection.query('INSERT INTO wilders (prenom, nom, email, motdepasse, naissance, adresse, codepostal, ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [req.body.prenom, req.body.nom, req.body.email, req.body.motdepasse, req.body.naissance, req.body.adresse, req.body.codepostal, req.body.ville], function (error) {
-		if (error) {
-			console.log(error);
-		} else {
-			res.redirect('/confirmationinscription');
-		}
-	});
+connection.query('INSERT INTO wilders (prenom, nom, email, motdepasse, naissance, adresse, codepostal, ville) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [req.body.prenom, req.body.nom, req.body.email, req.body.motdepasse, req.body.naissance, req.body.adresse, req.body.codepostal, req.body.ville], function (error) {
+if (error) {
+console.log(error);
+} else {
+res.redirect('/confirmationinscription');
+}
+});
 }); */
 
 
+/* Envoie d'un email sur MailTrap depuis la route suivante*/
+router.post('/email', Indexes.emailPost);
+
+
 /* GET Affichage de la page de confirmation d'inscription */
-router.get('/confirmationinscription', indexes.confirmationinscription);
+router.get('/registered', Users.registered);
 
 
 /* GET Affichage de la page de login */
-router.get('/connexion', indexes.connexionGet);
+router.get('/login', Users.loginGet);
+
+/* POST Prise en compte du login */
+router.post('/login', Users.loginPost);
 
 
 /* GET Affichage de la page de déconnexion */
-router.get('/deconnexion', indexes.deconnexion);
+router.get('/deconnection', Users.deconnection);
 
 
 /* GET Affichage de la page de mise à jour pour le mot de passe oublié qui fonctionne */
-router.get('/motdepasseoublie', indexes.motdepasseoublie);
-
-
-/* POST Prise en compte du login */
-router.post('/connexion', indexes.connexionPost);
-
-
-/* Ajouter la route de confirmation de deconnexion, peut-être dans Main */
+router.get('/forgottenpw', Users.forgottenpw);
 
 
 module.exports = router;
