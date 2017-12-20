@@ -5,7 +5,7 @@ var Sentences = {
 
   // Obtenir la liste des phrases existantes
   sentenceGet : function(req, res, next){
-    console.log('Loading sentences');
+    // console.log('Loading sentences');
     selectSentence().then(results => res.json({'Sentences': results}));
   },
 

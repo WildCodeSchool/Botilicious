@@ -11,7 +11,7 @@ function DuplicateSentence(){
 
 // delete sur une phrase : requête http en delete, puis effacer la ligne du tableau dans la page
 function DeleteSentence(){
-  let clickedButtonId = $(this).attr('id').substr(6);
+  let clickedButtonId = $(this).attr('id').substr(14);
   console.log(clickedButtonId);
   $.ajax({
     url: "/admin/sentence",
@@ -81,7 +81,7 @@ $('#addSentence').click(function(){
       $('#servermessage').empty();
       $('#sentences').append('<tr id="sentence'+data.sentence.id+'"><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Supprimer</button><button id=duplicate'+data.sentence.id+'>Dupliquer</button><button id="tag'+data.sentence.id+'">Tag sur les mots</button></td></tr>');
       // $("#sentences").on("click", "#tag", StartTagging);
-      $('#delete'+data.sentence.id).click(DeleteSentence);
+      $('#deletesentence'+data.sentence.id).click(DeleteSentence);
       $('#duplicate'+data.sentence.id).click(DuplicateSentence);
       $('#tag'+data.sentence.id).click(StartTagging);
       console.log('');
@@ -94,7 +94,7 @@ $('#addSentence').click(function(){
 
 
 // Delete a sentence
-$("button[id^='delete']").click(DeleteSentence);
+$("button[id^='deletesentence']").click(DeleteSentence);
 
 
 // Duplicate a sentence
@@ -116,36 +116,42 @@ $("button[id^='sentencetag']").click(function(){
   // console.log(word);
   // let mytags = [];
   // let mytags = {'word0':'tag0', 'word1':'tag1'}
-  let mytags = [
-    {
-      word: 'word1',
-      keyword: 'tag1'
-    },
-    {
-      word: 'word2',
-      keyword: 'tag2'
-    }
-  ];
-  let word;
+  // let mytags = [
+  //   {
+  //     word: 'word1',
+  //     keyword: 'tag1'
+  //   },
+  //   {
+  //     word: 'word2',
+  //     keyword: 'tag2'
+  //   }
+  // ];
+
+  // let word;
+
+  // console.log($('#wordsToTag'));
+  let mytags = {};
   let wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
   // console.log($('#word0').html());
-  //
-  // for (let i = 0; i < wordsToTag.length; i++) {
-  //   mytags[i].word = $('#word'+i).html();
-  //   mytags[i].keyword = $('#select'+i).val();
-  // }
 
-  let datatopost = {
-    'id': clickedButtonId,
-    'tags': mytags
-  };
-  console.log(datatopost);
+  for (let i = 0; i < wordsToTag.length; i++) {
+    // console.log(mytags);
+    // mytags[i] =
+    // {
+    //   'word'+i : $('#word'+i).html(),
+    //   'keyword'+i : $('#select'+i).val()
+    // };
+    mytags['word'+i] = $('#word'+i).html();
+    mytags['keyword'+i] = $('#select'+i).val();
+  }
+
+  console.log(mytags);
   $.ajax(
     {
       type: "POST",
-      url: '/admin/keyword',
-      data: datatopost,
+      url: '/admin/tag',
+      data: mytags,
       dataType: "json"
     }
   )

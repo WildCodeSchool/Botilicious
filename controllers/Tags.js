@@ -5,6 +5,7 @@ var Tags = {
 
   // Obtenir la liste des tags existants
   tagGet : function(req, res, next){
+    // console.log('Loading tags');
     selectTags().then(results => res.json({'Tags': results}));
   },
 
@@ -12,32 +13,31 @@ var Tags = {
   tagPost : function(req, res, next){
 
     console.log('req.body: ', req.body);
-    res.json(req.body)
 
-    // // insert into
-    // models.Tag.findOrCreate(
-    //   {
-    //     where: {
-    //       text: req.body
-    //     }
-    //   }
-    // )
-    // .spread(
-    //   (tags, created) => {
-    //     console.log('tags: ', tags.dataValues);
-    //     let data = {tags};
-    //     // set the error key
-    //     if(created){
-    //       data.error = false;
-    //     } else {
-    //       data.error = true;
-    //       data.serverMessage = 'Error, tags not added - Already there or database error';
-    //     }
-    //
-    //     // send back the new tags to the browser
-    //     res.json(data)
-    //   }
-    // )
+    // insert into
+    models.Tag.findOrCreate(
+      {
+        where: {
+          text: req.body.text
+        }
+      }
+    )
+    .spread(
+      (tags, created) => {
+        console.log('tags: ', tags.dataValues);
+        let data = {tags};
+        // set the error key
+        if(created){
+          data.error = false;
+        } else {
+          data.error = true;
+          data.serverMessage = 'Error, tags not added - Already there or database error';
+        }
+
+        // send back the new tags to the browser
+        res.json(data)
+      }
+    )
   },
 
   //keywordDelete

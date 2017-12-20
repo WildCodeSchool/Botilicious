@@ -17,10 +17,15 @@ function DeleteTag(){
   });
 };
 
+// List the keywords associated to a tag
+function ListKeywords(){
+  console.log('Listing the keywords associated to a tag');
+}
+
 
 // Add a tag
-$('#tagadd').click(function(){
-  $.post('/admin/tags',
+$('#addtag').click(function(){
+  $.post('/admin/tag',
   {
     text : $('#tag').val()
   },
@@ -29,9 +34,9 @@ $('#tagadd').click(function(){
     if (!data.error){
       $('#tag').val('');
       $('#servermessagetag').empty();
-      $('#tags').append('<tr id="tag'+data.tag.id+'"><td id="tagtext'+data.tag.id+'">'+data.tag.text+'</td><td>'+data.tag.type+'</td><td>'+data.tag.id+'</td><td><button id=delete'+data.tag.id+'>Delete</button><button id="listtags'+data.tag.id+'">Liste des tags</button></td></tr>');
-      $('#delete'+data.tag.id).click(DeleteTag);
-      $('#listtags'+data.tag.id).click(ListTags);
+      $('#tags').append('<tr id="tag'+data.tags.id+'"><td id="tagtext'+data.tags.id+'">'+data.tags.text+'</td><td>'+data.tags.id+'</td><td><button id=deletetag'+data.tags.id+'>Supprimer</button><button id="listkeywords'+data.tags.id+'">Liste des mots-clés</button></td></tr>');
+      $('#deletetag'+data.tags.id).click(DeleteTag);
+      $('#listkeywords'+data.tags.id).click(ListKeywords);
       console.log('');
     } else {
       $('#servermessagetag').append(data.serverMessageTag).append('. Connection status: '+status);
@@ -40,4 +45,4 @@ $('#tagadd').click(function(){
 });
 
 // Delete a tag
-$("button[id^='tagdelete']").click(DeleteTag);
+$("button[id^='deletetag']").click(DeleteTag);

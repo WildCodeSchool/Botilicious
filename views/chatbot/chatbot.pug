@@ -45,14 +45,14 @@ block content
           td= sentence.type
           td= sentence.id
           td
-            button(id='delete' +sentence.id) Supprimer
+            button(id='deletesentence' +sentence.id) Supprimer
             button(id='duplicate' +sentence.id) Dupliquer
             button(id='tag' +sentence.id) Tag sur les mots
     br
   .edittags
     h2 Edition des tags
     input#tag(type="text" name="tag" size="60")
-    button#tagadd Ajouter le tag
+    button#addtag Ajouter le tag
     div#servermessagetag
     br
     table#tags(style="width:600px;border:1px solid black")
@@ -65,12 +65,12 @@ block content
           td(id='tagtext' +tag.id)= tag.text
           td= tag.id
           td
-            button(id='tagdelete' +tag.id) Supprimer
+            button(id='deletetag' +tag.id) Supprimer
             button(id='listkeywords' +tag.id) Liste des mots-clés
   .editkeywords
     h2 Edition des keywords
     input#keyword(type="text" name="keyword" size="60")
-    button#keywordadd Ajouter le keyword
+    button#addkeyword Ajouter le keyword
     div#servermessagekeyword
     br
     table#keywords(style="width:600px;border:1px solid black")
@@ -83,7 +83,7 @@ block content
           td(id='keywordtext' +keyword.id)= keyword.text
           td= keyword.id
           td
-            button(id='keyworddelete' +keyword.id) Supprimer
+            button(id='deletekeyword' +keyword.id) Supprimer
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/chat.js')

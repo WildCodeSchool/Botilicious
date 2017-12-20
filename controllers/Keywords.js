@@ -5,40 +5,39 @@ var Keywords = {
 
   // Obtenir la liste des keywords existants
   keywordGet : function(req, res, next){
-    console.log('Loading keywords');
+    // console.log('Loading keywords');
     selectKeywords().then(results => res.json({'Keywords': results}));
   },
 
-  // Accepter les données du formulaire 'Ici tag de mots';
+  // Accepter les données du formulaire 'Ici keyword de mots';
   keywordPost : function(req, res, next){
 
     console.log('req.body: ', req.body);
-    res.json(req.body)
 
-    // // insert into
-    // models.Keyword.findOrCreate(
-    //   {
-    //     where: {
-    //       text: req.body
-    //     }
-    //   }
-    // )
-    // .spread(
-    //   (keywords, created) => {
-    //     console.log('keywords: ', keywords.dataValues);
-    //     let data = {keywords};
-    //     // set the error key
-    //     if(created){
-    //       data.error = false;
-    //     } else {
-    //       data.error = true;
-    //       data.serverMessage = 'Error, keywords not added - Already there or database error';
-    //     }
-    //
-    //     // send back the new keywords to the browser
-    //     res.json(data)
-    //   }
-    // )
+    // insert into
+    models.Keyword.findOrCreate(
+      {
+        where: {
+          text: req.body.text
+        }
+      }
+    )
+    .spread(
+      (keywords, created) => {
+        console.log('keywords: ', keywords.dataValues);
+        let data = {keywords};
+        // set the error key
+        if(created){
+          data.error = false;
+        } else {
+          data.error = true;
+          data.serverMessage = 'Error, keywords not added - Already there or database error';
+        }
+
+        // send back the new keywords to the browser
+        res.json(data)
+      }
+    )
   },
 
   //keywordDelete

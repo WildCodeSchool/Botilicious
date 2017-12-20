@@ -63,12 +63,15 @@ router.post('/module', Modules.modulePost);
 
 router.get('/keyword', Keywords.keywordGet);
 router.post('/keyword', Keywords.keywordPost);
+router.delete('/keyword', Keywords.keywordDelete);
+
 
 router.get('/tag', Tags.tagGet);
 router.post('/tag', Tags.tagPost);
 router.delete('/tag', Tags.tagDelete);
 
 // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+router.get('/sentence', Sentences.sentenceGet);
 router.post('/sentence', Sentences.sentencePost);
 router.delete('/sentence', Sentences.sentenceDelete);
 
