@@ -1,0 +1,4 @@
+node_modules
+bin/www
+app.js
+seeders

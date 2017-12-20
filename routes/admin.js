@@ -54,7 +54,7 @@ router.get('/chatbot', Chatbots.chatbotGet);
 router.post('/chatbot', Chatbots.chatbotPost);
 
 
-router.get('/message', Chatbots.messageGet);
+ router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
 
 // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
