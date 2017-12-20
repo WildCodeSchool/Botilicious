@@ -23,7 +23,7 @@ var Chatbots = {
         allsentences[i] = result.dataValues;
         // console.log('res', i, result.dataValues);
       });
-      console.log('sentences: ', allsentences);
+      
       res.render('chatbot/chatbot', {sentences:allsentences});
     });
   },
@@ -48,43 +48,70 @@ var Chatbots = {
 
   // route POST '/chatbot/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost: function(req, res, next) {
-    console.log(req.body.message);
-    let message = req.body.message.split(' ');
+   console.log(req.body.message);
+    // let message = req.body.message.split(' ');
 
-    let time;
-    let errorsyntaxe;
-    if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
-      time = 8*message[1] + Math.round(message[2]/3);
-    } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
-      time = 8*message[1];
-    } else {
-      time = 0;
-      let errorsyntaxe='votre syntaxe est incorrecte';
-    }
-    if (time > 39) {
-      time = 39;
-    }
-    console.log("time:", time);
-    if (isNaN(time)){
-      errorsyntaxe='votre syntaxe est incorrecte';
-      time=0;
-    }
+     /**
+     * méthode sequelize pour trouver des données de la bdd et qui retourne un model 
+     * test si cest une question pour renvoyer une reponse
+     */ 
+    
+    models.Sentence.findOne ({ 
+      where : { text : req.body.message }
+     })
+        
+     /**
+      * fonction qui permet de renvoyer une seule réponse (dans le network de la console du navigateur) 
+      * lorsqu'une string de type question est écrite dans le chat. Il faut utiliser un models.sentence.findOne({ })
+      * models.Sentence.findOne ({ })1
+      */ 
+    .then(response => {
+      console.log('response',response);
+      models.Sentence.findOne({
+        where : { id : response.dataValues.next}
+      })
+      .then(answer => {
+        console.log('answer',answer)
+        res.send(answer.dataValues.text)
+      })
+      
+    }) 
+//let rand = [Math.floor(Math.random()*res.length)];
+       
+    // let time;
+    // let errorsyntaxe;
+    // if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
+    //   time = 8*message[1] + Math.round(message[2]/3);
+    // } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
+    //   time = 8*message[1];
+    // } else {
+    //   time = 0;
+    //   let errorsyntaxe='votre syntaxe est incorrecte';
+    // }
+    // if (time > 39) {
+    //   time = 39;
+    // }
+    // console.log("time:", time);
+    // if (isNaN(time)){
+    //   errorsyntaxe='votre syntaxe est incorrecte';
+    //   time=0;
+    // }
 
-    request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
-      console.log(JSON.parse(response.body));
+    // request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
+    //   console.log(JSON.parse(response.body));
 
-      let data = JSON.parse(response.body);
+    //   let data = JSON.parse(response.body);
 
-      let temp = Math.round(data.list[time].main.temp-273.15);
+    //   let temp = Math.round(data.list[time].main.temp-273.15);
 
-      console.log(temp);
+    //   console.log(temp);
 
-      let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : data.city.country, Weather : data.list[time].weather[0].description+" ", Temperature : temp};
-      console.log('reponse :',responseapi);
-      // res.end();
+    //   let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : data.city.country, Weather : data.list[time].weather[0].description+" ", Temperature : temp};
+    //   console.log('reponse :',responseapi);
+    //   // res.end();
 
-      res.json(responseapi);
-    });
+    //   res.json(responseapi);
+    // });
     //   }
     // )
     // .catch(function(err) {
