@@ -1,27 +1,15 @@
-Tagconst models = require("../models");
+const models = require("../models");
+const selectTags = require('./modules/Tags');
 
 var Tags = {
 
   // Obtenir la liste des tags existants
-  TagGet : function(req, res, next){
-    console.log('Loading Tags');
-    let allTags = [];
-    models.Tag.findAll({})
-    // query ok
-    .then(results => {
-      // console.log(results);
-      results.map((result, i) => {
-        // allcategories.push(result.dataValues);
-        allTags[i] = result.dataValues;
-        // console.log('res', i, result.dataValues);
-      });
-      // console.log('tata', allcategories);
-      res.json({'Tags': allTags});
-    });
+  tagGet : function(req, res, next){
+    selectTags().then(results => res.json({'Tags': results}));
   },
 
   // Accepter les données du formulaire 'Ici tag de mots';
-  TagPost : function(req, res, next){
+  tagPost : function(req, res, next){
 
     console.log('req.body: ', req.body);
     res.json(req.body)
@@ -51,6 +39,23 @@ var Tags = {
     //   }
     // )
   },
+
+  //keywordDelete
+  tagDelete: function(req, res, next) {
+    console.log(req.body);
+
+    // insert into
+    models.Tag.destroy(
+      {
+        where: {id: req.body.id}
+      }
+    )
+    .then(
+      res.status(200).send('delete ok')
+    )
+  },
+
+
 };
 
-module.exports = Keywords;
+module.exports = Tags;

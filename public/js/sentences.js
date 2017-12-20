@@ -11,7 +11,6 @@ function DuplicateSentence(){
 
 // delete sur une phrase : requête http en delete, puis effacer la ligne du tableau dans la page
 function DeleteSentence(){
-  // console.log('bobo');
   let clickedButtonId = $(this).attr('id').substr(6);
   console.log(clickedButtonId);
   $.ajax({
@@ -39,10 +38,11 @@ function StartTagging(){
   // split de la phrase sélectionnée
   let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
   console.log(selectedSentence);
-  console.log($('#sentencetag').html());
+  // console.log($('#sentencetag').html());
 
   // get pour obtenir la liste des tags
-  $.get('/admin/keyword', function(data){
+  $.get('/admin/tag', function(data){
+    console.log(data);
     // $('#wordsToTag').empty();
 
     //changer le texte du bouton
@@ -55,11 +55,11 @@ function StartTagging(){
     // Boucler sur la liste de mots
     for (let i = 0; i < selectedSentence.length; i++) {
 
-      //
+      // boucler sur les tags
       $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
-      for (let j = 0; j < data.tags.length; j++) {
+      for (let j = 0; j < data.Tags.length; j++) {
         // console.log(data.tags[j]);
-        $('#select'+i).append('<option value="'+data.tags[j].name+'">'+data.tags[j].name+'</option>')
+        $('#select'+i).append('<option value="'+data.Tags[j].text+'">'+data.Tags[j].text+'</option>')
       }
     };
   });
@@ -79,7 +79,7 @@ $('#addSentence').click(function(){
     if (!data.error){
       $('#sentence').val('');
       $('#servermessage').empty();
-      $('#sentences').append('<tr id="sentence'+data.sentence.id+'"><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=duplicate'+data.sentence.id+'>Duplicate</button><button id="tag'+data.sentence.id+'">Tag words</button></td></tr>');
+      $('#sentences').append('<tr id="sentence'+data.sentence.id+'"><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Supprimer</button><button id=duplicate'+data.sentence.id+'>Dupliquer</button><button id="tag'+data.sentence.id+'">Tag sur les mots</button></td></tr>');
       // $("#sentences").on("click", "#tag", StartTagging);
       $('#delete'+data.sentence.id).click(DeleteSentence);
       $('#duplicate'+data.sentence.id).click(DuplicateSentence);

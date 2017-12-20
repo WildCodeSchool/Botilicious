@@ -1,6 +1,13 @@
 const models = require("../models");
+const selectSentences = require('./modules/Sentences');
 
 var Sentences = {
+
+  // Obtenir la liste des phrases existantes
+  sentenceGet : function(req, res, next){
+    console.log('Loading sentences');
+    selectSentence().then(results => res.json({'Sentences': results}));
+  },
 
   // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
   sentencePost : function(req, res, next){
@@ -45,20 +52,6 @@ var Sentences = {
     )
     .then(
       res.status(200).send('delete ok')
-      // (sentence, created) => {
-      //   console.log('sentence: ', sentence.dataValues);
-      //   let data = {sentence};
-      //   // set the error key
-      //   if(created){
-      //     data.error = false;
-      //   } else {
-      //     data.error = true;
-      //     data.serverMessage = 'Error, sentence not added';
-      //   }
-      //
-      //   // send back the new sentence to the browser
-      //   res.json(data)
-      // }
     )
   },
 

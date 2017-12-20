@@ -1,51 +1,11 @@
 const request = require('request');
 const models = require("../models");
-
-function selectSentences(){
-  let allSentences = [];
-  models.Sentence
-  .findAll({})
-  // query ok
-  .then(results => {
-    // console.log(results);
-    results.map((result, i) => {
-      allSentences[i] = result.dataValues;
-    });
-  });
-  return allSentences;
-}
-
-function selectKeywords(){
-  let allKeywords = [];
-  models.Keyword
-  .findAll({})
-  // query ok
-  .then(results => {
-    // console.log(results);
-    results.map((result, i) => {
-      allKeywords[i] = result.dataValues;
-    });
-  });
-  return allKeywords;
-}
-
-function selectTags(){
-  let allTags = [];
-  models.Tag
-  .findAll({})
-  // query ok
-  .then(results => {
-    // console.log(results);
-    results.map((result, i) => {
-      allTags[i] = result.dataValues;
-    });
-  });
-  return allTags;
-}
+const selectSentences = require('./modules/Sentences');
+const selectKeywords = require('./modules/Keywords');
+const selectTags = require('./modules/Tags');
 
 
 var Chatbots = {
-
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
   index: function(req, res){
@@ -54,14 +14,21 @@ var Chatbots = {
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
   chatbotGet: function(req, res, next){
-    let sentences = selectSentences();
-    console.log('sentences: ', sentences);
-    let keywords = selectKeywords();
-    console.log('keywords: ', keywords);
-    let tags = selectTags();
-    console.log('tags: ', tags);
 
-    res.render('chatbot/chatbot', {sentences:sentences, keywrds:keywords, tags:tags});
+    // console.log(selectSentences());
+    Promise.all([selectSentences(),selectKeywords(),selectTags()])
+    .then(
+      results => {
+        console.log('toto', results)
+        res.render('chatbot/chatbot', {'sentences':results[0], 'keywords':results[1], 'tags':results[2]});
+      }
+    )
+    .catch(
+      (error) => console.log(error)
+    );
+
+    // res.send('sentences ok');
+    // res.end();
   },
 
   // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);

@@ -1,23 +1,12 @@
 const models = require("../models");
+const selectKeywords = require('./modules/Keywords');
 
 var Keywords = {
 
-  // Obtenir la liste des tags existants
+  // Obtenir la liste des keywords existants
   keywordGet : function(req, res, next){
     console.log('Loading keywords');
-    let allkeywords = [];
-    models.Keyword.findAll({})
-    // query ok
-    .then(results => {
-      // console.log(results);
-      results.map((result, i) => {
-        // allcategories.push(result.dataValues);
-        allKeywords[i] = result.dataValues;
-        // console.log('res', i, result.dataValues);
-      });
-      // console.log('tata', allcategories);
-      res.json({'Keywords': allKeywords});
-    });
+    selectKeywords().then(results => res.json({'Keywords': results}));
   },
 
   // Accepter les données du formulaire 'Ici tag de mots';
@@ -51,6 +40,23 @@ var Keywords = {
     //   }
     // )
   },
+
+  //keywordDelete
+  keywordDelete: function(req, res, next) {
+    console.log(req.body);
+
+    // insert into
+    models.Keyword.destroy(
+      {
+        where: {id: req.body.id}
+      }
+    )
+    .then(
+      res.status(200).send('delete ok')
+    )
+  },
+
+
 };
 
 module.exports = Keywords;
