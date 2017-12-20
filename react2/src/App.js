@@ -4,6 +4,8 @@ import './App.css';
 
 // Composant permettant d'afficher sur la page les phrases saisies sous forme de liste 
 import List from './List';
+import Split from './Split';
+
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +20,7 @@ class App extends Component {
       // Valeur de départ permettant l'ajout de phrases et le stockage de celles ci 
       //sous forme de liste 
       term: '',   //   term to store what we passing as a value to our input
-      items: [],   //   items to store every value which we passing to our todo list
+      items: [],  //   items to store every value which we passing to our todo list
     };
   }
 
@@ -44,11 +46,15 @@ class App extends Component {
     event.preventDefault();
     this.setState({
       term: '',
-      items: [...this.state.items, this.state.term]
+      items: [...this.state.items, this.state.term],
+      split: [...this.state.items.toString().split(" ")],
     });
     console.log("toto");
-    console.log([this.state.items[0], this.state.items[2]]);
-    console.log("items : ", this.state.items)
+    console.log("this.state.items : ", this.state.items)
+    console.log("term : ", this.state.term)
+    //alert(typeof this.state.items);
+    console.log("toString : ", this.state.items.toString().split(" "))   
+    
   }
 
 
@@ -72,6 +78,10 @@ class App extends Component {
 
         {/* COMPOSANT QUI PERMET L'AFFICHAGE DES PHRASES SOUS FORME DE LISTE EN DESSOUS DU INPUT */}
         <List items={this.state.items} />
+
+      
+        <Split items={this.state.items.toString().split(" ")} />
+       
 
         {/* A VOIR SI JE PEUX RETIRER LES LIGNES CI DESSOUS : je ne sais pas 
         si la cohabitation des deux serveurs fonctionnera toujours */}
