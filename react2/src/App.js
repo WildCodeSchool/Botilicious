@@ -29,10 +29,8 @@ class App extends Component {
       .then(users => {
         console.log(users);
         this.setState({ users })
-    })
-
+    })  
   }
-
   ///////// Evenements associés au champs input pour l'ajout de phrases //////////
 
   // Stocke la valeur saisie par l'utilisateur dans 'term'
@@ -49,7 +47,8 @@ class App extends Component {
       items: [...this.state.items, this.state.term]
     });
     console.log("toto");
-    console.log([this.state.items[1], this.state.items[2]]);
+    console.log([this.state.items[0], this.state.items[2]]);
+    console.log("items : ", this.state.items)
   }
 
 
