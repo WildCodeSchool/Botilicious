@@ -1,4 +1,5 @@
 const request = require('request');
+const models = require("../models");
 
 var Chatbots = {
 
@@ -9,13 +10,22 @@ var Chatbots = {
   },
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
-  chatbotGet: function (req, res, next) {
-    res.render('chatbot/chatbot');
-  },
-
-  // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
-  chatbotGet: function (req, res, next) {
-    res.render('chatbot/chatbot');
+  chatbotGet: function(req, res, next){
+    let allsentences = [];
+    models.Sentence
+    // .findAll({raw: true})
+    .findAll({})
+    // query ok
+    .then(results => {
+      // console.log(results);
+      results.map((result, i) => {
+        // allsentences.push(result.dataValues);
+        allsentences[i] = result.dataValues;
+        // console.log('res', i, result.dataValues);
+      });
+      console.log('sentences: ', allsentences);
+      res.render('chatbot/chatbot', {sentences:allsentences});
+    });
   },
 
   // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
