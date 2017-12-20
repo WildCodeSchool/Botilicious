@@ -80,7 +80,8 @@ var Chatbots = {
 
       console.log(temp);
 
-      let responseapi = { Time: data.list[time].dt_txt + " ", City: data.city.name + " ", Country: data.city.country, Weather: data.list[time].weather[0].description + " ", Temperature: temp };
+      let responseapi = { Time: data.list[time].dt_txt + " ", City: data.city.name + " ", Country: data.city.country, Weather: data.list[time].weather[0].description + " ", Temperature: temp 
+      };
       console.log('reponse :', responseapi);
       // res.end();
 
