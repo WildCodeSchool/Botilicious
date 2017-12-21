@@ -29,6 +29,7 @@ block content
     select#sentenceType(name='sentenceType')
       option(value='question') Question
       option(value='answer') Answer
+    input#sentenceInputNext(type="text" size="20")
     br
     button#addSentence Ajouter la phrase
     div#servermessage
@@ -38,12 +39,14 @@ block content
         th Phrases
         th Type
         th id
+        th next
         th Action
       each sentence in sentences
         tr(id='sentence' +sentence.id)
           td(id='sentencetext' +sentence.id)= sentence.text
           td= sentence.type
           td= sentence.id
+          td(id='sentencenext' +sentence.id)= sentence.next
           td
             button(id='delete' +sentence.id) Delete
             button(id='duplicate' +sentence.id) Duplicate
