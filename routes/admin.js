@@ -61,14 +61,21 @@ router.post('/message', Chatbots.messagePost);
 // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
 router.post('/module', Modules.modulePost);
 
+
 router.get('/keyword', Keywords.keywordGet);
 router.post('/keyword', Keywords.keywordPost);
 router.delete('/keyword', Keywords.keywordDelete);
 
 
+router.get('/tagkeywordassociations', Keywords.tagkeywordassociationsGet);
+router.post('/tagkeywordassociations', Keywords.tagkeywordassociationsPost);
+router.delete('/tagkeywordassociations', Keywords.tagkeywordassociationsDelete);
+
+
 router.get('/tag', Tags.tagGet);
 router.post('/tag', Tags.tagPost);
 router.delete('/tag', Tags.tagDelete);
+
 
 // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
 router.get('/sentence', Sentences.sentenceGet);
