@@ -34,14 +34,15 @@ $('#keyword').focus(function(){
 $('#addkeyword').click(function(){
   $.post('/admin/keyword',
   {
-    text : $('#keyword').val()
+    text : $('#keyword').val(),
+    TagId : $('#KeywordTag').val()
   },
   function(data, status){
     console.log(data);
     if (!data.error){
       $('#keyword').val('');
       $('#servermessagekeyword').empty();
-      $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><td>'+data.keywords.idTag+'</td><td>'+data.keywords.id+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
+      $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><td>'+data.keywords.tag+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
       $('#deletekeyword'+data.keywords.id).click(DeleteKeyword);
       $('#listkeywords'+data.keywords.id).click(ListKeywords);
       console.log('');

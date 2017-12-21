@@ -130,7 +130,7 @@ $("button[id^='sentencetag']").click(function(){
   // let word;
 
   // console.log($('#wordsToTag'));
-  let mytags = {};
+  let mytags = [];
   let wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
   // console.log($('#word0').html());
@@ -142,22 +142,27 @@ $("button[id^='sentencetag']").click(function(){
     //   'word'+i : $('#word'+i).html(),
     //   'keyword'+i : $('#select'+i).val()
     // };
-    mytags['word'+i] = $('#word'+i).html();
-    mytags['keyword'+i] = $('#select'+i).val();
+    if ($('#select'+i).val()){
+      mytags[i] = {'word' : $('#word'+i).html(), 'keyword' : $('#select'+i).val()};
+    }
   }
 
-  console.log(mytags);
-  $.ajax(
-    {
-      type: "POST",
-      url: '/admin/tag',
-      data: mytags,
-      dataType: "json"
-    }
-  )
-  .done(function(){
-    console.log('browser: data sent')
-  });
+  console.log('mytags: ', mytags);
+  let datatopost = {'tags': mytags};
+  
+  if (mytags.length > 0){
+    $.ajax(
+      {
+        type: "POST",
+        url: '/admin/tag',
+        data: datatopost,
+        dataType: "json"
+      }
+    )
+    .done(function(){
+      console.log('browser: data sent')
+    });
+  }
   //
   // $.post('/admin/keyword', datatopost, function(resdata, status){
   //   console.log(resdata, status);

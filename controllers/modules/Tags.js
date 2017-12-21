@@ -2,7 +2,7 @@ const models = require("../../models");
 
 function selectTags(){
   return new Promise(function(resolve, reject) {
-    console.log('Getting the data from the db');
+    // console.log('Getting the data from the db');
     let records = [];
 
     models.Tag

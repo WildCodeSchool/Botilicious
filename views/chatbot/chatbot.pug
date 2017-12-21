@@ -72,7 +72,7 @@ block content
     input#keyword(type="text" name="keyword" size="60")
     select#KeywordTag(name='KeywordTag')
       each tag in tags
-        option(value=tag.text)= tag.text 
+        option(value=tag.text)= tag.text
     button#addkeyword Ajouter le keyword
     div#servermessagekeyword
     br
@@ -80,13 +80,11 @@ block content
       tr
         th Keywords
         th Tag
-        th id
         th Action
       each keyword in keywords
         tr(id='keyword' +keyword.id)
           td(id='keywordtext' +keyword.id)= keyword.text
-          td= keyword.tagId
-          td= keyword.id
+          td!= keyword.tag
           td
             button(id='deletekeyword' +keyword.id) Supprimer
   section.secgris
