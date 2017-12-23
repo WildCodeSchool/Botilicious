@@ -19,6 +19,7 @@ var Keywords = {
 
       console.log('req.body: ', req.body);
 
+
       // insert into
       models.Keyword.findOrCreate(
         {

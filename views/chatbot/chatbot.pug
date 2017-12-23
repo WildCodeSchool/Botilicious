@@ -69,6 +69,7 @@ block content
             button(id='listkeywords' +tag.id) Liste des mots-clés
   .editkeywords
     h2 Edition des keywords
+    //- button#gettags Get tags
     input#keyword(type="text" name="keyword" size="60")
     select#KeywordTag(name='KeywordTag')
       each tag in tags
@@ -84,6 +85,7 @@ block content
       each keyword in keywords
         tr(id='keyword' +keyword.id)
           td(id='keywordtext' +keyword.id)= keyword.text
+          input(type='hidden' value=keyword.TagId)
           td!= keyword.tag
           td
             button(id='deletekeyword' +keyword.id) Supprimer

@@ -18,27 +18,32 @@ function DeleteKeyword(){
 };
 
 
-function GetId(){
-  let mytags = GetTags();
-  return 1;
-};
+// function GetId(){
+//   let mytags = GetTags();
+//   return 1;
+// };
 
 function GetTags(){
-  $.get('/admin/tag', function(data){
-    // console.log(data);
-    // console.log($('#KeywordTag').html());
-    return data
-  );
+  return new Promise(function(resolve, reject) {
+
+    $.get('/admin/tag')
+    .done(data => {
+      // console.log(data);
+      // console.log($('#KeywordTag').html());
+      resolve(data);
+    })
+  })
 }
 
-$('#keyword').focus(
-  GetTags(), data => {
+$('#keyword').focus(() =>
+  GetTags().then(data => {
     $('#KeywordTag').empty();
+    // console.log(data);
     for (let i = 0; i < data.Tags.length; i++) {
-      // console.log(data.tags[j]);
-      $('#KeywordTag').append('<option value="'+data.Tags[i].text+'">'+data.Tags[i].text+'</option>')
+      // console.log(data.Tags[i]);
+      $('#KeywordTag').append('<option value="'+data.Tags[i].id+'">'+data.Tags[i].text+'</option>')
     }
-  }
+  })
 );
 
 
@@ -54,7 +59,7 @@ $('#addkeyword').click(function(){
     if (!data.error){
       $('#keyword').val('');
       $('#servermessagekeyword').empty();
-      $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><td>'+data.keywords.tag+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
+      $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><input value='+data.keywords.TagId+' type="hidden"><td>'+data.keywords.text+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
       $('#deletekeyword'+data.keywords.id).click(DeleteKeyword);
       $('#listkeywords'+data.keywords.id).click(ListKeywords);
       console.log('');
