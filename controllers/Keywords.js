@@ -6,7 +6,7 @@ var Keywords = {
 
   // Obtenir la liste des keywords existants
   keywordGet : function(req, res, next){
-    // console.log('Loading keywords');
+    console.log(req);
     selectKeywords().then(results =>
       {
         console.log(results);
@@ -18,7 +18,6 @@ var Keywords = {
     keywordPost : function(req, res, next){
 
       console.log('req.body: ', req.body);
-
 
       // insert into
       models.Keyword.findOrCreate(

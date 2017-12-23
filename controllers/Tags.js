@@ -6,7 +6,13 @@ var Tags = {
   // Obtenir la liste des tags existants
   tagGet : function(req, res, next){
     // console.log('Loading tags');
-    selectTags().then(results => res.json({'Tags': results}));
+    console.log('req.query: ', req.query);
+    let myquery;
+    req.query.id ? myquery = req.query.id : myquery = '';
+    selectTags(myquery).then(results => {
+      console.log('mytags: ', results);
+      res.json({'Tags': results})
+  });
   },
 
   // Accepter les données du formulaire 'Ici tag de mots';

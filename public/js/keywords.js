@@ -1,7 +1,5 @@
 // delete sur une phrase : requête http en delete, puis effacer la ligne du tableau dans la page
-function DeleteKeyword(){
-  let clickedButtonId = $(this).attr('id').substr(13);
-  console.log(clickedButtonId);
+function DeleteKeyword(clickedButtonId){
   $.ajax({
     url: "/admin/keyword",
     method: "DELETE",
@@ -23,10 +21,12 @@ function DeleteKeyword(){
 //   return 1;
 // };
 
-function GetTags(){
+function GetTags(TagId){
   return new Promise(function(resolve, reject) {
+    let myquery;
+    TagId ? myquery = '?id='+TagId : myquery = '';
 
-    $.get('/admin/tag')
+    $.get('/admin/tag'+myquery)
     .done(data => {
       // console.log(data);
       // console.log($('#KeywordTag').html());
@@ -55,14 +55,17 @@ $('#addkeyword').click(function(){
     TagId : $('#KeywordTag').val()
   },
   function(data, status){
-    console.log(data);
+    // console.log(data);
     if (!data.error){
-      $('#keyword').val('');
-      $('#servermessagekeyword').empty();
-      $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><input value='+data.keywords.TagId+' type="hidden"><td>'+data.keywords.text+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
-      $('#deletekeyword'+data.keywords.id).click(DeleteKeyword);
-      $('#listkeywords'+data.keywords.id).click(ListKeywords);
-      console.log('');
+      console.log('TagId :', data.keywords.TagId);
+      GetTags(data.keywords.TagId).then(mytag => {
+        console.log('mytag: ', mytag);
+        $('#keyword').val('');
+        $('#servermessagekeyword').empty();
+        $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><input value='+data.keywords.TagId+' type="hidden"><td>'+mytag.Tags[0].text+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
+        $('#deletekeyword'+data.keywords.id).click(DeleteKeyword);
+        $('#listkeywords'+data.keywords.id).click(ListKeywords);
+      })
     } else {
       $('#servermessagekeyword').append(data.serverMessageKeyword).append('. Connection status: '+status);
     }
@@ -70,4 +73,8 @@ $('#addkeyword').click(function(){
 });
 
 // Delete a keyword
-$("button[id^='deletekeyword']").click(DeleteKeyword);
+$("button[id^='deletekeyword']").click(function(){
+  let clickedButtonId = $(this).attr('id').substr(13);
+  console.log(clickedButtonId);
+  DeleteKeyword(clickedButtonId);
+});
