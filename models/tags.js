@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Tag.associate = function(models) {
-    Tag.belongsToMany(models.Keyword, {foreignKey:"tagId", through:"Keyword_has_Tag"});
+    Tag.belongsToMany(models.Keyword, {foreignKey:"TagId", through:"Keyword_has_Tag"});
   };
   return Tag;
 };

@@ -143,13 +143,13 @@ $("button[id^='sentencetag']").click(function(){
     //   'keyword'+i : $('#select'+i).val()
     // };
     if ($('#select'+i).val()){
-      mytags[i] = {'word' : $('#word'+i).html(), 'keyword' : $('#select'+i).val()};
+      mytags[i] = {'word  ' : $('#word'+i).html(), 'keyword' : $('#select'+i).val()};
     }
   }
 
   console.log('mytags: ', mytags);
   let datatopost = {'tags': mytags};
-  
+
   if (mytags.length > 0){
     $.ajax(
       {

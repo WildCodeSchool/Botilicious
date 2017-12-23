@@ -17,17 +17,29 @@ function DeleteKeyword(){
   });
 };
 
-$('#keyword').focus(function(){
+
+function GetId(){
+  let mytags = GetTags();
+  return 1;
+};
+
+function GetTags(){
   $.get('/admin/tag', function(data){
     // console.log(data);
     // console.log($('#KeywordTag').html());
+    return data
+  );
+}
+
+$('#keyword').focus(
+  GetTags(), data => {
     $('#KeywordTag').empty();
     for (let i = 0; i < data.Tags.length; i++) {
       // console.log(data.tags[j]);
       $('#KeywordTag').append('<option value="'+data.Tags[i].text+'">'+data.Tags[i].text+'</option>')
     }
-  });
-});
+  }
+);
 
 
 // Add a keyword
