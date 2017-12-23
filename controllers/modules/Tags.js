@@ -2,7 +2,6 @@ const models = require("../../models");
 
 function selectTags(id){
   return new Promise(function(resolve, reject) {
-    // console.log('Getting the data from the db');
     let records = [];
     let myparams = {};
 

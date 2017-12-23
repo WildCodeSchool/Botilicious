@@ -1,16 +1,18 @@
 const models = require("../../models");
 
-// function selectKeywords(id, text){
-function selectKeywords(){
+function selectKeywords(id){
   return new Promise(function(resolve, reject) {
-    // console.log('Getting the data from the db');
     let records = [];
-
-    models.Keyword
-    .findAll({
+    let myparams = {
       include: [models.Tag],
-      // where : {id : id}
-    })
+    };
+
+    if (id) {
+      myparams[where] = {id : id}
+    };
+    console.log('myparams', myparams);
+    models.Keyword
+    .findAll(myparams)
     // query ok
     .then(results => {
       results.map((result, i) => {

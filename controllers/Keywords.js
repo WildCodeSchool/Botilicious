@@ -1,6 +1,5 @@
 const models = require("../models");
 const selectKeywords = require('./modules/Keywords');
-const selectTagKeywordAssociations = require('./modules/TagKeywordAssociations');
 
 var Keywords = {
 
@@ -60,22 +59,6 @@ var Keywords = {
         res.status(200).send('delete ok')
       )
     },
-
-    // router.get('/tagkeywordassociations', Keywords.tagkeywordassociationsGet);
-
-    tagkeywordassociationsGet: function(req, res, next) {
-      console.log(req.body);
-      selectTagKeywordAssociations().then(results => res.json({'TagKeywordAssociations': results}));
-    },
-
-    tagkeywordassociationsPost: function(req, res, next) {
-      console.log(req.body);
-    },
-
-    tagkeywordassociationsDelete: function(req, res, next) {
-      console.log(req.body);
-    },
-
 
   };
 

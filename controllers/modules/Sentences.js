@@ -2,11 +2,15 @@ const models = require("../../models");
 
 function selectSentences(){
   return new Promise(function(resolve, reject) {
-    // console.log('Getting the data from the db');
     let records = [];
+    let myparams = {};
 
+    if (id){
+      myparams = {where : {id : id}}
+    }
+    console.log('myparams', myparams);
     models.Sentence
-    .findAll({})
+    .findAll(myparams)
     // query ok
     .then(results => {
       // console.log(results);
