@@ -67,11 +67,6 @@ router.post('/keyword', Keywords.keywordPost);
 router.delete('/keyword', Keywords.keywordDelete);
 
 
-router.get('/tagkeywordassociations', Keywords.tagkeywordassociationsGet);
-router.post('/tagkeywordassociations', Keywords.tagkeywordassociationsPost);
-router.delete('/tagkeywordassociations', Keywords.tagkeywordassociationsDelete);
-
-
 router.get('/tag', Tags.tagGet);
 router.post('/tag', Tags.tagPost);
 router.delete('/tag', Tags.tagDelete);

@@ -1,6 +1,6 @@
 const models = require("../../models");
 
-function selectSentences(){
+function selectSentences(id){
   return new Promise(function(resolve, reject) {
     let records = [];
     let myparams = {};
