@@ -37,17 +37,16 @@ function StartTagging(){
 
   // split de la phrase sélectionnée
   let selectedSentence = $('#sentencetext'+clickedButtonId)[0].firstChild.data.split(' ');
-  console.log(selectedSentence);
+  // console.log(selectedSentence);
   // console.log($('#sentencetag').html());
 
   // get pour obtenir la liste des tags
   $.get('/admin/tag', function(data){
-    console.log(data);
+    // console.log(data);
     // $('#wordsToTag').empty();
 
     //changer le texte du bouton
     $('#sentencetag').html('Tag des mots listés : phrase '+clickedButtonId);
-    // $('#wordsToTag').html('<tr><th>Mot</th><th>Tag</th></tr>');
 
     // effacer le contenu de la div "Ici tags de mots"
     $('#wordsToTag').children().remove();
@@ -58,8 +57,8 @@ function StartTagging(){
       // boucler sur les tags
       $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
       for (let j = 0; j < data.Tags.length; j++) {
-        // console.log(data.tags[j]);
-        $('#select'+i).append('<option value="'+data.Tags[j].text+'">'+data.Tags[j].text+'</option>')
+        // console.log(data.Tags[j]);
+        $('#select'+i).append('<option value="'+data.Tags[j].id+'">'+data.Tags[j].text+'</option>')
       }
     };
   });
@@ -109,56 +108,29 @@ $("button[id^='sentencetag']").click(function(){
 
   // console.log('tagging');
   let clickedButtonId = $(this)[0].innerHTML.substr(29);
-  console.log(clickedButtonId);
-
-  // let word = $('#word0').html();
-  // let select = $('#select0').val();
-  // console.log(word);
-  // let mytags = [];
-  // let mytags = {'word0':'tag0', 'word1':'tag1'}
-  // let mytags = [
-  //   {
-  //     word: 'word1',
-  //     keyword: 'tag1'
-  //   },
-  //   {
-  //     word: 'word2',
-  //     keyword: 'tag2'
-  //   }
-  // ];
-
-  // let word;
+  // console.log(clickedButtonId);
 
   // console.log($('#wordsToTag'));
   let mytags = [];
   let wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
-  // console.log($('#word0').html());
 
   for (let i = 0; i < wordsToTag.length; i++) {
-    // console.log(mytags);
-    // mytags[i] =
-    // {
-    //   'word'+i : $('#word'+i).html(),
-    //   'keyword'+i : $('#select'+i).val()
-    // };
-    if ($('#select'+i).val()){
-      mytags[i] = {'word  ' : $('#word'+i).html(), 'keyword' : $('#select'+i).val()};
+    if ($('#select'+i).val().length > 0){
+      mytags.push(
+        {
+          'word' : $('#word'+i).html(),
+          'TagId' : $('#select'+i).val()
+        }
+      );
     }
   }
 
   console.log('mytags: ', mytags);
-  let datatopost = {'tags': mytags};
+  let datatopost = {mytags};
 
   if (mytags.length > 0){
-    $.ajax(
-      {
-        type: "POST",
-        url: '/admin/tag',
-        data: datatopost,
-        dataType: "json"
-      }
-    )
+    $.post('/admin/tag', datatopost)
     .done(function(){
       console.log('browser: data sent')
     });
