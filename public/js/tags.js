@@ -20,19 +20,19 @@ function DeleteTag(){
 // List the keywords associated to a tag
 function ListKeywords(){
   console.log('Listing the keywords associated to a tag');
-  $.ajax({
-    url: "/admin/tagkeywordassociations",
-    method: "DELETE",
-    data: {id : clickedButtonId},
-  })
-  .done(function(){
-    console.log('to delete: ', clickedButtonId);
-    // console.log(msg);
-    $('#tag'+clickedButtonId).remove();
-  })
-  .fail(function(){
-    console.log('not deleted: there was an error');
-  });
+  // $.ajax({
+  //   url: "/admin/tagkeywordassociations",
+  //   method: "DELETE",
+  //   data: {id : clickedButtonId},
+  // })
+  // .done(function(){
+  //   console.log('to delete: ', clickedButtonId);
+  //   // console.log(msg);
+  //   $('#tag'+clickedButtonId).remove();
+  // })
+  // .fail(function(){
+  //   console.log('not deleted: there was an error');
+  // });
 
 }
 

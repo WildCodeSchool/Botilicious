@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Chatbot = sequelize.define('Chatbot', {
-    name: DataTypes.STRING
+    name: {type: DataTypes.STRING, unique: true}
   });
 
   Chatbot.associate = function(models) {

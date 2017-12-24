@@ -115,22 +115,32 @@ $("button[id^='sentencetag']").click(function(){
   let wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
 
+  let counter = 0;
   for (let i = 0; i < wordsToTag.length; i++) {
     if ($('#select'+i).val().length > 0){
-      mytags.push(
-        {
-          'word' : $('#word'+i).html(),
-          'TagId' : $('#select'+i).val()
-        }
-      );
+
+      mytags[counter] =
+      {
+        'text' : $('#word'+i).html(),
+        'TagId' : $('#select'+i).val()
+      };
+      counter++;
+      // mytags.push(
+      // {
+      //   'word' : $('#word'+i).html(),
+      //   'TagId' : $('#select'+i).val()
+      // }
+      // );
     }
   }
 
-  console.log('mytags: ', mytags);
-  let datatopost = {mytags};
+  // console.log('mytags: ', mytags);
+  // let datatopost = {tags : mytags};
+  let datatopost = {tags : [{word:'test1',tag:'time'},{word:'toto1',tag:'place'}]};
+  console.log(datatopost);
 
   if (mytags.length > 0){
-    $.post('/admin/tag', datatopost)
+    $.post('/admin/keyword', datatopost)
     .done(function(){
       console.log('browser: data sent')
     });

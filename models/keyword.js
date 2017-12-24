@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Keyword = sequelize.define('Keyword', {
-    text: DataTypes.STRING
+    text: {type: DataTypes.STRING, unique: true}
   });
 
   Keyword.associate = function(models) {

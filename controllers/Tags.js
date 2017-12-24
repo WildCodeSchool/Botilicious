@@ -23,12 +23,11 @@ var Tags = {
     if (req.body.length == 0 ) {
       res.json({'error' : true});
     } else {
-
       // insert into
       models.Tag.findOrCreate(
         {
           where: {
-            text: req.body.text
+            text: req.body.text,
           }
         }
       )

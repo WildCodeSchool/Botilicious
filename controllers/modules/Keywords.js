@@ -15,11 +15,14 @@ function selectKeywords(id){
     .findAll(myparams)
     // query ok
     .then(results => {
-      results.map((result, i) => {
-        console.log(result.dataValues.Tag.dataValues);
-        // console.log(result.dataValues);
-        records[i] = {'id':result.dataValues.id, 'text':result.dataValues.text, 'TagId':result.dataValues.Tag.dataValues.id, 'tag':result.dataValues.Tag.dataValues.text};
-      });
+      // console.log(results);
+      if (results.length > 0) {
+        results.map((result, i) => {
+          // console.log(result.dataValues.Tag.dataValues);
+          console.log(result.dataValues);
+          records[i] = {'id':result.dataValues.id, 'text':result.dataValues.text, 'TagId':result.dataValues.Tag.dataValues.id, 'tag':result.dataValues.Tag.dataValues.text};
+        });
+      }
       resolve(records);
     });
   });

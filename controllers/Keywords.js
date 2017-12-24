@@ -19,18 +19,36 @@ var Keywords = {
 
     console.log('req.body: ', req.body);
 
+    let dataToWrite = req.body;
+    // let dataToWrite = {text:'test1',TagId:1};
+    // let dataToWrite = {tags : [{text:'test1',TagId:1},{text:'toto1',TagId:1}]};
+
+    // User.bulkCreate([
+    //   { username: 'barfooz', isAdmin: true },
+    //   { username: 'foo', isAdmin: true },
+    //   { username: 'bar', isAdmin: false }
+    // ])
+    // .then(() => { // Notice: There are no arguments here
+    //   return User.findAll();
+    // })
+    // .then(users => {
+    //   console.log(users)
+    // });
+
+
     // insert into
     models.Keyword.findOrCreate(
       {
         where: {
-          text: req.body.text,
-          TagId: req.body.TagId
+          text: dataToWrite.text,
+          TagId: dataToWrite.TagId
         }
       }
     )
     .spread(
       (keywords, created) => {
         console.log('keywords: ', keywords.dataValues);
+        console.log('created: ', created);
         let data = {keywords};
         // set the error key
         if(created){
