@@ -2,7 +2,6 @@ const models = require("../../models");
 
 function selectTags(id){
   return new Promise(function(resolve, reject) {
-    let records = [];
     let myparams = {};
 
     if (id){
@@ -14,6 +13,7 @@ function selectTags(id){
     // query ok
     .then(results => {
       // console.log(results);
+      let records = [];
       results.map((result, i) => {
         records[i] = result.dataValues;
       });

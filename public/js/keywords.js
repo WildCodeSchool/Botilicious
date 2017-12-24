@@ -1,7 +1,10 @@
-// delete sur une phrase : requête http en delete, puis effacer la ligne du tableau dans la page
-function DeleteKeyword(e){
-  console.log('event :', e);
-  let clickedButtonId = e.target.attr('id').substr(13);
+/* delete sur une phrase : requête http en delete, puis effacer la ligne
+ du tableau dans la page */
+function DeleteKeyword(){
+  // console.log('event :', button);
+  // let clickedButtonId = button.id.substr(13);
+  console.log(this);
+  let clickedButtonId = $(this).attr('id').substr(13);
   console.log(clickedButtonId);
   $.ajax({
     url: "/admin/keyword",
@@ -39,14 +42,14 @@ function GetTags(TagId){
 }
 
 $('#keyword').focus(() =>
-  GetTags().then(data => {
-    $('#KeywordTag').empty();
-    // console.log(data);
-    for (let i = 0; i < data.Tags.length; i++) {
-      // console.log(data.Tags[i]);
-      $('#KeywordTag').append('<option value="'+data.Tags[i].id+'">'+data.Tags[i].text+'</option>')
-    }
-  })
+GetTags().then(data => {
+  $('#KeywordTag').empty();
+  // console.log(data);
+  for (let i = 0; i < data.Tags.length; i++) {
+    // console.log(data.Tags[i]);
+    $('#KeywordTag').append('<option value="'+data.Tags[i].id+'">'+data.Tags[i].text+'</option>')
+  }
+})
 );
 
 
@@ -66,8 +69,9 @@ $('#addkeyword').click(function(){
         console.log('mytag: ', mytag);
         $('#keyword').val('');
         $('#keywords').append('<tr id="keyword'+data.keywords.id+'"><td id="keywordtext'+data.keywords.id+'">'+data.keywords.text+'</td><input value='+data.keywords.TagId+' type="hidden"><td>'+mytag.Tags[0].text+'</td><td><button id=deletekeyword'+data.keywords.id+'>Supprimer</button></td></tr>');
-        $('#deletekeyword'+data.keywords.id).click(DeleteKeyword);
-        $('#listkeywords'+data.keywords.id).click(ListKeywords);
+
+        // Add an event listener to the new button. With an Event Delegation
+        $('#keywords').on('click', '#deletekeyword'+data.keywords.id , DeleteKeyword);
       })
     } else {
       $('#servermessagekeyword').append(data.serverMessage).append('. Connection status: '+status);
@@ -76,8 +80,4 @@ $('#addkeyword').click(function(){
 });
 
 // Delete a keyword
-$("button[id^='deletekeyword']").click(function(){
-  // let clickedButtonId = $(this).attr('id').substr(13);
-  // console.log(clickedButtonId);
-  DeleteKeyword(this);
-});
+$("button[id^='deletekeyword']").click(DeleteKeyword);

@@ -5,13 +5,18 @@ var Keywords = {
 
   // Obtenir la liste des keywords existants
   keywordGet : function(req, res, next){
-    console.log(req);
-    selectKeywords().then(results =>
+    console.log(req.body);
+    console.log(req.query);
+    selectKeywords(req.query.TagId)
+    .then(results =>
       {
-        console.log(results);
         res.json({'Keywords': results})
       }
-    );
+    )
+    .catch((error, data) => {
+      console.log(error, data);
+      res.send(error);
+    });
   },
 
   // Accepter les données du formulaire 'Ici keyword de mots';

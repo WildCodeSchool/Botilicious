@@ -1,14 +1,13 @@
 const models = require("../../models");
 
-function selectKeywords(id){
+function selectKeywords(TagId){
   return new Promise(function(resolve, reject) {
-    let records = [];
     let myparams = {
-      include: [models.Tag],
+      include: [models.Tag]
     };
-
-    if (id) {
-      myparams[where] = {id : id}
+    console.log(TagId);
+    if (TagId) {
+      myparams.where = {TagId : TagId}
     };
     console.log('myparams', myparams);
     models.Keyword
@@ -16,11 +15,17 @@ function selectKeywords(id){
     // query ok
     .then(results => {
       // console.log(results);
+      let records = [];
       if (results.length > 0) {
         results.map((result, i) => {
           // console.log(result.dataValues.Tag.dataValues);
           console.log(result.dataValues);
-          records[i] = {'id':result.dataValues.id, 'text':result.dataValues.text, 'TagId':result.dataValues.Tag.dataValues.id, 'tag':result.dataValues.Tag.dataValues.text};
+          records[i] = {
+            'id':result.dataValues.id,
+            'text':result.dataValues.text,
+            'TagId':result.dataValues.Tag.dataValues.id,
+            'tag':result.dataValues.Tag.dataValues.text
+          };
         });
       }
       resolve(records);

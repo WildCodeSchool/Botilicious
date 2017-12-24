@@ -67,6 +67,15 @@ block content
           td
             button(id='deletetag' +tag.id) Supprimer
             button(id='listkeywords' +tag.id) Liste des mots-clés
+  .listkeywords
+    h2 Liste des keywords associés à un tag
+    div#servermessagelistkeyword
+    br
+    table#listkeywords(style="width:600px;border:1px solid black")
+      tr
+        th Keywords
+        th Tag
+    
   .editkeywords
     h2 Edition des keywords
     //- button#gettags Get tags
