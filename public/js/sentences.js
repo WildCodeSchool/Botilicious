@@ -28,6 +28,40 @@ function DeleteSentence(){
   });
 };
 
+
+// get all tags (or only one with ?id=x)
+function GetTags(TagId){
+  return new Promise(function(resolve, reject) {
+    let myquery;
+    TagId ? myquery = '?id='+TagId : myquery = '';
+
+    $.get('/admin/tag'+myquery)
+    .done(data => {
+      // console.log(data);
+      // console.log($('#KeywordTag').html());
+      resolve(data);
+    })
+  })
+}
+
+
+// get all keywords (or only one with ?id=x
+function GetKeywords(KeywordId){
+  return new Promise(function(resolve, reject) {
+    let myquery;
+    KeywordId ? myquery = '?id='+KeywordId : myquery = '';
+    console.log('myquery: ', myquery);
+
+    $.get('/admin/keyword'+myquery)
+    .done(data => {
+      console.log('Keyword: ', data);
+      // console.log($('#KeywordTag').html());
+      resolve(data);
+    })
+  })
+}
+
+
 // générer la liste de mots dans la div "Ici tags de mots"
 function StartTagging(){
 
@@ -40,30 +74,45 @@ function StartTagging(){
   // console.log(selectedSentence);
   // console.log($('#sentencetag').html());
 
-  // get pour obtenir la liste des tags
-  $.get('/admin/tag', function(data){
-    // console.log(data);
-    // $('#wordsToTag').empty();
 
-    //changer le texte du bouton
-    $('#sentencetag').html('Tag des mots listés : phrase '+clickedButtonId);
+  Promise.all([GetKeywords(),GetTags()])
+  .then(
+    results => {
+      console.log('results: ', results);
 
-    // effacer le contenu de la div "Ici tags de mots"
-    $('#wordsToTag').children().remove();
+      //changer le texte du bouton
+      $('#sentencetag').html('Tag des mots listés : phrase '+clickedButtonId);
 
-    // Boucler sur la liste de mots
-    for (let i = 0; i < selectedSentence.length; i++) {
+      // effacer le contenu de la div "Ici tags de mots"
+      $('#wordsToTag').children().remove();
 
-      // boucler sur les tags
-      $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">""</option></select></td></tr>');
-      for (let j = 0; j < data.Tags.length; j++) {
-        // console.log(data.Tags[j]);
-        $('#select'+i).append('<option value="'+data.Tags[j].id+'">'+data.Tags[j].text+'</option>')
-      }
-    };
-  });
-  // }
-  // selectedSentence.map( word => $('#wordsToTag').append('<tr><td>'+word+'</td><td><select><option value="'+'tag1'+'">'+'Tag1'+'</option></select></td></tr>'))
+      // Boucler sur la liste de mots
+      for (let i = 0; i < selectedSentence.length; i++) {
+
+        // add a line for each word
+        $('#wordsToTag').append('<tr><td id="word'+i+'">'+selectedSentence[i]+'<td><select id="select'+i+'"><option value="">(aucun)</option></select></td></tr>');
+
+        // boucler sur les tags
+        for (let j = 0; j < results[1].Tags.length; j++) {
+          // console.log(data.Tags[j]);
+          $('#select'+i).append('<option value="'+results[1].Tags[j].id+'">'+results[1].Tags[j].text+'</option>');
+        }
+
+        let currentTagId = results[0].Keywords.find(keyword => keyword.text == selectedSentence[i]);
+
+        if (typeof currentTagId != 'undefined') {
+          console.log('selectedSentence[i]: ', selectedSentence[i]);
+          console.log('currentTagId: ', currentTagId);
+          $('#select'+i).val(currentTagId.TagId);
+        }
+      };
+
+    }
+  )
+  .catch(
+    (error) => console.log(error)
+  );
+
 };
 
 // Add a sentence

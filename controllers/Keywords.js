@@ -8,7 +8,9 @@ var Keywords = {
   keywordGet : function(req, res, next){
     console.log(req.body);
     console.log(req.query);
-    selectKeywords({TagId : req.query.TagId})
+    let attributes;
+    if (req.query.TagId) attributes = {TagId : req.query.TagId};
+    selectKeywords(attributes)
     .then(results =>
       {
         res.json({'Keywords': results})

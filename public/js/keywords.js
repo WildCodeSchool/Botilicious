@@ -22,11 +22,7 @@ function DeleteKeyword(){
 };
 
 
-// function GetId(){
-//   let mytags = GetTags();
-//   return 1;
-// };
-
+// get all tags (or only one with ?id=x)
 function GetTags(TagId){
   return new Promise(function(resolve, reject) {
     let myquery;
