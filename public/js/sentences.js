@@ -111,52 +111,60 @@ $("button[id^='sentencetag']").click(function(){
   // console.log(clickedButtonId);
 
   // console.log($('#wordsToTag'));
-  let mytags = [];
+  let mykeywords = [];
   let wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
 
-  let counter = 0;
+  // let counter = 0;
   for (let i = 0; i < wordsToTag.length; i++) {
     if ($('#select'+i).val().length > 0){
 
-      mytags[counter] =
-      {
-        'text' : $('#word'+i).html(),
-        'TagId' : $('#select'+i).val()
-      };
-      counter++;
-      // mytags.push(
+      // mykeywords[counter] =
       // {
-      //   'word' : $('#word'+i).html(),
+      //   'text' : $('#word'+i).html(),
       //   'TagId' : $('#select'+i).val()
-      // }
-      // );
+      // };
+      // counter++;
+      mykeywords.push(
+        {
+          'text' : $('#word'+i).html(),
+          'TagId' : $('#select'+i).val()
+        }
+      );
     }
   }
 
-  // console.log('mytags: ', mytags);
-  // let datatopost = {tags : mytags};
-  let datatopost = {tags : [{word:'test1',tag:'time'},{word:'toto1',tag:'place'}]};
-  console.log(datatopost);
+  // console.log('mykeywords: ', mykeywords);
+  // let datatopost = {tags : [{word:'test1',tag:'time'},{word:'toto1',tag:'place'}]};
 
-  if (mytags.length > 0){
-    $.post('/admin/keyword', datatopost)
-    .done(function(){
-      console.log('browser: data sent')
+  if (mykeywords.length > 0){
+    let datatopost = JSON.stringify({keywords : mykeywords});
+    // let datatopost = {tags : mykeywords};
+    console.log(datatopost);
+    $.ajax({
+      method : 'POST',
+      url : '/admin/keyword',
+      data : datatopost,
+      // processData : false,
+      contentType: "application/json; charset=utf-8",
+      dataType : 'json'
+    })
+    .done(data => {
+      console.log('data: ', data);
     });
-  }
-  //
-  // $.post('/admin/keyword', datatopost, function(resdata, status){
-  //   console.log(resdata, status);
-  //   if (!resdata.error){
-  //     // $('#sentence').val('');
-  //     // $('#servermessage').empty();
-  //     // $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id="tag">Tag words</button></td></tr>');
-  //     // console.log("tag"+data.sentence.id);
-  //   } else {
-  //     // $('#servermessage').text(data.serverMessage);
-  //     // $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
-  //   }
-  // });
+    //
+    // $.post('/admin/keyword', datatopost, function(resdata, status){
+    //   console.log(resdata, status);
+    //   if (!resdata.error){
+    //     // $('#sentence').val('');
+    //     // $('#servermessage').empty();
+    //     // $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id="tag">Tag words</button></td></tr>');
+    //     // console.log("tag"+data.sentence.id);
+    //   } else {
+    //     // $('#servermessage').text(data.serverMessage);
+    //     // $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
+    //   }
+    // });
 
+  };
 });

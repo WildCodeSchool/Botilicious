@@ -1,8 +1,8 @@
-$("#parler").click(function(){
-  console.log($("#message").val());
-  $.post("/admin/message",
+$('#parler').click(function(){
+  console.log($('#message').val());
+  $.post('/admin/message',
   {
-    message : $("#message").val()
+    message : $('#message').val()
   },
   function(data, status){
     console.log(data);
