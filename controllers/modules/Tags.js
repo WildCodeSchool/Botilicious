@@ -7,7 +7,7 @@ function selectTags(id){
     if (id){
       myparams = {where : {id : id}}
     }
-    console.log('myparams', myparams);
+    // console.log('myparams', myparams);
     models.Tag
     .findAll(myparams)
     // query ok

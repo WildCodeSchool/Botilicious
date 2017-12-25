@@ -19,7 +19,7 @@ var Chatbots = {
     Promise.all([selectSentences(),selectKeywords(),selectTags()])
     .then(
       results => {
-        console.log('toto', results[1]);
+        console.log('keywords found: ', results[1]);
         res.render('chatbot/chatbot', {'sentences':results[0], 'keywords':results[1], 'tags':results[2]});
       }
     )

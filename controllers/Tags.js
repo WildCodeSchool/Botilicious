@@ -23,6 +23,15 @@ var Tags = {
     if (req.body.length == 0 ) {
       res.json({'error' : true});
     } else {
+
+      // {
+      //   where: {
+      //     authorId: {
+      //       [Op.or]: [12, 13]
+      //     }
+      //   }
+      // }
+
       // insert into
       models.Tag.findOrCreate(
         {

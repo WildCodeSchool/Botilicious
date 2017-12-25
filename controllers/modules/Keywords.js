@@ -1,13 +1,13 @@
 const models = require("../../models");
 
-function selectKeywords(TagId){
+function selectKeywords(where){
   return new Promise(function(resolve, reject) {
     let myparams = {
       include: [models.Tag]
     };
-    console.log(TagId);
-    if (TagId) {
-      myparams.where = {TagId : TagId}
+    console.log('where: ', where);
+    if (where) {
+      myparams.where = where
     };
     console.log('myparams', myparams);
     models.Keyword
