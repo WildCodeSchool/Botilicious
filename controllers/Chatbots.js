@@ -55,6 +55,7 @@ var Chatbots = {
         username: "D0loresH4ze"
       }
     ]);
+    
   },
 
   // route POST '/chatbot/message' -- soumission d'un message dans la boite de dialogue du chatbot
@@ -77,13 +78,17 @@ var Chatbots = {
       * models.Sentence.findOne ({ })1
       */ 
     .then(response => {
-      console.log('response',response);
+      // console.log('response',response);
       models.Sentence.findOne({
         where : { id : response.dataValues.next}
       })
       .then(answer => {
-        console.log('answer',answer)
-        res.send(answer.dataValues.text)
+       // console.log('answer',answer)
+       
+       let jsontostring = {answer : answer.dataValues.text,
+                           text : req.body.message}
+      res.json(jsontostring)
+
       })
       
     }) 
