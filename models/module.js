@@ -1,6 +1,9 @@
-
 module.exports = (sequelize, DataTypes) => {
   const Module = sequelize.define('Module', {
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     name: { type: DataTypes.STRING, unique: true },
     description: DataTypes.STRING,
     apiurl: DataTypes.STRING,
