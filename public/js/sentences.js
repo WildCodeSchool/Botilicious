@@ -166,7 +166,7 @@ $("button[id^='sentencetag']").click(function(){
 
   // let counter = 0;
   for (let i = 0; i < wordsToTag.length; i++) {
-    if ($('#select'+i).val().length > 0){
+    // if ($('#select'+i).val().length > 0){
 
       // mykeywords[counter] =
       // {
@@ -180,7 +180,7 @@ $("button[id^='sentencetag']").click(function(){
           'TagId' : $('#select'+i).val()
         }
       );
-    }
+    // }
   }
 
   // console.log('mykeywords: ', mykeywords);
@@ -200,6 +200,9 @@ $("button[id^='sentencetag']").click(function(){
     })
     .done(data => {
       console.log('data: ', data);
+      
+      // refresh, to be deleted later
+      location.reload();
     });
     //
     // $.post('/admin/keyword', datatopost, function(resdata, status){

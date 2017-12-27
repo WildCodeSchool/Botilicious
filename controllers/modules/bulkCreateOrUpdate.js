@@ -5,33 +5,48 @@ const models = require("../../models");
 
 
 function bulkCreateOrUpdate(requestObject){
-  console.log('requestObject: ', requestObject);
-  const promises = _.map(
-    requestObject, (value, index) =>
-    Promise
-    .resolve()
-    .then(() => {
-      console.log('value, index: ', value, index);
-      console.log(value.text);
-      models.Keyword.update(
-        value,
-        {
-          // where: { id : 1 },
-          where: { text : value.text },
-        })
-        .then((data => {
-          console.log('after update: ', data);
-          // console.log(data[0] == 0);
-          // if (true){
-          if (data[0] == 0){
-            console.log('inserting: ', value);
-            models.Keyword.create(value).then(() => console.log('inserted'));
-          }
-        }))
-      })
-    );
-    // console.log(promises);
-    return promises;
-  }
+  // return new Promise(function(resolve, reject) {
 
-  module.exports = bulkCreateOrUpdate;
+    console.log('requestObject: ', requestObject);
+    const promises = _.map(
+      requestObject, (value, index) =>
+      Promise
+      .resolve()
+      .then(() => {
+        console.log('value, index: ', value, index);
+        console.log(value.text);
+
+        if (value.TagId == '') {
+          models.Keyword
+          .destroy({where : { text : value.text }})
+          .then(result => console.log('destroy result: ', result))
+        } else {
+          models.Keyword.update(
+            value,
+            {
+              // where: { id : 1 },
+              where: { text : value.text },
+            })
+            .then((data => {
+              console.log('after update: ', data);
+              // console.log(data[0] == 0);
+              // if (true){
+              if (data[0] == 0){
+                console.log('inserting: ', value);
+                models.Keyword
+                .create(value)
+                .then(() => console.log('inserted'));
+              }
+            }))
+          }
+        }
+      )
+    );
+  //   resolve(promises);
+  // });
+  console.log('promises: ', promises);
+  return promises;
+
+}
+
+module.exports = bulkCreateOrUpdate;

@@ -37,16 +37,19 @@ var Keywords = {
     console.log('keywordsToFind: ', keywordsToFind);
 
 
-    // insert into - several NEW keywords in bulk
-
+    // send an error if the keywords list is empty
     // if (dataToWrite.keywords.length = 0) {
+    //   console.log('Erreur - Liste de keywords vide');
     //   return res.status(501).json({serverMessage: 'Erreur - Liste de keywords vide'});
     // }
 
-    return Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
+    // insert into or update - several keywords in bulk
+    // Parallel promises, an array as parameter
+
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
+    Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
     .then(results => {
-      console.log('results: ', results);
+      console.log('bulkCreateOrUpdate results: ', results);
       models.Keyword
       .findAll()
       .then(findResults => res.status(200).json({keywords : findResults}))
@@ -81,28 +84,6 @@ var Keywords = {
     //     }
     //   )
 
-
-    // insert into - several NEW keywords in bulk
-
-    // models.Keyword.bulkCreate(dataToWrite.keywords)
-    // .then(() => { // Notice: There are no arguments here
-    //   return selectKeywords()
-    // })
-    // .then(keywords => {
-    //   // console.log('keywords: ', keywords)
-    //   res.json({'keywords': keywords});
-    // });
-
-
-    // How to use OR
-
-    // {
-    //   where: {
-    //     authorId: {
-    //       [Op.or]: [12, 13]
-    //     }
-    //   }
-    // }
 
   },
 
