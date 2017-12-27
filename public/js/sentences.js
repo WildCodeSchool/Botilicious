@@ -133,7 +133,7 @@ $('#addSentence').click(function(){
       $('#sentence').val('');
       $('#sentencenext').val('');
       $('#servermessage').empty();
-      $('#sentences').append('<tr id="sentence'+data.sentence.id+'"><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td>'+data.sentence.next+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=duplicate'+data.sentence.id+'>Duplicate</button><button id="tag'+data.sentence.id+'">Tag words</button></td></tr>');
+      $('#sentences').append('<tr id="sentence'+data.sentence.id+'"><td id="sentencetext'+data.sentence.id+'">'+data.sentence.text+'</td><td>'+data.sentence.type+'</td><td>'+data.sentence.id+'</td><td>'+data.sentence.next+'</td><td><button id=delete'+data.sentence.id+'>Supprimer</button><button id=duplicate'+data.sentence.id+'>Dupliquer</button><button id="tag'+data.sentence.id+'">Tag sur les mots</button></td></tr>');
       // $("#sentences").on("click", "#tag", StartTagging);
       $('#deletesentence'+data.sentence.id).click(DeleteSentence);
       $('#duplicate'+data.sentence.id).click(DuplicateSentence);
