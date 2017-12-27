@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Module = sequelize.define('Module', {
-    name: DataTypes.STRING,
+    name: {type: DataTypes.STRING, unique: true},
     description: DataTypes.STRING,
     apiurl: DataTypes.STRING
   });

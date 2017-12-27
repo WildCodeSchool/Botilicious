@@ -3,11 +3,12 @@ const router = express.Router();
 
 
 // permet de faire la liaison avec les controlleurs
-var Chatbots = require('../controllers/Chatbots');
-var Keywords = require('../controllers/Keywords');
-var Modules = require('../controllers/Modules');
-var Sentences = require('../controllers/Sentences');
-var Users = require('../controllers/Users');
+const Chatbots = require('../controllers/Chatbots');
+const Keywords = require('../controllers/Keywords');
+const Modules = require('../controllers/Modules');
+const Sentences = require('../controllers/Sentences');
+const Users = require('../controllers/Users');
+const Tags = require('../controllers/Tags');
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
 
@@ -60,10 +61,19 @@ router.post('/message', Chatbots.messagePost);
 // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
 router.post('/module', Modules.modulePost);
 
+
 router.get('/keyword', Keywords.keywordGet);
 router.post('/keyword', Keywords.keywordPost);
+router.delete('/keyword', Keywords.keywordDelete);
+
+
+router.get('/tag', Tags.tagGet);
+router.post('/tag', Tags.tagPost);
+router.delete('/tag', Tags.tagDelete);
+
 
 // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+router.get('/sentence', Sentences.sentenceGet);
 router.post('/sentence', Sentences.sentencePost);
 router.delete('/sentence', Sentences.sentenceDelete);
 

@@ -1,8 +1,11 @@
 const request = require('request');
 const models = require("../models");
+const selectSentences = require('./modules/Sentences');
+const selectKeywords = require('./modules/Keywords');
+const selectTags = require('./modules/Tags');
+
 
 var Chatbots = {
-
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
   index: function (req, res) {
@@ -11,21 +14,21 @@ var Chatbots = {
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
   chatbotGet: function(req, res, next){
-    let allsentences = [];
-    models.Sentence
-    // .findAll({raw: true})
-    .findAll({})
-    // query ok
-    .then(results => {
-      // console.log(results);
-      results.map((result, i) => {
-        // allsentences.push(result.dataValues);
-        allsentences[i] = result.dataValues;
-        // console.log('res', i, result.dataValues);
-      });
-      
-      res.render('chatbot/chatbot', {sentences:allsentences});
-    });
+
+    // console.log(selectSentences());
+    Promise.all([selectSentences(),selectKeywords(),selectTags()])
+    .then(
+      results => {
+        console.log('keywords found: ', results[1]);
+        res.render('chatbot/chatbot', {'sentences':results[0], 'keywords':results[1], 'tags':results[2]});
+      }
+    )
+    .catch(
+      (error) => console.log(error)
+    );
+
+    // res.send('sentences ok');
+    // res.end();
   },
 
   // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
@@ -49,13 +52,13 @@ var Chatbots = {
         id: 1,
         username: "samsepi0l"
       },
-      
+
       {
         id: 2,
         username: "D0loresH4ze"
       }
     ]);
-    
+
   },
 
   // route POST '/chatbot/message' -- soumission d'un message dans la boite de dialogue du chatbot
@@ -64,19 +67,19 @@ var Chatbots = {
     // let message = req.body.message.split(' ');
 
      /**
-     * méthode sequelize pour trouver des données de la bdd et qui retourne un model 
+     * méthode sequelize pour trouver des données de la bdd et qui retourne un model
      * test si cest une question pour renvoyer une reponse
-     */ 
-    
-    models.Sentence.findOne ({ 
+     */
+
+    models.Sentence.findOne ({
       where : { text : req.body.message }
      })
-        
+
      /**
-      * fonction qui permet de renvoyer une seule réponse (dans le network de la console du navigateur) 
+      * fonction qui permet de renvoyer une seule réponse (dans le network de la console du navigateur)
       * lorsqu'une string de type question est écrite dans le chat. Il faut utiliser un models.sentence.findOne({ })
       * models.Sentence.findOne ({ })1
-      */ 
+      */
     .then(response => {
       // console.log('response',response);
       models.Sentence.findOne({
@@ -84,16 +87,16 @@ var Chatbots = {
       })
       .then(answer => {
        // console.log('answer',answer)
-       
+
        let jsontostring = {answer : answer.dataValues.text,
                            text : req.body.message}
       res.json(jsontostring)
 
       })
-      
-    }) 
+
+    })
 //let rand = [Math.floor(Math.random()*res.length)];
-       
+
     // let time;
     // let errorsyntaxe;
     // if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
