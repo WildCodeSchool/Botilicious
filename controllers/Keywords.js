@@ -45,16 +45,19 @@ const Keywords = {
     // insert into or update - several keywords in bulk
     // Parallel promises, an array as parameter
 
+    if (!dataToWrite.keywords[0].text) {
+      res.json({ serverMessageTag: 'Error, no keyword to add', error: true });
+    } else {
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
-    Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
-      .then((results) => {
-        console.log('bulkCreateOrUpdate results: ', results);
-        models.Keyword
-          .findAll()
-          .then(findResults => res.status(200).json({ keywords: findResults }));
-      })
-      .catch(err => res.status(501).send(err));
-
+      Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
+        .then((results) => {
+          console.log('bulkCreateOrUpdate results: ', results);
+          models.Keyword
+            .findAll()
+            .then(findResults => res.status(200).json({ keywords: findResults }));
+        })
+        .catch(err => res.status(501).send(err));
+    }
 
     // insert into - one keyword only
 

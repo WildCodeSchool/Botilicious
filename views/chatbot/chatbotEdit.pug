@@ -2,8 +2,8 @@ extends ../layout
 
 block content
   a(href="/" class="btn orange") Retour à l'accueil
-  a(href="/chatbot" class="btn orange") Nouveau chatbot
-  a(href="/module" class="btn orange") Nouveau module
+  a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
+  a(href="/admin/module" class="btn gris") Gestion Module
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
@@ -20,6 +20,7 @@ block content
   .tagwindow
     h2 Ici tag de mots
     button#sentencetag Tag des mots listés
+    div#serverMessageSentenceTagging
     table#wordsToTag(style="width:400px;border:1px solid black")
       tr#headers
         th Mot

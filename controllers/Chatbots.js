@@ -30,6 +30,21 @@ const Chatbots = {
   chatbotGet(req, res) {
     console.log(req.body);
     console.log(req.query);
+    getChatbots()
+      .then((results) => {
+        console.log(results);
+        res.render('chatbot/chatbot', { chatbots: results });
+      })
+      .catch((error, data) => {
+        console.log(error, data);
+        res.render('chatbot/chatbot', { servermessage: error });
+      });
+  },
+
+
+  chatbotListGet(req, res) {
+    console.log(req.body);
+    console.log(req.query);
     let attributes;
     if (req.query.TagId) {
       attributes = { TagId: req.query.TagId };
@@ -47,6 +62,7 @@ const Chatbots = {
 
   // Accepter les données du formulaire 'Nouveau Chatbot'
   chatbotPost(req, res) {
+    console.log('body: ', req.body);
     const nom = req.body.name;
 
     models.chatbot.create({

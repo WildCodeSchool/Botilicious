@@ -133,6 +133,7 @@ $('#addSentence').click(() => {
         console.log('');
       } else {
       // $('#servermessage').text(data.serverMessage);
+        $('#servermessage').empty();
         $('#servermessage').append(data.serverMessage).append(`. Connection status: ${status}`);
       }
     },

@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  
+  section.sectionform
+    h2 Nouveau Chatbot
+    .containerform
+      form#form(method="POST")
+        if servermessage
+          p.warning= servermessage.error
+        .form-group
+          label(for='name') Nom du chatbot
+          input#name.form-control(required='', placeholder="Nom du chatbot" name="name")
+        button.btn.gris(type='submit') Créer le chatbot
+  section.chatbotsList
+    table#chatbots(style="width:800px;border:1px solid black")
+      tr
+        th Nom
+        th id
+        th Action
+      each chatbot in chatbots
+        tr(id='chatbot' +chatbot.id)
+          td(id='chatbottext' +chatbot.id)= chatbot.name
+          td= chatbot.id
+          td
+            button(id='deletechatbot' +chatbot.id) Supprimer

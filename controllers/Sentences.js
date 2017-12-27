@@ -13,28 +13,32 @@ const Sentences = {
   sentencePost(req, res) {
     console.log(req.body);
 
+    if (!req.body.text) {
+      res.json({ serverMessage: 'Error, Sentence length is 0', error: true });
+    } else {
     // insert into
-    models.Sentence.findOrCreate({
-      where: {
-        text: req.body.sentence,
-        type: req.body.type,
-        next: req.body.next,
-      },
-    })
-      .spread((sentence, created) => {
+      models.Sentence.findOrCreate({
+        where: {
+          text: req.body.sentence,
+          type: req.body.type,
+          next: req.body.next,
+        },
+      })
+        .spread((sentence, created) => {
         // console.log('sentence: ', sentence.dataValues);
-        const data = { sentence };
-        // set the error key
-        if (created) {
-          data.error = false;
-        } else {
-          data.error = true;
-          data.serverMessage = 'Error, sentence not added - Already there or database error';
-        }
+          const data = { sentence };
+          // set the error key
+          if (created) {
+            data.error = false;
+          } else {
+            data.error = true;
+            data.serverMessage = 'Error, sentence not added - Already there or database error';
+          }
 
-        // send back the new sentence to the browser
-        res.json(data);
-      });
+          // send back the new sentence to the browser
+          res.json(data);
+        });
+    }
   },
 
   // sentenceDelete

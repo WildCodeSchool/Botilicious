@@ -30,8 +30,10 @@ router.get('/updateconfirmation', Users.updateconfirmation);
 // page de configuration du chatbot
 router.get('/chatbotEdit', Chatbots.chatbotEditGet);
 
-// obtenir la liste des chatbots pour un utilisateur donnné
+// obtenir la page qui présente la liste de chatbots
 router.get('/chatbot', Chatbots.chatbotGet);
+// obtenir la liste des chatbots pour un utilisateur donnné
+router.get('/chatbotList', Chatbots.chatbotListGet);
 // Accepter les données du formulaire 'Nouveau Chatbot'
 router.post('/chatbot', Chatbots.chatbotPost);
 router.delete('/chatbot', Chatbots.chatbotDelete);
@@ -41,7 +43,10 @@ router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
 
 
+// obtenir la page qui présente la liste de modules
 router.get('/module', Modules.moduleGet);
+// obtenir la liste des chatbots pour un chatbot donnné
+router.get('/moduleList', Modules.moduleListGet);
 // Accepter les données du formulaire 'Nouveau Modules'
 router.post('/module', Modules.modulePost);
 router.delete('/module', Modules.moduleDelete);
@@ -57,9 +62,8 @@ router.post('/tag', Tags.tagPost);
 router.delete('/tag', Tags.tagDelete);
 
 
-// Accepter les données du formulaire 'Nouvelles phrases'
-// ===> router.post('/pattern', patterns.pattern);
 router.get('/sentence', Sentences.sentenceGet);
+// Accepter les données du formulaire 'Nouvelles phrases'
 router.post('/sentence', Sentences.sentencePost);
 router.delete('/sentence', Sentences.sentenceDelete);
 

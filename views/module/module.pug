@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+  
+  section.sectionform
+    h2 Nouveau module
+    .containerform
+      form#form(method="POST")
+        if servermessage
+          p.warning= servermessage.error
+        .form-group
+          label(for='name') Nom du module
+          input#name.form-control(required='', placeholder="Nom du module" name="name")
+        .form-group
+          label(for='description') Description
+          input#description.form-control(required='', placeholder="Description" name="description")
+        .form-group
+          label(for='url') URL d'une API
+          input#url.form-control(placeholder="URL d'une API" name="url")
+        button.btn.gris(type='submit') Créer le module
+  section.modulesList
+    table#modules(style="width:800px;border:1px solid black")
+      tr
+        th Nom
+        th id
+        th URL d'une API
+        th Description
+        th Action
+      each module in modules
+        tr(id='module' +module.id)
+          td(id='moduletext' +module.id)= module.name
+          td= module.id
+          td= module.apiurl
+          td= module.description
+          td
+            button(id='deletemodule' +module.id) Supprimer
