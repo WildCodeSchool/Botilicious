@@ -1,6 +1,6 @@
 const models = require('../../models');
 
-function selectTags(id) {
+function getTags(id) {
   return new Promise(((resolve, reject) => {
     let myparams = {};
 
@@ -24,4 +24,4 @@ function selectTags(id) {
   }));
 }
 
-module.exports = selectTags;
+module.exports = getTags;

@@ -1,23 +1,24 @@
 const models = require('../models');
-const selectSentences = require('./modules/Sentences');
-const selectKeywords = require('./modules/Keywords');
-const selectTags = require('./modules/Tags');
+const getSentences = require('./modules/Sentences');
+const getKeywords = require('./modules/Keywords');
+const getTags = require('./modules/Tags');
+const getChatbots = require('./modules/Chatbots');
 
 
 const Chatbots = {
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
   index(req, res) {
-    res.render('chatbot/chatbot');
+    res.render('chatbot/chatbotEdit');
   },
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
-  chatbotGet(req, res) {
-    // console.log(selectSentences());
-    Promise.all([selectSentences(), selectKeywords(), selectTags()])
+  chatbotEditGet(req, res) {
+    // console.log(getSentences());
+    Promise.all([getSentences(), getKeywords(), getTags()])
       .then((results) => {
         console.log('keywords found: ', results[1]);
-        res.render('chatbot/chatbot', { sentences: results[0], keywords: results[1], tags: results[2] });
+        res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });
       })
       .catch(error => console.log(error));
 
@@ -25,7 +26,26 @@ const Chatbots = {
     // res.end();
   },
 
-  // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
+
+  chatbotGet(req, res) {
+    console.log(req.body);
+    console.log(req.query);
+    let attributes;
+    if (req.query.TagId) {
+      attributes = { TagId: req.query.TagId };
+    }
+    getChatbots(attributes)
+      .then((results) => {
+        res.json({ Chatbots: results });
+      })
+      .catch((error, data) => {
+        console.log(error, data);
+        res.json({ servermessage: error });
+      });
+  },
+
+
+  // Accepter les données du formulaire 'Nouveau Chatbot'
   chatbotPost(req, res) {
     const nom = req.body.name;
 
@@ -36,9 +56,9 @@ const Chatbots = {
     res.send('Nouveau bot ok');
   },
 
-  // route GET '/chatbot/message' -- liste des messages d'une conversation
+  // route GET '/admin/message' -- liste des messages d'une conversation
   messageGet(req, res) {
-    console.log('toto');
+    console.log('route messageGet');
     res.json([
       {
         id: 1,
@@ -52,25 +72,27 @@ const Chatbots = {
     ]);
   },
 
-  // route POST '/chatbot/message' -- soumission d'un message dans la boite de dialogue du chatbot
+  // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
     console.log(req.body.message);
     // let message = req.body.message.split(' ');
 
     /**
-     * méthode sequelize pour trouver des données de la bdd et qui retourne un model
-     * test si cest une question pour renvoyer une reponse
-     */
+    * méthode sequelize pour trouver des données de la bdd et qui retourne un model
+    * test si cest une question pour renvoyer une reponse
+    */
 
     models.Sentence.findOne({
       where: { text: req.body.message },
     })
 
     /**
-      * fonction qui permet de renvoyer une seule réponse (dans le network de la console du navigateur)
-      * lorsqu'une string de type question est écrite dans le chat. Il faut utiliser un models.sentence.findOne({ })
-      * models.Sentence.findOne ({ })1
-      */
+    * fonction qui permet de renvoyer une seule réponse
+    * (dans le network de la console du navigateur)
+    * lorsqu'une string de type question est écrite dans le chat.
+    *
+    * Il faut utiliser un models.sentence.findOne({ })
+    */
       .then((response) => {
       // console.log('response',response);
         models.Sentence.findOne({
@@ -129,6 +151,15 @@ const Chatbots = {
     // });
   },
 
+  chatbotDelete(req, res) {
+    console.log(req.body);
+    console.log(req.query);
+    // delete
+    models.Chatbot.destroy({
+      where: { id: req.body.id },
+    })
+      .then(res.status(200).json({ servermessage: 'delete ok' }));
+  },
 
 };
 

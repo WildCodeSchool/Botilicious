@@ -1,15 +1,15 @@
 const models = require('../models');
-const selectSentences = require('./modules/Sentences');
+const getSentences = require('./modules/Sentences');
 
 const Sentences = {
 
   // Obtenir la liste des phrases existantes
   sentenceGet(req, res) {
     // console.log('Loading sentences');
-    selectSentences().then(results => res.json({ Sentences: results }));
+    getSentences().then(results => res.json({ Sentences: results }));
   },
 
-  // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
+  // Accepter les données du formulaire 'Nouvelles phrases'
   sentencePost(req, res) {
     console.log(req.body);
 
@@ -41,11 +41,11 @@ const Sentences = {
   sentenceDelete(req, res) {
     console.log(req.body);
 
-    // insert into
+    // delete
     models.Sentence.destroy({
       where: { id: req.body.id },
     })
-      .then(res.status(200).send('delete ok'));
+      .then(res.status(200).json({ servermessage: 'delete ok' }));
   },
 
 };

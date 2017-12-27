@@ -32,7 +32,7 @@ const Users = {
       res.render('index/login', { error });
     } else {
       req.session.connected = true;
-      res.redirect('admin/chatbot');
+      res.redirect('admin/chatbotEdit');
     }
   },
   /* console.log('login en cours');
