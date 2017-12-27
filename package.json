@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & node ./bin/www ; opn http://localhost:3001",
+    "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & sequelize db:seed:all & node ./bin/www ; opn http://localhost:3001",
     "start": "node ./bin/www ; opn http://localhost:3001",
     "lint": "eslint ."
   },
