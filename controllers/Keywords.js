@@ -1,39 +1,36 @@
-const models = require("../models");
+const models = require('../models');
 const selectKeywords = require('./modules/Keywords');
 const bulkCreateOrUpdate = require('./modules/bulkCreateOrUpdate');
 
-var Keywords = {
+const Keywords = {
 
   // Obtenir la liste des keywords existants
-  keywordGet : function(req, res, next){
+  keywordGet(req, res) {
     console.log(req.body);
     console.log(req.query);
     let attributes;
-    if (req.query.TagId) attributes = {TagId : req.query.TagId};
+    if (req.query.TagId) attributes = { TagId: req.query.TagId };
     selectKeywords(attributes)
-    .then(results =>
-      {
-        res.json({'Keywords': results})
-      }
-    )
-    .catch((error, data) => {
-      console.log(error, data);
-      res.send(error);
-    });
+      .then((results) => {
+        res.json({ Keywords: results });
+      })
+      .catch((error, data) => {
+        console.log(error, data);
+        res.send(error);
+      });
   },
 
   // Accepter les données du formulaire 'Ici keyword de mots';
-  keywordPost : function(req, res, next){
-
+  keywordPost(req, res) {
     console.log('req.body: ', req.body);
 
     // let dataToWrite = {tags:[{text:'test1', TagId:1}]};
     // let dataToWrite = {tags : [{text:'test1', TagId:1},{text:'toto1', TagId:1}]};
-    let dataToWrite = req.body;
+    const dataToWrite = req.body;
     console.log('dataToWrite.keywords: ', dataToWrite.keywords);
 
     // build an array of keywords to create or update
-    let keywordsToFind = dataToWrite.keywords.map(keyword => keyword.text);
+    const keywordsToFind = dataToWrite.keywords.map(keyword => keyword.text);
     console.log('keywordsToFind: ', keywordsToFind);
 
 
@@ -48,13 +45,13 @@ var Keywords = {
 
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
     Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
-    .then(results => {
-      console.log('bulkCreateOrUpdate results: ', results);
-      models.Keyword
-      .findAll()
-      .then(findResults => res.status(200).json({keywords : findResults}))
-    })
-    .catch(err => res.status(501).send(err));
+      .then((results) => {
+        console.log('bulkCreateOrUpdate results: ', results);
+        models.Keyword
+          .findAll()
+          .then(findResults => res.status(200).json({ keywords: findResults }));
+      })
+      .catch(err => res.status(501).send(err));
 
 
     // insert into - one keyword only
@@ -83,23 +80,17 @@ var Keywords = {
     //       res.json(data)
     //     }
     //   )
-
-
   },
 
-  //keywordDelete
-  keywordDelete: function(req, res, next) {
+  // keywordDelete
+  keywordDelete(req, res) {
     console.log(req.body);
 
     // insert into
-    models.Keyword.destroy(
-      {
-        where: {id: req.body.id}
-      }
-    )
-    .then(
-      res.status(200).send('delete ok')
-    )
+    models.Keyword.destroy({
+      where: { id: req.body.id },
+    })
+      .then(res.status(200).send('delete ok'));
   },
 
 };

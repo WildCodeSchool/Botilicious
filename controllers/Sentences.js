@@ -1,34 +1,31 @@
-const models = require("../models");
+const models = require('../models');
 const selectSentences = require('./modules/Sentences');
 
-var Sentences = {
+const Sentences = {
 
   // Obtenir la liste des phrases existantes
-  sentenceGet : function(req, res, next){
+  sentenceGet(req, res) {
     // console.log('Loading sentences');
-    selectSentence().then(results => res.json({'Sentences': results}));
+    selectSentences().then(results => res.json({ Sentences: results }));
   },
 
   // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
-  sentencePost : function(req, res, next){
+  sentencePost(req, res) {
     console.log(req.body);
 
     // insert into
-    models.Sentence.findOrCreate(
-      {
-        where: {
-          text: req.body.sentence,
-          type: req.body.type,
-          next : req.body.next
-        }
-      }
-    )
-    .spread(
-      (sentence, created) => {
+    models.Sentence.findOrCreate({
+      where: {
+        text: req.body.sentence,
+        type: req.body.type,
+        next: req.body.next,
+      },
+    })
+      .spread((sentence, created) => {
         // console.log('sentence: ', sentence.dataValues);
-        let data = {sentence};
+        const data = { sentence };
         // set the error key
-        if(created){
+        if (created) {
           data.error = false;
         } else {
           data.error = true;
@@ -36,26 +33,19 @@ var Sentences = {
         }
 
         // send back the new sentence to the browser
-        res.json(data)
-      }
-    );
-
-   
+        res.json(data);
+      });
   },
 
-  //sentenceDelete
-  sentenceDelete: function(req, res, next) {
+  // sentenceDelete
+  sentenceDelete(req, res) {
     console.log(req.body);
 
     // insert into
-    models.Sentence.destroy(
-      {
-        where: {id: req.body.id}
-      }
-    )
-    .then(
-      res.status(200).send('delete ok')
-    )
+    models.Sentence.destroy({
+      where: { id: req.body.id },
+    })
+      .then(res.status(200).send('delete ok'));
   },
 
 };

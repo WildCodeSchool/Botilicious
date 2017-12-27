@@ -1,25 +1,27 @@
-const models = require("../../models");
+const models = require('../../models');
 
-function selectSentences(id){
-  return new Promise(function(resolve, reject) {
-    let records = [];
+function selectSentences(id) {
+  return new Promise(((resolve, reject) => {
+    const records = [];
     let myparams = {};
 
-    if (id){
-      myparams = {where : {id : id}}
+    if (id) {
+      myparams = { where: { id } };
     }
     console.log('myparams', myparams);
     models.Sentence
-    .findAll(myparams)
+      .findAll(myparams)
     // query ok
-    .then(results => {
+      .then((results) => {
       // console.log(results);
-      results.map((result, i) => {
-        records[i] = result.dataValues;
+        results.map((result, i) => {
+          records[i] = result.dataValues;
+          // ESLint demande de renvoyer une valeur
+          return i;
+        });
+        resolve(records);
       });
-      resolve(records);
-    });
-  });
-};
+  }));
+}
 
 module.exports = selectSentences;
