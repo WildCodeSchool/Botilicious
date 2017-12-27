@@ -13,12 +13,11 @@ block content
     button#parler Parler
     br
     div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
-      p Le testeur de chatbot :    
     br
     br
   .tagwindow
     h2 Ici tag de mots
-    button#sentencetag Tag the sentence
+    button#sentencetag Tag des mots listés
     table#wordsToTag(style="width:400px;border:1px solid black")
       tr#headers
         th Mot
@@ -29,6 +28,7 @@ block content
     select#sentenceType(name='sentenceType')
       option(value='question') Question
       option(value='answer') Answer
+    input#sentenceInputNext(type="text" size="20")
     br
     button#addSentence Ajouter la phrase
     div#servermessage
@@ -38,18 +38,71 @@ block content
         th Phrases
         th Type
         th id
+        th next
         th Action
       each sentence in sentences
         tr(id='sentence' +sentence.id)
           td(id='sentencetext' +sentence.id)= sentence.text
           td= sentence.type
           td= sentence.id
+          td(id='sentencenext' +sentence.id)= sentence.next
           td
-            button(id='delete' +sentence.id) Delete
-            button(id='duplicate' +sentence.id) Duplicate
-            button(id='tag' +sentence.id) Tag words
+            button(id='deletesentence' +sentence.id) Supprimer
+            button(id='duplicate' +sentence.id) Dupliquer
+            button(id='tag' +sentence.id) Tag sur les mots
     br
+  .edittags
+    h2 Edition des tags
+    input#tag(type="text" name="tag" size="60")
+    button#addtag Ajouter le tag
+    div#servermessagetag
+    br
+    table#tags(style="width:600px;border:1px solid black")
+      tr
+        th Tags
+        th id
+        th Action
+      each tag in tags
+        tr(id='tag' +tag.id)
+          td(id='tagtext' +tag.id)= tag.text
+          td= tag.id
+          td
+            button(id='deletetag' +tag.id) Supprimer
+            button(id='listkeywords' +tag.id) Liste des mots-clés
+  .listkeywords
+    h2 Liste des keywords associés à un tag
+    div#servermessagelistkeyword
+    br
+    table#listkeywords(style="width:600px;border:1px solid black")
+      tr
+        th Keywords
+        th Tag
+    
+  .editkeywords
+    h2 Edition des keywords
+    //- button#gettags Get tags
+    input#keyword(type="text" name="keyword" size="60")
+    select#KeywordTag(name='KeywordTag')
+      each tag in tags
+        option(value=tag.text)= tag.text
+    button#addkeyword Ajouter le keyword
+    div#servermessagekeyword
+    br
+    table#keywords(style="width:600px;border:1px solid black")
+      tr
+        th Keywords
+        th Tag
+        th Action
+      each keyword in keywords
+        tr(id='keyword' +keyword.id)
+          td(id='keywordtext' +keyword.id)= keyword.text
+          input(type='hidden' value=keyword.TagId)
+          td!= keyword.tag
+          td
+            button(id='deletekeyword' +keyword.id) Supprimer
   section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/chat.js')
   script(type='text/javascript', src='/js/sentences.js')
+  script(type='text/javascript', src='/js/tags.js')
+  script(type='text/javascript', src='/js/keywords.js')
