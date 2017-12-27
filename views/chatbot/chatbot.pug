@@ -13,7 +13,6 @@ block content
     button#parler Parler
     br
     div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
-      p Le testeur de chatbot :    
     br
     br
   .tagwindow
@@ -28,7 +27,8 @@ block content
     input#sentence(type="text" name="sentence" size="60")
     select#sentenceType(name='sentenceType')
       option(value='question') Question
-      option(value='answer') Réponse
+      option(value='answer') Answer
+    input#sentenceInputNext(type="text" size="20")
     br
     button#addSentence Ajouter la phrase
     div#servermessage
@@ -38,12 +38,14 @@ block content
         th Phrases
         th Type
         th id
+        th next
         th Action
       each sentence in sentences
         tr(id='sentence' +sentence.id)
           td(id='sentencetext' +sentence.id)= sentence.text
           td= sentence.type
           td= sentence.id
+          td(id='sentencenext' +sentence.id)= sentence.next
           td
             button(id='deletesentence' +sentence.id) Supprimer
             button(id='duplicate' +sentence.id) Dupliquer

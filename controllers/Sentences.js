@@ -11,14 +11,15 @@ var Sentences = {
 
   // Accepter les données du formulaire 'Nouvelles phrases' ===> router.post('/pattern', patterns.pattern);
   sentencePost : function(req, res, next){
-    // console.log(req.body);
+    console.log(req.body);
 
     // insert into
     models.Sentence.findOrCreate(
       {
         where: {
           text: req.body.sentence,
-          type: req.body.type
+          type: req.body.type,
+          next : req.body.next
         }
       }
     )
@@ -37,7 +38,9 @@ var Sentences = {
         // send back the new sentence to the browser
         res.json(data)
       }
-    )
+    );
+
+   
   },
 
   //sentenceDelete

@@ -1,33 +1,41 @@
 {
-  "name": "toto",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & sequelize db:seed:all & node ./bin/www ; opn http://localhost:3000",
-    "start": "node ./bin/www ; opn http://localhost:3000"
-  },
-  "dependencies": {
-    "bcrypt": "^1.0.3",
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "express-session": "^1.15.6",
-    "faker": "^4.1.0",
-    "lodash": "^4.17.4",
-    "morgan": "~1.8.1",
-    "mysql": "^2.15.0",
-    "mysql2": "^1.5.1",
-    "nodemailer": "^4.4.0",
-    "opn-cli": "^3.1.0",
-    "pug": "~2.0.0-beta11",
-    "request": "^2.83.0",
-    "sequelize": "^4.22.11",
-    "sequelize-cli": "^3.1.0",
-    "serve-favicon": "~2.4.2",
-    "session-file-store": "^1.1.2",
-    "sqlite3": "^3.1.13",
-    "uuid": "^3.1.0",
-    "validator": "^9.1.1"
-  }
+    "name": "Botilicious",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & node ./bin/www ; opn http://localhost:3001",
+        "start": "node ./bin/www ; opn http://localhost:3001",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "bcrypt": "^1.0.3",
+        "body-parser": "~1.17.1",
+        "cookie-parser": "~1.4.3",
+        "debug": "~2.6.3",
+        "express": "~4.15.2",
+        "express-session": "^1.15.6",
+        "faker": "^4.1.0",
+        "lodash": "^4.17.4",
+        "morgan": "~1.8.1",
+        "mysql": "^2.15.0",
+        "mysql2": "^1.5.1",
+        "nodemailer": "^4.4.0",
+        "opn-cli": "^3.1.0",
+        "pug": "~2.0.0-beta11",
+        "request": "^2.83.0",
+        "sequelize": "^4.22.11",
+        "sequelize-cli": "^3.1.0",
+        "serve-favicon": "~2.4.2",
+        "session-file-store": "^1.1.2",
+        "sqlite3": "^3.1.13",
+        "uuid": "^3.1.0",
+        "validator": "^9.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^4.13.1",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-plugin-import": "^2.8.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-react": "^7.5.1"
+    }
 }
