@@ -6,9 +6,11 @@ class SelectTag extends Component {
         super(props);
 
         this.state = {
-            selectedOption: 'option 1',
+            selectedOption: '',
 
         };
+        // this.handleOptionChange = this.handleOptionChange.bind(this);
+        // this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     handleOptionChange = (changeEvent) => {
@@ -51,14 +53,12 @@ class SelectTag extends Component {
 
             <form onSubmit={this.handleFormSubmit}>
               
-                <button type="button" value="option 1" onClick={this.state.selectedOption === 'option 1'} onChange={this.handleOptionChange}></button>
+                <button type="button" value="option1" onClick={this.state.selectedOption === 'option1'} onChange={this.handleOptionChange}>option1</button>
                  
-                <button type="button" value="option 2" onClick={this.state.selectedOption === 'option 2'} onChange={this.handleOptionChange}></button>
-                       
-                
-                   
-                <button type="button" value="option 3" onClick={this.state.selectedOption === 'option 3'} onChange={this.handleOptionChange}></button>
-
+                <button type="button" value="option2" onClick={this.state.selectedOption === 'option2'} onChange={this.handleOptionChange}>option2</button>
+                <div>           
+                    <button type="select" value="option3" onClick={this.state.selectedOption} onChange={this.handleOptionChange}>option3</button>
+                </div>
                     
                
                 <button type="submit">Save</button>
