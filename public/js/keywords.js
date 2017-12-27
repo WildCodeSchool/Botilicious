@@ -1,78 +1,77 @@
 /* delete sur une phrase : requête http en delete, puis effacer la ligne
 du tableau dans la page */
-function DeleteKeyword(){
+function DeleteKeyword() {
   // console.log('event :', button);
   // let clickedButtonId = button.id.substr(13);
   console.log(this);
-  let clickedButtonId = $(this).attr('id').substr(13);
+  const clickedButtonId = $(this).attr('id').substr(13);
   console.log(clickedButtonId);
   $.ajax({
-    url: "/admin/keyword",
-    method: "DELETE",
-    data: {id : clickedButtonId},
+    url: '/admin/keyword',
+    method: 'DELETE',
+    data: { id: clickedButtonId },
   })
-  .done(function(){
-    console.log('to delete: ', clickedButtonId);
-    // console.log(msg);
-    $('#keyword'+clickedButtonId).remove();
-  })
-  .fail(function(){
-    console.log('not deleted: there was an error');
-  });
-};
+    .done(() => {
+      console.log('to delete: ', clickedButtonId);
+      // console.log(msg);
+      $(`#keyword${clickedButtonId}`).remove();
+    })
+    .fail(() => {
+      console.log('not deleted: there was an error');
+    });
+}
 
 
 // get all tags (or only one with ?id=x)
-function GetTags(TagId){
-  return new Promise(function(resolve, reject) {
+function GetTags(TagId) {
+  return new Promise(((resolve, reject) => {
     let myquery;
-    TagId ? myquery = '?id='+TagId : myquery = '';
+    TagId ? myquery = `?id=${TagId}` : myquery = '';
 
-    $.get('/admin/tag'+myquery)
-    .done(data => {
+    $.get(`/admin/tag${myquery}`)
+      .done((data) => {
       // console.log(data);
       // console.log($('#KeywordTag').html());
-      resolve(data);
-    })
-  })
+        resolve(data);
+      });
+  }));
 }
 
 $('#keyword').focus(() =>
-GetTags().then(data => {
-  $('#KeywordTag').empty();
-  // console.log(data);
-  for (let i = 0; i < data.Tags.length; i++) {
+  GetTags().then((data) => {
+    $('#KeywordTag').empty();
+    // console.log(data);
+    for (let i = 0; i < data.Tags.length; i++) {
     // console.log(data.Tags[i]);
-    $('#KeywordTag').append('<option value="'+data.Tags[i].id+'">'+data.Tags[i].text+'</option>')
-  }
-})
-);
+      $('#KeywordTag').append(`<option value="${data.Tags[i].id}">${data.Tags[i].text}</option>`);
+    }
+  }));
 
 
 // Add a keyword
-$('#addkeyword').click(function(){
-  let datatopost =   JSON.stringify({
-      keywords : [
-        {
-          text : $('#keyword').val(),
-          TagId : $('#KeywordTag').val()
-        }
-      ]
-    });
+$('#addkeyword').click(() => {
+  const datatopost = JSON.stringify({
+    keywords: [
+      {
+        text: $('#keyword').val(),
+        TagId: $('#KeywordTag').val(),
+      },
+    ],
+  });
   $.ajax({
-    method : 'POST',
-    url : '/admin/keyword',
-    data : datatopost,
+    method: 'POST',
+    url: '/admin/keyword',
+    data: datatopost,
     // processData : false,
-    contentType: "application/json; charset=utf-8",
-    dataType : 'json'
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
   })
-  .done((data, status) => {
-    console.log('data: ', data);
-    console.log('status: ', status);
+    .done((data, status) => {
+      console.log('data: ', data);
+      console.log('status: ', status);
 
-    // refresh, to be deleted later
-    location.reload();
+      // refresh, to be deleted later
+      location.reload();
 
     // $('#servermessagekeyword').empty();
     // if (!data.error){
@@ -88,7 +87,7 @@ $('#addkeyword').click(function(){
     // } else {
     //   $('#servermessagekeyword').append(data.serverMessage).append('. Connection status: '+status);
     // }
-  });
+    });
 });
 
 // Delete a keyword

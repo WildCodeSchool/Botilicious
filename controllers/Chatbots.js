@@ -1,101 +1,92 @@
-const request = require('request');
-const models = require("../models");
+const models = require('../models');
 const selectSentences = require('./modules/Sentences');
 const selectKeywords = require('./modules/Keywords');
 const selectTags = require('./modules/Tags');
 
 
-var Chatbots = {
+const Chatbots = {
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
-  index: function (req, res) {
+  index(req, res) {
     res.render('chatbot/chatbot');
   },
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
-  chatbotGet: function(req, res, next){
-
+  chatbotGet(req, res) {
     // console.log(selectSentences());
-    Promise.all([selectSentences(),selectKeywords(),selectTags()])
-    .then(
-      results => {
+    Promise.all([selectSentences(), selectKeywords(), selectTags()])
+      .then((results) => {
         console.log('keywords found: ', results[1]);
-        res.render('chatbot/chatbot', {'sentences':results[0], 'keywords':results[1], 'tags':results[2]});
-      }
-    )
-    .catch(
-      (error) => console.log(error)
-    );
+        res.render('chatbot/chatbot', { sentences: results[0], keywords: results[1], tags: results[2] });
+      })
+      .catch(error => console.log(error));
 
     // res.send('sentences ok');
     // res.end();
   },
 
   // Accepter les données du formulaire 'Nouveau Chatbot' ===> router.post('/configchat', configchats.configchatEnBdd);
-  chatbotPost: function (req, res, next) {
-    let nom = req.body.name;
+  chatbotPost(req, res) {
+    const nom = req.body.name;
 
-    models.chatbot.create(
-      {
-        name: nom
-      }
-    );
+    models.chatbot.create({
+      name: nom,
+    });
 
     res.send('Nouveau bot ok');
   },
 
   // route GET '/chatbot/message' -- liste des messages d'une conversation
-  messageGet: function (req, res, next) {
-    console.log("toto");
+  messageGet(req, res) {
+    console.log('toto');
     res.json([
       {
         id: 1,
-        username: "samsepi0l"
+        username: 'samsepi0l',
       },
 
       {
         id: 2,
-        username: "D0loresH4ze"
-      }
+        username: 'D0loresH4ze',
+      },
     ]);
-
   },
 
   // route POST '/chatbot/message' -- soumission d'un message dans la boite de dialogue du chatbot
-  messagePost: function(req, res, next) {
-   console.log(req.body.message);
+  messagePost(req, res) {
+    console.log(req.body.message);
     // let message = req.body.message.split(' ');
 
-     /**
+    /**
      * méthode sequelize pour trouver des données de la bdd et qui retourne un model
      * test si cest une question pour renvoyer une reponse
      */
 
-    models.Sentence.findOne ({
-      where : { text : req.body.message }
-     })
+    models.Sentence.findOne({
+      where: { text: req.body.message },
+    })
 
-     /**
+    /**
       * fonction qui permet de renvoyer une seule réponse (dans le network de la console du navigateur)
       * lorsqu'une string de type question est écrite dans le chat. Il faut utiliser un models.sentence.findOne({ })
       * models.Sentence.findOne ({ })1
       */
-    .then(response => {
+      .then((response) => {
       // console.log('response',response);
-      models.Sentence.findOne({
-        where : { id : response.dataValues.next}
-      })
-      .then(answer => {
-       // console.log('answer',answer)
+        models.Sentence.findOne({
+          where: { id: response.dataValues.next },
+        })
+          .then((answer) => {
+            // console.log('answer',answer)
 
-       let jsontostring = {answer : answer.dataValues.text,
-                           text : req.body.message}
-      res.json(jsontostring)
-
-      })
-
-    })
-//let rand = [Math.floor(Math.random()*res.length)];
+            const jsontostring = {
+              answer: answer.dataValues.text,
+              text: req.body.message,
+            };
+            res.json(jsontostring);
+          });
+      });
+    // let rand = [Math.floor(Math.random()*res.length)];
 
     // let time;
     // let errorsyntaxe;

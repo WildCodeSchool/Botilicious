@@ -1,19 +1,20 @@
 const express = require('express');
+
 const router = express.Router();
 // const models = require("../models");
 
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles pré-connexion */
 
 // permet de faire la liaison avec les controlleurs
-var Indexes = require('../controllers/Indexes');
-var Users = require('../controllers/Users');
+const Indexes = require('../controllers/Indexes');
+const Users = require('../controllers/Users');
 
 /* GET Affichage de la page d'erreur 404 */
 router.get('/error404', Indexes.error404);
 
 
 /* GET Affichage de la page d'inscription avec le formulaire */
-router.get('/',  Indexes.indexGet);
+router.get('/', Indexes.indexGet);
 
 /* POST Prise en compte des informations d'inscription qui fonctionne avec la bdd yeah */
 router.post('/', Indexes.indexPost);
@@ -29,7 +30,7 @@ res.redirect('/confirmationinscription');
 }); */
 
 
-/* Envoie d'un email sur MailTrap depuis la route suivante*/
+/* Envoie d'un email sur MailTrap depuis la route suivante */
 router.post('/email', Indexes.emailPost);
 
 

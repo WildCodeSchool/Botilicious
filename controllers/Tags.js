@@ -1,29 +1,27 @@
-const models = require("../models");
+const models = require('../models');
 const selectTags = require('./modules/Tags');
 
-var Tags = {
+const Tags = {
 
   // Obtenir la liste des tags existants
-  tagGet : function(req, res, next){
+  tagGet(req, res) {
     // console.log('Loading tags');
     console.log('req.query: ', req.query);
     let myquery;
     req.query.id ? myquery = req.query.id : myquery = '';
-    selectTags(myquery).then(results => {
+    selectTags(myquery).then((results) => {
       console.log('mytags: ', results);
-      res.json({'Tags': results})
-  });
+      res.json({ Tags: results });
+    });
   },
 
   // Accepter les données du formulaire 'Ici tag de mots';
-  tagPost : function(req, res, next){
-
+  tagPost(req, res) {
     console.log('req.body: ', req.body);
 
-    if (req.body.length == 0 ) {
-      res.json({'error' : true});
+    if (req.body.length === 0) {
+      res.json({ error: true });
     } else {
-
       // {
       //   where: {
       //     authorId: {
@@ -33,19 +31,16 @@ var Tags = {
       // }
 
       // insert into
-      models.Tag.findOrCreate(
-        {
-          where: {
-            text: req.body.text,
-          }
-        }
-      )
-      .spread(
-        (tags, created) => {
+      models.Tag.findOrCreate({
+        where: {
+          text: req.body.text,
+        },
+      })
+        .spread((tags, created) => {
           // console.log('tags: ', tags.dataValues);
-          let data = {tags};
+          const data = { tags };
           // set the error key
-          if(created){
+          if (created) {
             data.error = false;
           } else {
             data.error = true;
@@ -53,27 +48,22 @@ var Tags = {
           }
 
           // send back the new tags to the browser
-          res.json(data)
-        }
-      )
+          res.json(data);
+        });
       // fin insert into
     }
     // res.end()
   },
 
-  //keywordDelete
-  tagDelete: function(req, res, next) {
+  // keywordDelete
+  tagDelete(req, res) {
     console.log(req.body);
 
     // insert into
-    models.Tag.destroy(
-      {
-        where: {id: req.body.id}
-      }
-    )
-    .then(
-      res.status(200).send('delete ok')
-    )
+    models.Tag.destroy({
+      where: { id: req.body.id },
+    })
+      .then(res.status(200).send('delete ok'));
   },
 
 

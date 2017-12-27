@@ -1,20 +1,18 @@
-const models = require("../models");
+const models = require('../models');
 
-var Modules = {
+const Modules = {
 
   // Accepter les données du formulaire 'Nouveau Modules' ===> router.post('/modules', addModules.modulesEnBdd);
-  modulePost : function(req, res, next){
-    let nom = req.body.name;
-    let desc = req.body.description;
-    let url = req.body.apiurl;
+  modulePost(req, res) {
+    const nom = req.body.name;
+    const desc = req.body.description;
+    const url = req.body.apiurl;
 
-    models.module.create(
-      {
-        name : nom,
-        description : desc,
-        apiurl : url
-      }
-    );
+    models.module.create({
+      name: nom,
+      description: desc,
+      apiurl: url,
+    });
   },
 };
 
