@@ -43,15 +43,15 @@ app.use(Session({
 app.use('/', index);
 
 
-// app.use('/admin', function (req, res, next) {
-//   // console.log(req.session);
+app.use('/admin', function (req, res, next) {
+  console.log(req.session);
 
-//   if (req.session.connected){
-//     return next();
-//   } else {
-//     return res.redirect('/');
-//   }
-// });
+  if (req.session.connected){
+    return next();
+  } else {
+    return res.redirect('/');
+  }
+});
 app.use('/admin', admin);
 
 
