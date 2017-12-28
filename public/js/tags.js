@@ -56,6 +56,7 @@ $('#addtag').click(() => {
         $(`#listkeywords${data.tags.id}`).click(ListKeywords);
         console.log('');
       } else {
+        $('#servermessagetag').empty();
         $('#servermessagetag').append(data.serverMessageTag).append(`. Connection status: ${status}`);
       }
     },

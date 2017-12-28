@@ -31,11 +31,6 @@ const Users = {
       console.log(error);
       res.render('index/login', { error });
     } else {
-      // res.redirect('admin/chatbot');
-
-
-      console.log('login en cours');
-      // console.log(req.body);
       const myparams = {
         email: req.body.email,
         password: req.body.motdepasse,
@@ -55,7 +50,7 @@ const Users = {
             // inscrire l'id de l'utilisateur dans req.session
             req.session.userId = results.id;
             console.log(req.session);
-            res.redirect('/admin/chatbot');
+            res.redirect('/admin/chatbotEdit');
           }
         });
     }

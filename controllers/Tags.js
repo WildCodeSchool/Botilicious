@@ -1,5 +1,5 @@
 const models = require('../models');
-const selectTags = require('./modules/Tags');
+const getTags = require('./modules/Tags');
 
 const Tags = {
 
@@ -7,9 +7,11 @@ const Tags = {
   tagGet(req, res) {
     // console.log('Loading tags');
     console.log('req.query: ', req.query);
-    let myquery;
-    req.query.id ? myquery = req.query.id : myquery = '';
-    selectTags(myquery).then((results) => {
+    let attributes;
+    if (req.query.id) {
+      attributes = { id: req.query.id };
+    }
+    getTags(attributes).then((results) => {
       console.log('mytags: ', results);
       res.json({ Tags: results });
     });
@@ -19,8 +21,8 @@ const Tags = {
   tagPost(req, res) {
     console.log('req.body: ', req.body);
 
-    if (req.body.length === 0) {
-      res.json({ error: true });
+    if (!req.body.text) {
+      res.json({ serverMessageTag: 'Error, tags length is 0', error: true });
     } else {
       // {
       //   where: {
@@ -44,7 +46,7 @@ const Tags = {
             data.error = false;
           } else {
             data.error = true;
-            data.serverMessage = 'Error, tags not added - Already there or database error';
+            data.serverMessageTag = 'Error, tags not added - Already there or database error';
           }
 
           // send back the new tags to the browser
@@ -59,11 +61,11 @@ const Tags = {
   tagDelete(req, res) {
     console.log(req.body);
 
-    // insert into
+    // delete
     models.Tag.destroy({
       where: { id: req.body.id },
     })
-      .then(res.status(200).send('delete ok'));
+      .then(res.status(200).json({ servermessage: 'delete ok' }));
   },
 
 

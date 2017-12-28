@@ -3,10 +3,14 @@ module.exports = (sequelize, DataTypes) => {
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
     },
     firstname: DataTypes.STRING,
     name: DataTypes.STRING,
-    email: { type: DataTypes.STRING, unique: true },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
     password: DataTypes.STRING,
     dateofbirth: DataTypes.STRING,
     address: DataTypes.STRING,

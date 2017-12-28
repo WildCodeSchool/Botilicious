@@ -6,7 +6,13 @@ module.exports = {
   up : function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Tags', [{
       uuid: uuidv4(),
-      text: faker.name.firstName(),
+      text: 'time',
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent()
+    },
+    {
+      uuid: uuidv4(),
+      text: 'place',
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
     }], {});

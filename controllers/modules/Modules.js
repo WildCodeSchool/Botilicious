@@ -1,19 +1,19 @@
 const models = require('../../models');
 
-function getSentences(id) {
+function getModules(id) {
   return new Promise(((resolve, reject) => {
-    const records = [];
     let myparams = {};
 
     if (id) {
       myparams = { where: { id } };
     }
     console.log('myparams', myparams);
-    models.Sentence
+    models.Module
       .findAll(myparams)
     // query ok
       .then((results) => {
       // console.log(results);
+        const records = [];
         results.map((result, i) => {
           records[i] = result.dataValues;
           // ESLint demande de renvoyer une valeur
@@ -24,4 +24,4 @@ function getSentences(id) {
   }));
 }
 
-module.exports = getSentences;
+module.exports = getModules;

@@ -1,6 +1,6 @@
 const models = require('../../models');
 
-function selectKeywords(where) {
+function getKeywords(where) {
   return new Promise(((resolve, reject) => {
     const myparams = {
       include: [models.Tag],
@@ -14,7 +14,7 @@ function selectKeywords(where) {
       .findAll(myparams)
     // query ok
       .then((results) => {
-      // console.log(results);
+      console.log('Keyword results: ', results);
         const records = [];
         if (results.length > 0) {
           results.map((result, i) => {
@@ -35,4 +35,4 @@ function selectKeywords(where) {
   }));
 }
 
-module.exports = selectKeywords;
+module.exports = getKeywords;

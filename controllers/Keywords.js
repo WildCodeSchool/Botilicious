@@ -1,5 +1,5 @@
 const models = require('../models');
-const selectKeywords = require('./modules/Keywords');
+const getKeywords = require('./modules/Keywords');
 const bulkCreateOrUpdate = require('./modules/bulkCreateOrUpdate');
 
 const Keywords = {
@@ -9,8 +9,10 @@ const Keywords = {
     console.log(req.body);
     console.log(req.query);
     let attributes;
-    if (req.query.TagId) attributes = { TagId: req.query.TagId };
-    selectKeywords(attributes)
+    if (req.query.TagId) {
+      attributes = { TagId: req.query.TagId };
+    }
+    getKeywords(attributes)
       .then((results) => {
         res.json({ Keywords: results });
       })
@@ -43,16 +45,19 @@ const Keywords = {
     // insert into or update - several keywords in bulk
     // Parallel promises, an array as parameter
 
+    if (!dataToWrite.keywords[0].text) {
+      res.json({ serverMessageTag: 'Error, no keyword to add', error: true });
+    } else {
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
-    Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
-      .then((results) => {
-        console.log('bulkCreateOrUpdate results: ', results);
-        models.Keyword
-          .findAll()
-          .then(findResults => res.status(200).json({ keywords: findResults }));
-      })
-      .catch(err => res.status(501).send(err));
-
+      Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
+        .then((results) => {
+          console.log('bulkCreateOrUpdate results: ', results);
+          models.Keyword
+            .findAll()
+            .then(findResults => res.status(200).json({ keywords: findResults }));
+        })
+        .catch(err => res.status(501).send(err));
+    }
 
     // insert into - one keyword only
 
@@ -86,11 +91,11 @@ const Keywords = {
   keywordDelete(req, res) {
     console.log(req.body);
 
-    // insert into
+    // delete
     models.Keyword.destroy({
       where: { id: req.body.id },
     })
-      .then(res.status(200).send('delete ok'));
+      .then(res.status(200).json({ servermessage: 'delete ok' }));
   },
 
 };

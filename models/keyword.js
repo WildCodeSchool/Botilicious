@@ -3,8 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
     },
-    text: { type: DataTypes.STRING, unique: true },
+    text: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
   });
 
   Keyword.associate = function (models) {

@@ -4,7 +4,7 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
   up : function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('users', [{
+    return queryInterface.bulkInsert('Users', [{
       uuid: uuidv4(),
       firstname: faker.name.firstName(),
       name: faker.name.lastName(),

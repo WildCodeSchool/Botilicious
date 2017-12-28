@@ -1,0 +1,111 @@
+extends ../layout
+
+block content
+  a(href="/" class="btn orange") Retour à l'accueil
+  a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
+  a(href="/admin/module" class="btn gris") Gestion Module
+  .chatwindow
+    h2 Vous êtes sur la page de configuration de votre nouveau chatbot
+    br
+    p input : ville nombre_de_jours nombre_d_heures
+    p (max 4 21)
+    br
+    input#message(type="text" name="message")
+    br
+    button#parler Parler
+    br
+    div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
+    br
+    br
+  .tagwindow
+    h2 Ici tag de mots
+    button#sentencetag Tag des mots listés
+    div#serverMessageSentenceTagging
+    table#wordsToTag(style="width:400px;border:1px solid black")
+      tr#headers
+        th Mot
+        th Tag
+  .sentencewindow
+    h2 Liste des phrases
+    input#sentence(type="text" name="sentence" size="60")
+    select#sentenceType(name='sentenceType')
+      option(value='question') Question
+      option(value='answer') Answer
+    input#sentenceInputNext(type="text" size="20")
+    br
+    button#addSentence Ajouter la phrase
+    div#servermessage
+    br
+    table#sentences(style="width:800px;border:1px solid black")
+      tr
+        th Phrases
+        th Type
+        th id
+        th next
+        th Action
+      each sentence in sentences
+        tr(id='sentence' +sentence.id)
+          td(id='sentencetext' +sentence.id)= sentence.text
+          td= sentence.type
+          td= sentence.id
+          td(id='sentencenext' +sentence.id)= sentence.next
+          td
+            button(id='deletesentence' +sentence.id) Supprimer
+            button(id='duplicate' +sentence.id) Dupliquer
+            button(id='tag' +sentence.id) Tag sur les mots
+    br
+  .edittags
+    h2 Edition des tags
+    input#tag(type="text" name="tag" size="60")
+    button#addtag Ajouter le tag
+    div#servermessagetag
+    br
+    table#tags(style="width:600px;border:1px solid black")
+      tr
+        th Tags
+        th id
+        th Action
+      each tag in tags
+        tr(id='tag' +tag.id)
+          td(id='tagtext' +tag.id)= tag.text
+          td= tag.id
+          td
+            button(id='deletetag' +tag.id) Supprimer
+            button(id='listkeywords' +tag.id) Liste des mots-clés
+  .listkeywords
+    h2 Liste des keywords associés à un tag
+    div#servermessagelistkeyword
+    br
+    table#listkeywords(style="width:600px;border:1px solid black")
+      tr
+        th Keywords
+        th Tag
+    
+  .editkeywords
+    h2 Edition des keywords
+    //- button#gettags Get tags
+    input#keyword(type="text" name="keyword" size="60")
+    select#KeywordTag(name='KeywordTag')
+      each tag in tags
+        option(value=tag.text)= tag.text
+    button#addkeyword Ajouter le keyword
+    div#servermessagekeyword
+    br
+    table#keywords(style="width:600px;border:1px solid black")
+      tr
+        th Keywords
+        th Tag
+        th Action
+      each keyword in keywords
+        tr(id='keyword' +keyword.id)
+          td(id='keywordtext' +keyword.id)= keyword.text
+          input(type='hidden' value=keyword.TagId)
+          td!= keyword.tag
+          td
+            button(id='deletekeyword' +keyword.id) Supprimer
+  section.secgris
+  script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(type='text/javascript', src='/js/chat.js')
+  script(type='text/javascript', src='/js/sentences.js')
+  script(type='text/javascript', src='/js/tags.js')
+  script(type='text/javascript', src='/js/keywords.js')
