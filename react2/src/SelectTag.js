@@ -6,7 +6,7 @@ class SelectTag extends Component {
         super(props);
 
         this.state = {
-            selectedOption: 'option1',
+            selectedOption: 'null',
         };
     }
 
@@ -26,30 +26,35 @@ class SelectTag extends Component {
     render() {
         return (
 
-            <form onSubmit={this.handleFormSubmit}>
 
+
+            <form onSubmit={this.handleFormSubmit}>
                 <label>
-                    <input type="radio" value="weather" checked={this.state.selectedOption === 'weather'} onChange={this.handleOptionChange} /> 
+                    <input type="radio" value="weather" checked={this.state.selectedOption === 'weather'} onChange={this.handleOptionChange} />
                     Weather
                 </label>
 
                 <label>
-                  <input type="radio" value="city" checked={this.state.selectedOption === 'city'} onChange={this.handleOptionChange}/>
-                  City
+                    <input type="radio" value="city" checked={this.state.selectedOption === 'city'} onChange={this.handleOptionChange} />
+                    City
                 </label>
 
                 <label>
-                  <input type="radio" value="null" checked={this.state.selectedOption === 'null'} onChange={this.handleOptionChange}/>
-                  Null
+                    <input type="radio" value="null" checked={this.state.selectedOption === 'null'} onChange={this.handleOptionChange} />
+                    Null
                 </label>
 
                 <button type="submit">Save</button>
-
             </form>
+
+
 
         );
     }
 
 }
+
+
+
 
 export default SelectTag;

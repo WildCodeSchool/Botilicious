@@ -4,36 +4,46 @@ import SelectTag from './SelectTag';
 
 const Split = props => (
 
-  <ul>
-    {
-      props.items.map((item, index, bouleen) => 
+  //  1 - SPLIT LA PHRASE EN MOTS PUIS REALISE UN MAP SUR CHAQUE MOTS
       
-      <li key={index}>
-      
-        {item}
-        
-        <SelectTag />
-
-      </li>)
-    }
+  //  2 - POUR CHAQUE MOTS LE MAP : CRÉER UN TABLEAU CONTEANT LE MOT EN QUESTION ET 
+  //      UN ENSEMBLE DE BOUTON RADIO POUR SELECTIONNER LE TAG SOUHAITÉ 
+  //      (cf.composant 'SelectTag')
 
     
+  <ul>
+    {
+      props.items.toString().split(" ").map((item, index) =>
+          
+          <table key={index}>
+
+            <tbody>
+              <tr>
+                
+                <td>
+                  {item} {/* MOT DE LA PHRASE  */}
+                </td>
+
+                <td>
+
+                  {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
+                  <SelectTag />
+
+                </td>
+
+              </tr>
+            </tbody>
+
+          </table>
+
+        )
+    }
+
+
   </ul>
-
-  // <ul>
-  //   {
-
-  //     props.items.toString().split(" ")
-  //     //props.items.split("")
-  //     //props.items.map(word => word.split().map((f) => <li>{f}</li>) )
-
-  //     // let output = sentences.map(e => e.split(' ').map(f => <span style= {style}> {f} </span>));
-  //   }
-  // </ul>
 
 );
 
-console.log(Split.props);
 
 
 export default Split;

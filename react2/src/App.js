@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import AddSentences from './AddSentences';
+// import TagAllWords from './TagAllWords';
 // Composant permettant d'afficher sur la page les phrases saisies sous forme de liste 
 import List from './List';
 import Split from './Split';
@@ -17,10 +19,6 @@ class App extends Component {
           the this.state.users.map from blowing up before the users are loaded. */
       users: [],
 
-      // Valeur de départ permettant l'ajout de phrases et le stockage de celles ci 
-      //sous forme de liste 
-      term: '',   //   term to store what we passing as a value to our input
-      items: [],  //   items to store every value which we passing to our todo list
     };
   }
 
@@ -31,13 +29,7 @@ class App extends Component {
       .then(users => {
         console.log(users);
         this.setState({ users })
-    })  
-  }
-  ///////// Evenements associés au champs input pour l'ajout de phrases //////////
-
-  // Stocke la valeur saisie par l'utilisateur dans 'term'
-  onChange = (event) => {
-    this.setState({ term: event.target.value });
+      })
   }
 
   // Lors de la soumission, affiche la phrase saisie sous forme 
@@ -52,9 +44,9 @@ class App extends Component {
     console.log("toto");
     console.log("this.state.items : ", this.state.items)
     console.log("term : ", this.state.term)
-    //alert(typeof this.state.items);
-    console.log("toString : ", this.state.items.toString().split(" "))   
-    
+
+    console.log("toString : ", this.state.items.toString().split(" "))
+
   }
 
 
@@ -70,18 +62,18 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
-        <form className="App" onSubmit={this.onSubmit}>
-          {/* CAHMPS INPUT POUR LA SAISIE DE PHRASES */}
-          <input value={this.state.term} onChange={this.onChange} />
-          <button>Submit</button>
-        </form>
+        {/* COMPOSANT QUI PERMET LA SAISIE DE PHRASE DANS UN CHAMPS INPUT */  }
+        <AddSentences />
 
+        {/* <TagAllWords /> */}
+
+        
         {/* COMPOSANT QUI PERMET L'AFFICHAGE DES PHRASES SOUS FORME DE LISTE EN DESSOUS DU INPUT */}
-        <List items={this.state.items} />
+        {/* <List items={this.state.items} /> */}
 
-      
-        <Split items={this.state.items.toString().split(" ")} />
-       
+        {/* COMPOSANT QUI PERMET DE SPLITTER LA PHRASE ET D'AFFICHER CHACUN DES MOTS EN DESSOUS */}
+        {/* <Split items={this.state.items.toString().split(" ")} /> */}
+
 
         {/* A VOIR SI JE PEUX RETIRER LES LIGNES CI DESSOUS : je ne sais pas 
         si la cohabitation des deux serveurs fonctionnera toujours */}
