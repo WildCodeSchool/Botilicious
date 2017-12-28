@@ -7,11 +7,13 @@ block content
     .containerform
       form#form(method="POST")
         if servermessage
-          p.warning= servermessage.error
+          p.warning= servermessage
         .form-group
           label(for='name') Nom du chatbot
-          input#name.form-control(required='', placeholder="Nom du chatbot" name="name")
-        button.btn.gris(type='submit') Créer le chatbot
+          input#chatbot.form-control(required='', placeholder="Nom du chatbot" name="name")
+        button#addchatbot.btn.gris(type='submit') Créer le chatbot
+      div#serverMessageChatbot
+
   section.chatbotsList
     table#chatbots(style="width:800px;border:1px solid black")
       tr
@@ -24,3 +26,5 @@ block content
           td= chatbot.id
           td
             button(id='deletechatbot' +chatbot.id) Supprimer
+  script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(type='text/javascript', src='/js/chatbot.js')

@@ -63,13 +63,33 @@ const Chatbots = {
   // Accepter les données du formulaire 'Nouveau Chatbot'
   chatbotPost(req, res) {
     console.log('body: ', req.body);
-    const nom = req.body.name;
 
-    models.chatbot.create({
-      name: nom,
-    });
+    if (!req.body.name) {
+      res.json({ servermessage: 'Error, name length is 0', error: true });
+    } else {
+      const name = req.body.name;
+      // insert into
+      models.Chatbot.findOrCreate({
+        where: {
+          name,
+        },
+      })
+        .spread((chatbot, created) => {
+          console.log('chatbot.dataValues: ', chatbot.dataValues);
+          console.log('chatbot: ', chatbot);
+          const data = { chatbot: chatbot.dataValues };
+          // set the error key
+          if (created) {
+            data.error = false;
+          } else {
+            data.error = true;
+            data.serverMessage = 'Error, chatbot not added - Already there or database error';
+          }
 
-    res.send('Nouveau bot ok');
+          // send back the new sentence to the browser
+          res.json(data);
+        });
+    }
   },
 
   // route GET '/admin/message' -- liste des messages d'une conversation

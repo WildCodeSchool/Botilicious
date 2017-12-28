@@ -13,7 +13,7 @@ const Modules = {
       })
       .catch((error, data) => {
         console.log(error, data);
-        res.render('module/module', { error: error });
+        res.render('module/module', { error });
       });
   },
 
@@ -37,15 +37,37 @@ const Modules = {
   // Accepter les données du formulaire 'Nouveau Modules'
   modulePost(req, res) {
     console.log('body: ', req.body);
-    const nom = req.body.name;
-    const desc = req.body.description;
-    const url = req.body.apiurl;
 
-    models.module.create({
-      name: nom,
-      description: desc,
-      apiurl: url,
-    });
+    if (!req.body.name) {
+      res.json({ servermessage: 'Error, name length is 0', error: true });
+    } else {
+      const name = req.body.name;
+      const description = req.body.description;
+      const apiurl = req.body.apiurl;
+      // insert into
+      models.Module.findOrCreate({
+        where: {
+          name,
+          description,
+          apiurl,
+        },
+      })
+        .spread((module, created) => {
+          console.log('module.dataValues: ', module.dataValues);
+          console.log('module: ', module);
+          const data = { module: module.dataValues };
+          // set the error key
+          if (created) {
+            data.error = false;
+          } else {
+            data.error = true;
+            data.serverMessage = 'Error, module not added - Already there or database error';
+          }
+
+          // send back the new sentence to the browser
+          res.json(data);
+        });
+    }
   },
 
   moduleDelete(req, res) {

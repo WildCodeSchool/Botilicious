@@ -7,17 +7,19 @@ block content
     .containerform
       form#form(method="POST")
         if servermessage
-          p.warning= servermessage.error
+          p.warning= servermessage
         .form-group
-          label(for='name') Nom du module
-          input#name.form-control(required='', placeholder="Nom du module" name="name")
+          label(for='module') Nom du module
+          input#module.form-control(required='', placeholder="Nom du module" name="name")
         .form-group
           label(for='description') Description
           input#description.form-control(required='', placeholder="Description" name="description")
         .form-group
-          label(for='url') URL d'une API
-          input#url.form-control(placeholder="URL d'une API" name="url")
-        button.btn.gris(type='submit') Créer le module
+          label(for='apiurl') URL d'une API
+          input#apiurl.form-control(placeholder="URL d'une API" name="apiurl")
+        button#addmodule.btn.gris(type='submit') Créer le module
+      div#serverMessageModule
+
   section.modulesList
     table#modules(style="width:800px;border:1px solid black")
       tr
@@ -34,3 +36,5 @@ block content
           td= module.description
           td
             button(id='deletemodule' +module.id) Supprimer
+  script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(type='text/javascript', src='/js/module.js')
