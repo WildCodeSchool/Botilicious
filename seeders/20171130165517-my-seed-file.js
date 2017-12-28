@@ -17,7 +17,8 @@ module.exports = {
       phone: faker.phone.phoneNumber(),
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
-    },{
+    },
+    {
       uuid: uuidv4(),
       firstname: 'Bob',
       name: 'Bob',

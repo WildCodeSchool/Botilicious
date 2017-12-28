@@ -31,30 +31,30 @@ const Users = {
       console.log(error);
       res.render('index/login', { error });
     } else {
-      req.session.connected = true;
-      res.redirect('admin/chatbotEdit');
+      const myparams = {
+        email: req.body.email,
+        password: req.body.motdepasse,
+      };
+      console.log(myparams);
+
+      models.User
+        .findOne({ where: myparams })
+        .then((results, status) => {
+          console.log('results: ', results);
+          console.log('status: ', status);
+          if (!results) {
+            console.log('error login');
+            res.redirect('/login');
+          } else {
+            req.session.connected = true;
+            // inscrire l'id de l'utilisateur dans req.session
+            req.session.userId = results.id;
+            console.log(req.session);
+            res.redirect('/admin/chatbotEdit');
+          }
+        });
     }
   },
-  /* console.log('login en cours');
-  console.log(req.body);
-  let login = req.body.email;
-  let pass = req.body.motdepasse;
-  console.log(login, pass); */
-
-  // requête sequelize sur la table Users
-  // connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
-  //   if (error) throw error;
-  //   if (results.length === 0) {
-  //     console.log('error login');
-  //     res.redirect('/connexion');
-  //   } else {
-  // req.session.connected = true;
-
-  // inscrire l'id de l'utilisateur dans req.session
-  // req.session.user = results[0].id;
-  // console.log(req.session);
-  // res.redirect('/main/');
-  // },
 
 
   // route GET '/admin/miseajour' -- Affichage de la page de mise à jour des infos personnelles
