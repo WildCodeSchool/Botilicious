@@ -15,10 +15,11 @@ const Users = {
 
   // route POST '/connexion' -- Prise en compte du login
   loginPost(req, res) {
+    // initalisation du tableau qui listera les erreurs
     const error = [];
-    console.log('bob');
+    console.log('login en cours');
     console.log(validator.isEmpty(req.body.email));
-    console.log('bob2');
+    // console.log('bob2');
     if (validator.isEmpty(req.body.email)) {
       error[0] = 'Merci de renseigner votre identifiant';
       console.log(error.length);
