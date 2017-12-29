@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 import AddSentences from './AddSentences';
-// import TagAllWords from './TagAllWords';
+
 // Composant permettant d'afficher sur la page les phrases saisies sous forme de liste 
-import List from './List';
-import Split from './Split';
+// import List from './List';
+// import Split from './Split';
 
 
 class App extends Component {
@@ -34,20 +34,20 @@ class App extends Component {
 
   // Lors de la soumission, affiche la phrase saisie sous forme 
   // de liste sous le champs input
-  onSubmit = (event) => {
-    event.preventDefault();
-    this.setState({
-      term: '',
-      items: [...this.state.items, this.state.term],
-      split: [...this.state.items.toString().split(" ")],
-    });
-    console.log("toto");
-    console.log("this.state.items : ", this.state.items)
-    console.log("term : ", this.state.term)
+  // onSubmit = (event) => {
+  //   event.preventDefault();
+  //   this.setState({
+  //     term: '',
+  //     items: [...this.state.items, this.state.term],
+  //     split: [...this.state.items.toString().split(" ")],
+  //   });
+  //   console.log("toto");
+  //   console.log("this.state.items : ", this.state.items)
+  //   console.log("term : ", this.state.term)
 
-    console.log("toString : ", this.state.items.toString().split(" "))
+  //   console.log("toString : ", this.state.items.toString().split(" "))
 
-  }
+  // }
 
 
 

@@ -29,10 +29,8 @@ class AddSentences extends Component {
         this.setState({
             term: '',
             items: [...this.state.items, this.state.term],
-            split: [...this.state.items.toString().split(" ")]
         });
     }
-
 
     render() {
         return (

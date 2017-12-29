@@ -10,12 +10,11 @@ const Split = props => (
   //      UN ENSEMBLE DE BOUTON RADIO POUR SELECTIONNER LE TAG SOUHAITÉ 
   //      (cf.composant 'SelectTag')
 
-    
   <ul>
     {
       props.items.toString().split(" ").map((item, index) =>
           
-          <table key={index}>
+          <table key={index} >
 
             <tbody>
               <tr>
@@ -28,6 +27,9 @@ const Split = props => (
 
                   {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
                   <SelectTag />
+                  
+                  {/* Affiche l'index correspondant à chaque mots de la phrase */}
+                  {console.log('index of ' + item + ' is : ' + index)}
 
                 </td>
 
@@ -38,7 +40,6 @@ const Split = props => (
 
         )
     }
-
 
   </ul>
 
