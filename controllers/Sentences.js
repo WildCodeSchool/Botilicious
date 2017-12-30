@@ -3,50 +3,54 @@ const getSentences = require('./modules/Sentences');
 const getKeywords = require('./modules/Keywords');
 // const getTags = require('./modules/Tags');
 
+
 function AutoTagSentence(originalSentence, keywords, separators) {
-  const splitSentence = originalSentence.split(separators[0]);
+  let splitSentence = originalSentence.split(separators[0]);
   const foundKeywords = [];
-  const asAnArray = [];
+  // const pattern = [];
+  // const asAnArray = [];
+  let sentence = originalSentence;
   let wordsToCheck;
   let nbOfKeywords;
-  let keywordArray;
-  splitSentence.map((word, i, array) => keywords.findIndex((keyword) => {
-    // console.log('keyword.text: ', keyword.text);
-    // console.log('array: ', array);
-    nbOfKeywords = keyword.text.split(' ').length;
-    // console.log('nbOfKeywords: ', nbOfKeywords);
-    // console.log('i: ', i);
-    wordsToCheck = array.slice(i, i + nbOfKeywords);
-    // console.log('wordsToCheck: ', wordsToCheck);
-    if (wordsToCheck.join(' ') === keyword.text) {
-      foundKeywords.push({
-        text: wordsToCheck.join(' '),
-        TagId: keyword.TagId,
-        tag: keyword.tag,
-      });
-      // console.log('foundKeywords: ', foundKeywords);
-      // console.log([wordsToCheck.join(separators[0])]);
-      keywordArray = [wordsToCheck.join(separators[0])].concat(Array(nbOfKeywords - 1).fill(''));
-      // asAnArray.splice(i, (i + nbOfKeywords) - 1, keywordArray);
-      // console.log('keywordArray: ', keywordArray);
-      asAnArray.splice(i, keywordArray);
-      // console.log('asAnArray: ', asAnArray);
-      // console.log('i: ', i);
-      // console.log('nbOfKeywords: ', nbOfKeywords);
-    } else if (asAnArray[i] === '') {
-      // console.log('asAnArray2: ', asAnArray);
-    } else {
-      asAnArray[i] = word;
+  // let keywordArray;
+  let counter;
+  let increment;
+  // console.log('asAnArray: ', asAnArray);
+
+  keywords.map((keyword) => {
+    counter = 0;
+    while (counter < splitSentence.length) {
+      console.log('counter: ', counter);
+      console.log('splitSentence_whileStart: ', splitSentence);
+      nbOfKeywords = keyword.text.split(' ').length;
+      wordsToCheck = splitSentence.slice(counter, counter + nbOfKeywords);
+      if (wordsToCheck.join(' ') === keyword.text) {
+        foundKeywords.push({
+          text: wordsToCheck.join(' '),
+          TagId: keyword.TagId,
+          tag: keyword.tag,
+        });
+        sentence = sentence.replace(keyword.text, `<${keyword.tag}>`);
+        splitSentence[counter] = splitSentence.splice(counter, nbOfKeywords, keyword.text).join(separators[0]);
+        // increment = nbOfKeywords;
+        increment = 1;
+        // pattern[counter] = nbOfKeywords;
+      } else {
+        // pattern[counter] = 0;
+        increment = 1;
+      }
+      console.log('splitSentence_end: ', splitSentence);
+      console.log('foundKeywords: ', foundKeywords);
+      counter += increment;
     }
-    // console.log('asAnArray3: ', asAnArray);
-    return null;
-  }));
-  let sentence = originalSentence;
-  foundKeywords.map(keyword =>
-    sentence = sentence.replace(keyword.text, `<${keyword.tag}>`));
-  return {
-    originalSentence, sentence, foundKeywords, array: asAnArray,
+    return foundKeywords;
+  });
+
+  const myobject = {
+    foundKeywords, sentence, array: splitSentence, originalSentence,
   };
+  console.log('myobject: ', myobject);
+  return myobject;
 }
 
 const Sentences = {
