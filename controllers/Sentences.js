@@ -17,7 +17,7 @@ function AutoTagSentence(originalSentence, keywords, separators) {
     counter = 0;
     while (counter < splitSentence.length) {
       // console.log('counter: ', counter);
-      console.log('splitSentence_whileStart: ', splitSentence);
+      // console.log('splitSentence_whileStart: ', splitSentence);
       nbOfKeywords = keyword.text.split(' ').length;
       wordsToCheck = splitSentence.slice(counter, counter + nbOfKeywords);
       if (wordsToCheck.join(' ') === keyword.text) {
@@ -33,7 +33,7 @@ function AutoTagSentence(originalSentence, keywords, separators) {
         increment = 1;
       }
       // console.log('splitSentence_whileEnd: ', splitSentence);
-      console.log('foundKeywords: ', foundKeywords);
+      // console.log('foundKeywords: ', foundKeywords);
       counter += increment;
     }
     return foundKeywords;

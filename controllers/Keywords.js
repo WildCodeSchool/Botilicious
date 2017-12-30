@@ -50,41 +50,16 @@ const Keywords = {
     } else {
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
       Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
-        .then((results) => {
+        .then((results, res2, res3) => {
           console.log('bulkCreateOrUpdate results: ', results);
+          console.log('bulkCreateOrUpdate res2: ', res2);
+          console.log('bulkCreateOrUpdate res3: ', res3);
           models.Keyword
             .findAll()
-            .then(findResults => res.status(200).json({ keywords: findResults }));
+            .then(findResults => res.status(200).json({ keywords: findResults, message: 'Bien écrit' }));
         })
-        .catch(err => res.status(501).send(err));
+        .catch(error => res.status(501).json({ error }));
     }
-
-    // insert into - one keyword only
-
-    // models.Keyword.findOrCreate(
-    //   {
-    //     where: {
-    //       text: dataToWrite.keywords[0].text,
-    //       TagId: dataToWrite.keywords[0].TagId
-    //     }
-    //   })
-    //   .spread(
-    //     (keywords, created) => {
-    //       console.log('keywords: ', keywords.dataValues);
-    //       console.log('created: ', created);
-    //       let data = {keywords};
-    //       // set the error key
-    //       if(created){
-    //         data.error = false;
-    //       } else {
-    //         data.error = true;
-    //         data.serverMessage = 'Error, keywords not added - Already there or database error';
-    //       }
-    //
-    //       // send back the new keywords to the browser
-    //       res.json(data)
-    //     }
-    //   )
   },
 
   // keywordDelete

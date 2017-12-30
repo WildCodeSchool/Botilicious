@@ -69,6 +69,7 @@ function GetKeywords(KeywordId) {
 
 // générer la liste de mots dans la div "Ici tags de mots"
 function StartTagging() {
+  $('#serverMessageSentenceTagging').empty();
   // trouver l'id de la phrase cliquée
   const clickedButtonId = $(this).attr('id').substr(3);
   console.log('Tag des mots listés : phrase ', clickedButtonId);
@@ -167,29 +168,17 @@ $("button[id^='tag']").click(StartTagging);
 // Post the list of tags
 $("button[id^='sentencetag']").click(() => {
   // console.log('tagging');
-  // const clickedButtonId = $(this)[0].innerHTML.substr(29);
-  // console.log(clickedButtonId);
 
   // console.log($('#wordsToTag'));
   const mykeywords = [];
   const wordsToTag = $('#wordsToTag').children();
   // console.log(wordsToTag.children[0].children[0].innerHTML);
 
-  // let counter = 0;
   for (let i = 0; i < wordsToTag.length; i += 1) {
-    // if ($('#select'+i).val().length > 0){
-
-    // mykeywords[counter] =
-    // {
-    //   'text' : $('#word'+i).html(),
-    //   'TagId' : $('#select'+i).val()
-    // };
-    // counter++;
     mykeywords.push({
       text: $(`#word${i}`).html(),
       TagId: $(`#select${i}`).val(),
     });
-    // }
   }
 
   // console.log('mykeywords: ', mykeywords);
@@ -197,7 +186,7 @@ $("button[id^='sentencetag']").click(() => {
 
   if (mykeywords.length > 0) {
     const datatopost = JSON.stringify({ keywords: mykeywords });
-    // let datatopost = {tags : mykeywords};
+    // let datatopost = {keywords : mykeywords};
     console.log(datatopost);
     $.ajax({
       method: 'POST',
@@ -207,25 +196,19 @@ $("button[id^='sentencetag']").click(() => {
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
     })
-      .done((data) => {
-        console.log('data: ', data);
+      .done((resdata, status) => {
+        console.log('data: ', resdata);
 
+        if (!resdata.error) {
+          $('#serverMessageSentenceTagging').text(resdata.message);
+          // $('#wordsToTag > tbody').remove();
+          $('#wordsToTag').children().remove();
+          // $('#keywords').append(`<tr><td id="keyword${keyword.id}">${keyword.text.text}</td><td>${keyword.text.type}</td><td>${keyword.id}</td><td><button id=delete${keyword.id}>Delete</button><button id=modify${keyword.id}>Duplicate</button><button id="tag">Tag words</button></td></tr>`);
+        } else {
+          $('#serverMessageSentenceTagging').text(`${resdata.error}. Connection status: ${status}`);
+        }
         // refresh, to be deleted later
-        // location.reload();
-        this.reload();
+        location.reload();
       });
-    //
-    // $.post('/admin/keyword', datatopost, function(resdata, status){
-    //   console.log(resdata, status);
-    //   if (!resdata.error){
-    //     // $('#sentence').val('');
-    //     // $('#servermessage').empty();
-    //     // $('#sentences').append('<tr><td id="sentence'+data.sentence.id+'">'+data.sentence.text.text+'</td><td>'+data.sentence.text.type+'</td><td>'+data.sentence.id+'</td><td><button id=delete'+data.sentence.id+'>Delete</button><button id=modify'+data.sentence.id+'>Duplicate</button><button id="tag">Tag words</button></td></tr>');
-    //     // console.log("tag"+data.sentence.id);
-    //   } else {
-    //     // $('#servermessage').text(data.serverMessage);
-    //     // $('#servermessage').append(data.serverMessage).append('. Connection status: '+status);
-    //   }
-    // });
   }
 });

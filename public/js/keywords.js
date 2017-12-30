@@ -71,22 +71,25 @@ $('#addkeyword').click(() => {
       console.log('status: ', status);
 
       // refresh, to be deleted later
-      location.reload();
+      // location.reload();
 
-    // $('#servermessagekeyword').empty();
-    // if (!data.error){
-    //   console.log('data.keywords[0].TagId :', data.keywords[0].TagId);
-    //   GetTags(data.keywords[0].TagId).then(mytag => {
-    //     console.log('mytag: ', mytag);
-    //     $('#keyword').val('');
-    //     $('#keywords').append('<tr id="keyword'+data.keywords[0].id+'"><td id="keywordtext'+data.keywords[0].id+'">'+data.keywords[0].text+'</td><input value='+data.keywords[0].TagId+' type="hidden"><td>'+mytag.Tags[0].text+'</td><td><button id=deletekeyword'+data.keywords[0].id+'>Supprimer</button></td></tr>');
-    //
-    //     // Add an event listener to the new button. With an Event Delegation
-    //     $('#keywords').on('click', '#deletekeyword'+data.keywords[0].id , DeleteKeyword);
-    //   })
-    // } else {
-    //   $('#servermessagekeyword').append(data.serverMessage).append('. Connection status: '+status);
-    // }
+      $('#servermessagekeyword').empty();
+      if (!data.error) {
+        $('#servermessagekeyword').text(data.message);
+        // console.log('data.keywords[0].TagId :', data.keywords[0].TagId);
+        // GetTags(data.keywords[0].TagId).then((mytag) => {
+        //   console.log('mytag: ', mytag);
+        //   $('#keyword').val('');
+        //   $('#keywords').append(`<tr id="keyword${data.keywords[0].id}"><td id="keywordtext${data.keywords[0].id}">${data.keywords[0].text}</td><input value=${data.keywords[0].TagId} type="hidden"><td>${mytag.Tags[0].text}</td><td><button id=deletekeyword${data.keywords[0].id}>Supprimer</button></td></tr>`);
+        //
+        //   // Add an event listener to the new button. With an Event Delegation
+        //   $('#keywords').on('click', `#deletekeyword${data.keywords[0].id}`, DeleteKeyword);
+        // });
+      } else {
+        $('#servermessagekeyword').text(`${data.message}. Connection status: ${status}`);
+      }
+      // refresh, to be deleted later
+      location.reload();
     });
 });
 
