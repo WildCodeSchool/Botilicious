@@ -17,14 +17,6 @@ block content
     div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
     br
     br
-  .tagwindow
-    h2 Ici tag de mots
-    button#sentencetag Tag des mots listés
-    div#serverMessageSentenceTagging
-    table#wordsToTag(style="width:400px;border:1px solid black")
-      tr#headers
-        th Mot
-        th Tag
   .sentencewindow
     h2 Liste des phrases
     input#sentence(type="text" name="sentence" size="60")
@@ -54,6 +46,14 @@ block content
             button(id='duplicate' +sentence.id) Dupliquer
             button(id='tag' +sentence.id) Tag sur les mots
     br
+  .tagwindow
+    h2 Ici tag de mots
+    button#sentencetag Tag des mots listés
+    div#serverMessageSentenceTagging
+    table#wordsToTag(style="width:400px;border:1px solid black")
+      tr#headers
+        th Mot
+        th Tag
   .edittags
     h2 Edition des tags
     input#tag(type="text" name="tag" size="60")

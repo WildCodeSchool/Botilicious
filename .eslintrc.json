@@ -1,6 +1,12 @@
 {
-    "extends": "airbnb",
-    "rules": {
-      "func-names": "off"
-    }
+  "extends": "airbnb",
+  "rules": {
+    "func-names": "off"
+  },
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  }
 }

@@ -44,7 +44,7 @@ app.use('/', index);
 
 
 app.use('/admin', function (req, res, next) {
-  console.log(req.session);
+  // console.log(req.session);
 
   if (req.session.connected){
     return next();
@@ -71,6 +71,7 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('./index/error', {connected : req.session.connected});
+  // res.render('./index/error', {connected : req.session.connected});
 });
 
 module.exports = app;

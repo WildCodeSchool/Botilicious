@@ -66,5 +66,7 @@ router.get('/sentence', Sentences.sentenceGet);
 // Accepter les données du formulaire 'Nouvelles phrases'
 router.post('/sentence', Sentences.sentencePost);
 router.delete('/sentence', Sentences.sentenceDelete);
+// Tagger une phrase avec les keywords existants
+router.post('/sentenceAutotag', Sentences.sentenceAutotagPost);
 
 module.exports = router;

@@ -5,16 +5,16 @@ function getKeywords(where) {
     const myparams = {
       include: [models.Tag],
     };
-    console.log('where: ', where);
+    // console.log('where: ', where);
     if (where) {
       myparams.where = where;
     }
-    console.log('myparams', myparams);
+    // console.log('myparams', myparams);
     models.Keyword
       .findAll(myparams)
     // query ok
       .then((results) => {
-      console.log('Keyword results: ', results);
+      // console.log('Keyword results: ', results);
         const records = [];
         if (results.length > 0) {
           results.map((result, i) => {
@@ -29,7 +29,7 @@ function getKeywords(where) {
             return records;
           });
         }
-        console.log('records :', records);
+        // console.log('records :', records);
         resolve(records);
       });
   }));
