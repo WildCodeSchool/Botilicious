@@ -89,12 +89,11 @@ function StartTagging() {
     dataType: 'json',
   }), GetTags()])
     .then((results) => {
-      console.log('results: ', results);
-      const arraySentence = results[0].sentence.split(' ');
-      console.log('arraySentence: ', arraySentence);
-      const sentenceToTag = arraySentence.map(word => results[0].foundKeywords.map(keyword => word.replace(`<${keyword.tag}>`, `${keyword.text}`)));
+      // console.log('results: ', results);
+      // const arraySentence = results[0].sentence.split(' ');
+      // console.log('arraySentence: ', arraySentence);
+      const sentenceToTag = results[0].array;
       console.log('sentenceToTag: ', sentenceToTag);
-      console.log('results[0].array: ', results[0].array);
       // changer le texte du bouton
       $('#sentencetag').html(`Tag des mots listés : phrase ${clickedButtonId}`);
 
@@ -112,50 +111,15 @@ function StartTagging() {
           $(`#select${i}`).append(`<option value="${results[1].Tags[j].id}">${results[1].Tags[j].text}</option>`);
         }
 
-        // const currentTagId = results[1].Tags
-        //   .find(keyword => keyword.text === sentenceToTag[i]);
-        //
-        // if (typeof currentTagId !== 'undefined') {
-        //   console.log('sentenceToTag[i]: ', sentenceToTag[i]);
-        //   console.log('currentTagId: ', currentTagId);
-        //   $(`#select${i}`).val(currentTagId.TagId);
-        // }
+        // console.log('results[0].pattern[i]: ', results[0].pattern[i]);
+        const currentTag = results[1].Tags.find(tag => `<${tag.text}>` === results[0].pattern[i]);
+        console.log('currentTag: ', currentTag);
+        if (typeof currentTag !== 'undefined') {
+          $(`#select${i}`).val(currentTag.id);
+        }
       }
-    });
-  // .catch(error => console.log(error));
-
-  // Promise.all([GetKeywords(), GetTags()])
-  //   .then((results) => {
-  //     console.log('results: ', results);
-  //
-  //     // changer le texte du bouton
-  //     $('#sentencetag').html(`Tag des mots listés : phrase ${clickedButtonId}`);
-  //
-  //     // effacer le contenu de la div "Ici tags de mots"
-  //     $('#wordsToTag').children().remove();
-  //
-  //     // Boucler sur la liste de mots
-  //     for (let i = 0; i < selectedSentence.length; i += 1) {
-  //       // add a line for each word
-  //       $('#wordsToTag').append(`<tr><td id="word${i}">${selectedSentence[i]}<td><select id="select${i}"><option value="">(aucun)</option></select></td></tr>`);
-  //
-  //       // boucler sur les tags
-  //       for (let j = 0; j < results[1].Tags.length; j += 1) {
-  //         // console.log(data.Tags[j]);
-  //         $(`#select${i}`).append(`<option value="${results[1].Tags[j].id}">${results[1].Tags[j].text}</option>`);
-  //       }
-  //
-  //       const currentTagId = results[0].Keywords
-  //         .find(keyword => keyword.text === selectedSentence[i]);
-  //
-  //       if (typeof currentTagId !== 'undefined') {
-  //         console.log('selectedSentence[i]: ', selectedSentence[i]);
-  //         console.log('currentTagId: ', currentTagId);
-  //         $(`#select${i}`).val(currentTagId.TagId);
-  //       }
-  //     }
-  //   })
-  //   .catch(error => console.log(error));
+    })
+    .catch(error => console.log(error));
 }
 
 // Add a sentence

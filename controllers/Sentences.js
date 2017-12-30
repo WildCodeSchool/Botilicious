@@ -7,20 +7,16 @@ const getKeywords = require('./modules/Keywords');
 function AutoTagSentence(originalSentence, keywords, separators) {
   let splitSentence = originalSentence.split(separators[0]);
   const foundKeywords = [];
-  // const pattern = [];
-  // const asAnArray = [];
-  let sentence = originalSentence;
+  let pattern = originalSentence;
   let wordsToCheck;
   let nbOfKeywords;
-  // let keywordArray;
   let counter;
   let increment;
-  // console.log('asAnArray: ', asAnArray);
 
   keywords.map((keyword) => {
     counter = 0;
     while (counter < splitSentence.length) {
-      console.log('counter: ', counter);
+      // console.log('counter: ', counter);
       console.log('splitSentence_whileStart: ', splitSentence);
       nbOfKeywords = keyword.text.split(' ').length;
       wordsToCheck = splitSentence.slice(counter, counter + nbOfKeywords);
@@ -30,16 +26,13 @@ function AutoTagSentence(originalSentence, keywords, separators) {
           TagId: keyword.TagId,
           tag: keyword.tag,
         });
-        sentence = sentence.replace(keyword.text, `<${keyword.tag}>`);
+        pattern = pattern.replace(keyword.text, `<${keyword.tag}>`);
         splitSentence[counter] = splitSentence.splice(counter, nbOfKeywords, keyword.text).join(separators[0]);
-        // increment = nbOfKeywords;
         increment = 1;
-        // pattern[counter] = nbOfKeywords;
       } else {
-        // pattern[counter] = 0;
         increment = 1;
       }
-      console.log('splitSentence_end: ', splitSentence);
+      // console.log('splitSentence_whileEnd: ', splitSentence);
       console.log('foundKeywords: ', foundKeywords);
       counter += increment;
     }
@@ -47,7 +40,7 @@ function AutoTagSentence(originalSentence, keywords, separators) {
   });
 
   const myobject = {
-    foundKeywords, sentence, array: splitSentence, originalSentence,
+    foundKeywords, pattern: pattern.split(' '), array: splitSentence, originalSentence,
   };
   console.log('myobject: ', myobject);
   return myobject;
