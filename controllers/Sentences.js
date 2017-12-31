@@ -1,50 +1,9 @@
 const models = require('../models');
 const getSentences = require('./modules/Sentences');
 const getKeywords = require('./modules/Keywords');
+const autotagSentence = require('./modules/autotagSentence');
 // const getTags = require('./modules/Tags');
 
-
-function AutoTagSentence(originalSentence, keywords, separators) {
-  let splitSentence = originalSentence.split(separators[0]);
-  const foundKeywords = [];
-  let pattern = originalSentence;
-  let wordsToCheck;
-  let nbOfKeywords;
-  let counter;
-  let increment;
-
-  keywords.map((keyword) => {
-    counter = 0;
-    while (counter < splitSentence.length) {
-      // console.log('counter: ', counter);
-      // console.log('splitSentence_whileStart: ', splitSentence);
-      nbOfKeywords = keyword.text.split(' ').length;
-      wordsToCheck = splitSentence.slice(counter, counter + nbOfKeywords);
-      if (wordsToCheck.join(' ') === keyword.text) {
-        foundKeywords.push({
-          text: wordsToCheck.join(' '),
-          TagId: keyword.TagId,
-          tag: keyword.tag,
-        });
-        pattern = pattern.replace(keyword.text, `<${keyword.tag}>`);
-        splitSentence[counter] = splitSentence.splice(counter, nbOfKeywords, keyword.text).join(separators[0]);
-        increment = 1;
-      } else {
-        increment = 1;
-      }
-      // console.log('splitSentence_whileEnd: ', splitSentence);
-      // console.log('foundKeywords: ', foundKeywords);
-      counter += increment;
-    }
-    return foundKeywords;
-  });
-
-  const myobject = {
-    foundKeywords, pattern: pattern.split(' '), array: splitSentence, originalSentence,
-  };
-  console.log('myobject: ', myobject);
-  return myobject;
-}
 
 const Sentences = {
 
@@ -101,7 +60,7 @@ const Sentences = {
   // ex.: 'Quel temps fait-il demain à Paris ?' =>
   // {
   // sentence: 'Quel temps fait-il <time> à <place> ?',
-  // tags: [{ text: 'temps', tagId: 1 }, { text: 'Paris', tagId: 2 }]
+  // keywords: [{ text: 'temps', tagId: 1 }, { text: 'Paris', tagId: 2 }]
   // }
 
   sentenceAutotagPost(req, res) {
@@ -110,7 +69,7 @@ const Sentences = {
     // console.log('sentence: ', sentence);
     getKeywords().then((keywords) => {
       // console.log('Keywords: ', keywords);
-      const data = AutoTagSentence(req.body.sentence, keywords, separators);
+      const data = autotagSentence(req.body.sentence, keywords, separators);
       // console.log('data: ', data);
       res.json(data);
     });
