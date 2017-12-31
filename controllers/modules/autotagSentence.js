@@ -1,38 +1,37 @@
 function autotagSentence(originalSentence, keywords, separators) {
-  const splitSentence = originalSentence.split(separators[0]);
+  let splitSentence;
   const foundKeywords = [];
-  let pattern = originalSentence;
+  const pattern = [];
+  const asAnArray = [];
   let wordsToCheck;
   let nbOfKeywords;
-  let counter;
-  let increment;
 
   keywords.map((keyword) => {
-    counter = 0;
-    while (counter < splitSentence.length) {
-      // console.log('counter: ', counter);
-      // console.log('splitSentence_whileStart: ', splitSentence);
-      nbOfKeywords = keyword.text.split(' ').length;
-      wordsToCheck = splitSentence.slice(counter, counter + nbOfKeywords);
+    nbOfKeywords = keyword.text.split(' ').length;
+    splitSentence = originalSentence.split(separators[0]);
+    splitSentence.map((word, i, words) => {
+      wordsToCheck = words.slice(i, i + nbOfKeywords);
+      // console.log('wordsToCheck: ', wordsToCheck);
       if (wordsToCheck.join(' ') === keyword.text) {
         foundKeywords.push({
           text: wordsToCheck.join(' '),
           TagId: keyword.TagId,
           tag: keyword.tag,
         });
-        pattern = pattern.replace(keyword.text, `<${keyword.tag}>`);
-        splitSentence[counter] = splitSentence.splice(counter, nbOfKeywords, keyword.text).join(separators[0]);
+        // asAnArray.push(wordsToCheck.join(separators[0]));
+        pattern.push(originalSentence.replace(keyword.text, `<${keyword.tag}>`));
+        splitSentence[i] = splitSentence.splice(i, nbOfKeywords, keyword.text).join(separators[0]);
+        asAnArray.push(splitSentence);
       }
-      // console.log('splitSentence_whileEnd: ', splitSentence);
+      // console.log('splitSentence_mapEnd: ', splitSentence);
       // console.log('foundKeywords: ', foundKeywords);
-      increment = 1;
-      counter += increment;
-    }
+      return null;
+    });
     return foundKeywords;
   });
 
   const myobject = {
-    foundKeywords, pattern: pattern.split(' '), array: splitSentence, originalSentence,
+    foundKeywords, pattern, asAnArray, originalSentence,
   };
   console.log('myobject: ', myobject);
   return myobject;

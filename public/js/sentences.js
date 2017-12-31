@@ -66,6 +66,20 @@ function GetKeywords(KeywordId) {
   }));
 }
 
+function Autotag(sentence) {
+  const promise = new Promise((resolve, reject) => {
+    $.ajax({
+      method: 'POST',
+      url: '/admin/sentenceAutotag',
+      data: { sentence },
+      // processData : false,
+      // contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+    })
+      .done(res => resolve(res));
+  });
+  return promise;
+}
 
 // générer la liste de mots dans la div "Ici tags de mots"
 function StartTagging() {
@@ -74,27 +88,21 @@ function StartTagging() {
   const clickedButtonId = $(this).attr('id').substr(3);
   console.log('Tag des mots listés : phrase ', clickedButtonId);
 
-  // const selectedSentence = $(`#sentencetext${clickedButtonId}`)[0].firstChild.data.split(' ');
   // phrase sélectionnée
   const selectedSentence = $(`#sentencetext${clickedButtonId}`)[0].firstChild.data;
   // console.log('selectedSentence: ', selectedSentence);
   // console.log({ sentence: selectedSentence });
   // console.log($('#sentencetag').html());
 
-  Promise.all([$.ajax({
-    method: 'POST',
-    url: '/admin/sentenceAutotag',
-    data: { sentence: selectedSentence },
-    // processData : false,
-    // contentType: 'application/json; charset=utf-8',
-    dataType: 'json',
-  }), GetTags()])
+  Promise.all([Autotag(selectedSentence), GetTags()])
     .then((results) => {
-      // console.log('results: ', results);
-      // const arraySentence = results[0].sentence.split(' ');
-      // console.log('arraySentence: ', arraySentence);
-      const sentenceToTag = results[0].array;
+      console.log('results: ', results);
+      const sentenceToTag = results[0].asAnArray[0];
       console.log('sentenceToTag: ', sentenceToTag);
+
+      let currentWord;
+      let currentTag;
+
       // changer le texte du bouton
       $('#sentencetag').html(`Tag des mots listés : phrase ${clickedButtonId}`);
 
@@ -112,11 +120,15 @@ function StartTagging() {
           $(`#select${i}`).append(`<option value="${results[1].Tags[j].id}">${results[1].Tags[j].text}</option>`);
         }
 
-        // console.log('results[0].pattern[i]: ', results[0].pattern[i]);
-        const currentTag = results[1].Tags.find(tag => `<${tag.text}>` === results[0].pattern[i]);
+        // le mot en cours
+        currentWord = results[0].asAnArray[0][i];
+        console.log('currentWord: ', currentWord);
+        // trouver ce mot en cours dans la liste des keywords
+        currentTag = results[0].foundKeywords.find(keyword => keyword.text === currentWord);
         console.log('currentTag: ', currentTag);
+        // si le mot est trouvé, sélectionner la bonne option dans le select en html
         if (typeof currentTag !== 'undefined') {
-          $(`#select${i}`).val(currentTag.id);
+          $(`#select${i}`).val(currentTag.TagId);
         }
       }
     })
