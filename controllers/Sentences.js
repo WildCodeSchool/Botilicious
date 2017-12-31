@@ -1,5 +1,9 @@
 const models = require('../models');
 const getSentences = require('./modules/Sentences');
+const getKeywords = require('./modules/Keywords');
+const autotagSentence = require('./modules/autotagSentence');
+// const getTags = require('./modules/Tags');
+
 
 const Sentences = {
 
@@ -19,7 +23,7 @@ const Sentences = {
     // insert into
       models.Sentence.findOrCreate({
         where: {
-          text: req.body.sentence,
+          text: req.body.text,
           type: req.body.type,
           next: req.body.next,
         },
@@ -50,6 +54,25 @@ const Sentences = {
       where: { id: req.body.id },
     })
       .then(res.status(200).json({ servermessage: 'delete ok' }));
+  },
+
+  // route that takes a sentence then gets keywords and returns tagged keywords
+  // ex.: 'Quel temps fait-il demain à Paris ?' =>
+  // {
+  // sentence: 'Quel temps fait-il <time> à <place> ?',
+  // keywords: [{ text: 'temps', tagId: 1 }, { text: 'Paris', tagId: 2 }]
+  // }
+
+  sentenceAutotagPost(req, res) {
+    const separators = [' ', '-'];
+    // const sentence = req.body.sentence;
+    // console.log('sentence: ', sentence);
+    getKeywords().then((keywords) => {
+      // console.log('Keywords: ', keywords);
+      const data = autotagSentence(req.body.sentence, keywords, separators);
+      // console.log('data: ', data);
+      res.json(data);
+    });
   },
 
 };
