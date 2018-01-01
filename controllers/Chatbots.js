@@ -156,7 +156,7 @@ const Chatbots = {
       time = 8 * message[1];
     } else {
       time = 0;
-      errorsyntaxe = 'Votre syntaxe est incorrecte';
+      errorMessage = 'Votre syntaxe est incorrecte';
     }
     if (time > 39) {
       time = 39;
@@ -173,21 +173,32 @@ const Chatbots = {
       APPID: '096247cb370ee7b808f6578b219dec6c',
     };
 
+    let responseToBrowser;
     apiCall('meteo', { params: tempArgs })
       .then((response) => {
         // console.log('response: ', response);
-        const responseapi = {
+        const data = {
           Time: response.list[time].dt_txt,
           City: response.city.name,
           Country: response.city.country,
           Weather: response.list[time].weather[0].description,
           Temperature: Math.round(response.list[time].main.temp - 273.15),
         };
-        res.json(responseapi);
+        responseToBrowser = {
+          text: req.body.message,
+          answer: `Weather (${data.Time} City: ${data.City} (${data.Country}) ): ${data.Weather} ${data.Temperature}°C`,
+          serverMessage: errorMessage,
+        };
+        res.json(responseToBrowser);
       })
       .catch((error) => {
-        console.log('API call Error: -S', error);
-        res.json(error);
+        console.log('API call Error: ', error.response.data.message);
+        responseToBrowser = {
+          text: req.body.message,
+          answer: `Error api: ${error.response.data.message}`,
+          error: error.response.data,
+        };
+        res.json(responseToBrowser);
       });
 
     // request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){

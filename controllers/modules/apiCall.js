@@ -22,7 +22,7 @@ function apiCall(moduleName, args) {
               resolve(response.data);
             })
             .catch((error) => {
-              console.log('Error api: ', error);
+              // console.log('Error api: ', error);
               reject(error);
             });
           // }
