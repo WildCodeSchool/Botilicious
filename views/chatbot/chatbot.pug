@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  
+  include ../menu
   section.sectionform
     h2 Nouveau Chatbot
     .containerform
@@ -11,7 +11,7 @@ block content
         .form-group
           label(for='name') Nom du chatbot
           input#chatbot.form-control(required='', placeholder="Nom du chatbot" name="name")
-        button#addchatbot.btn.gris(type='submit') Créer le chatbot
+        button#addchatbot(type='submit') Créer le chatbot
       div#serverMessageChatbot
 
   section.chatbotsList

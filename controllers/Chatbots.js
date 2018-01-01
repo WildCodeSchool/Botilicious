@@ -3,6 +3,7 @@ const getSentences = require('./modules/Sentences');
 const getKeywords = require('./modules/Keywords');
 const getTags = require('./modules/Tags');
 const getChatbots = require('./modules/Chatbots');
+const apiCall = require('./modules/apiCall');
 
 
 const Chatbots = {
@@ -111,61 +112,85 @@ const Chatbots = {
   // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
     console.log(req.body.message);
-    // let message = req.body.message.split(' ');
 
-    /**
-    * méthode sequelize pour trouver des données de la bdd et qui retourne un model
-    * test si cest une question pour renvoyer une reponse
-    */
 
-    models.Sentence.findOne({
-      where: { text: req.body.message },
-    })
+    // /**
+    // * méthode sequelize pour trouver des données de la bdd et qui retourne un model
+    // * test si cest une question pour renvoyer une reponse
+    // */
+    //
+    // models.Sentence.findOne({
+    //   where: { text: req.body.message },
+    // })
+    //
+    // /**
+    // * fonction qui permet de renvoyer une seule réponse
+    // * (dans le network de la console du navigateur)
+    // * lorsqu'une string de type question est écrite dans le chat.
+    // *
+    // * Il faut utiliser un models.sentence.findOne({ })
+    // */
+    //   .then((response) => {
+    //   // console.log('response',response);
+    //     models.Sentence.findOne({
+    //       where: { id: response.dataValues.next },
+    //     })
+    //       .then((answer) => {
+    //         // console.log('answer',answer)
+    //
+    //         const jsontostring = {
+    //           answer: answer.dataValues.text,
+    //           text: req.body.message,
+    //         };
+    //         res.json(jsontostring);
+    //       });
+    //   });
 
-    /**
-    * fonction qui permet de renvoyer une seule réponse
-    * (dans le network de la console du navigateur)
-    * lorsqu'une string de type question est écrite dans le chat.
-    *
-    * Il faut utiliser un models.sentence.findOne({ })
-    */
+    const message = req.body.message.split(' ');
+    // const rand = [Math.floor(Math.random() * res.length)];
+    let time;
+    let errorMessage;
+    if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number' && typeof (parseInt(message[1], 10)) === 'number') {
+      time = (8 * message[1]) + Math.round(message[2] / 3);
+    } else if (message.length === 2 && typeof (parseInt(message[1], 10)) === 'number') {
+      time = 8 * message[1];
+    } else {
+      time = 0;
+      errorsyntaxe = 'Votre syntaxe est incorrecte';
+    }
+    if (time > 39) {
+      time = 39;
+    }
+    console.log('time:', time);
+    if (isNaN(time)) {
+      errorMessage = 'Votre syntaxe est incorrecte';
+      time = 0;
+    }
+
+    const tempArgs = {
+      q: message[0],
+      time,
+      APPID: '096247cb370ee7b808f6578b219dec6c',
+    };
+
+    apiCall('meteo', { params: tempArgs })
       .then((response) => {
-      // console.log('response',response);
-        models.Sentence.findOne({
-          where: { id: response.dataValues.next },
-        })
-          .then((answer) => {
-            // console.log('answer',answer)
-
-            const jsontostring = {
-              answer: answer.dataValues.text,
-              text: req.body.message,
-            };
-            res.json(jsontostring);
-          });
+        // console.log('response: ', response);
+        const responseapi = {
+          Time: response.list[time].dt_txt,
+          City: response.city.name,
+          Country: response.city.country,
+          Weather: response.list[time].weather[0].description,
+          Temperature: Math.round(response.list[time].main.temp - 273.15),
+        };
+        res.json(responseapi);
+      })
+      .catch((error) => {
+        console.log('API call Error: -S', error);
+        res.json(error);
       });
-    // let rand = [Math.floor(Math.random()*res.length)];
 
-    // let time;
-    // let errorsyntaxe;
-    // if (message.length == 3 && typeof(parseInt(message[2]))=== 'number' && typeof(parseInt(message[1]))=== 'number'){
-    //   time = 8*message[1] + Math.round(message[2]/3);
-    // } else if (message.length == 2 && typeof(parseInt(message[1]))=== 'number'){
-    //   time = 8*message[1];
-    // } else {
-    //   time = 0;
-    //   let errorsyntaxe='votre syntaxe est incorrecte';
-    // }
-    // if (time > 39) {
-    //   time = 39;
-    // }
-    // console.log("time:", time);
-    // if (isNaN(time)){
-    //   errorsyntaxe='votre syntaxe est incorrecte';
-    //   time=0;
-    // }
-
-    // request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&APPID=7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
+    // request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
     //   console.log(JSON.parse(response.body));
 
     //   let data = JSON.parse(response.body);
@@ -174,7 +199,7 @@ const Chatbots = {
 
     //   console.log(temp);
 
-    //   let responseapi = {Time: data.list[time].dt_txt+" ", City : data.city.name+" ", Country : data.city.country, Weather : data.list[time].weather[0].description+" ", Temperature : temp};
+    //   let responseapi = {Time: data.list[time].dt_txt, City : data.city.name, Country : data.city.country, Weather : data.list[time].weather[0].description, Temperature : temp};
     //   console.log('reponse :',responseapi);
     //   // res.end();
 

@@ -1,9 +1,7 @@
 extends ../layout
 
 block content
-  a(href="/" class="btn orange") Retour à l'accueil
-  a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
-  a(href="/admin/module" class="btn gris") Gestion Module
+  include ../menu
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
