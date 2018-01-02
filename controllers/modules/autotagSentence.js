@@ -2,9 +2,10 @@ function autotagSentence(originalSentence, keywords, separators) {
   let splitSentence;
   const foundKeywords = [];
   const pattern = [];
-  const asAnArray = [];
+  let asAnArray = [];
   let wordsToCheck;
   let nbOfKeywords;
+  // let foundIndex;
 
   keywords.map((keyword) => {
     nbOfKeywords = keyword.text.split(' ').length;
@@ -12,7 +13,7 @@ function autotagSentence(originalSentence, keywords, separators) {
     splitSentence.map((word, i, words) => {
       wordsToCheck = words.slice(i, i + nbOfKeywords);
       // console.log('wordsToCheck: ', wordsToCheck);
-      if (wordsToCheck.join(' ') === keyword.text) {
+      if (wordsToCheck.join(separators[0]) === keyword.text) {
         foundKeywords.push({
           text: wordsToCheck.join(' '),
           TagId: keyword.TagId,
@@ -23,13 +24,28 @@ function autotagSentence(originalSentence, keywords, separators) {
         splitSentence[i] = splitSentence.splice(i, nbOfKeywords, keyword.text).join(separators[0]);
         asAnArray.push(splitSentence);
       }
-      // console.log('splitSentence_mapEnd: ', splitSentence);
+
+      // } else {
+      //   asAnArray[i] = splitSentence;
+      // }
+
+      // foundIndex = asAnArray.findIndex(element => element === splitSentence);
+      // console.log('foundIndex: ', foundIndex);
+      // if (foundIndex > -1) {
+      //   asAnArray[foundIndex] = splitSentence;
+      // } else {
+      //   asAnArray.push(splitSentence);
+      // }
+      console.log('splitSentence_mapEnd: ', splitSentence);
+      console.log('asAnArray: ', asAnArray);
       // console.log('foundKeywords: ', foundKeywords);
       return null;
     });
     return foundKeywords;
   });
-
+  if (asAnArray.length === 0) {
+    asAnArray[0] = splitSentence;
+  }
   const myobject = {
     foundKeywords, pattern, asAnArray, originalSentence,
   };
