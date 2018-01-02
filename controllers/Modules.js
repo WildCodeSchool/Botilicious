@@ -52,10 +52,10 @@ const Modules = {
           apiurl,
         },
       })
-        .spread((module, created) => {
-          console.log('module.dataValues: ', module.dataValues);
-          console.log('module: ', module);
-          const data = { module: module.dataValues };
+        .spread((newModule, created) => {
+          console.log('module.dataValues: ', newModule.dataValues);
+          console.log('module: ', newModule);
+          const data = { module: newModule.dataValues };
           // set the error key
           if (created) {
             data.error = false;

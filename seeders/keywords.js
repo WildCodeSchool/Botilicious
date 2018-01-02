@@ -6,8 +6,29 @@ module.exports = {
   up : function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Keywords', [{
       uuid: uuidv4(),
-      text: faker.name.firstName(),
+      text: 'demain',
       TagId: 1,
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent()
+    },
+    {
+      uuid: uuidv4(),
+      text: 'Paris',
+      TagId: 2,
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent()
+    },
+    {
+      uuid: uuidv4(),
+      text: 'San Fransisco',
+      TagId: 2,
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent()
+    },
+    {
+      uuid: uuidv4(),
+      text: 'Fransisco',
+      TagId: 3,
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
     }], {});

@@ -10,7 +10,7 @@ const Chatbots = {
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
   index(req, res) {
-    res.render('chatbot/chatbotEdit');
+    res.redirect('/admin/chatbotEdit');
   },
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot

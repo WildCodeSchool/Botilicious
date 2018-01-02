@@ -15,6 +15,12 @@ module.exports = {
       text: 'place',
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent()
+    },
+    {
+      uuid: uuidv4(),
+      text: 'name',
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent()
     }], {});
   },
 
