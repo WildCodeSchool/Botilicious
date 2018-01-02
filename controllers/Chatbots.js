@@ -4,7 +4,7 @@ const getKeywords = require('./modules/Keywords');
 const getTags = require('./modules/Tags');
 const getChatbots = require('./modules/Chatbots');
 const apiCall = require('./modules/apiCall');
-const findPattern = require('./modules/findPattern');
+const detectKeywords = require('./modules/detectKeywords');
 
 
 const Chatbots = {
@@ -146,16 +146,22 @@ const Chatbots = {
               };
               res.json(jsontostring);
             });
-        // si on ne trouve pas de next
+        // si on ne trouve pas de next, chercher un pattern
         } else {
           console.log('sentence not found, looking for a pattern...');
-          const pattern = findPattern(req.body.message);
-          console.log('pattern: ', pattern);
-          const responseToBrowser = {
-            answer: 'pattern',
-            text: req.body.message,
-          };
-          res.json(responseToBrowser);
+          // const pattern = detectKeywords(req.body.message)
+          detectKeywords(req.body.message)
+            .then((results) => {
+              // console.log('results: ', results);
+              const responseToBrowser = {
+                answer: 'pattern',
+                text: req.body.message,
+              };
+              setTimeout(() => {
+                console.log(results);
+                res.json(responseToBrowser);
+              }, 500);
+            });
         }
       });
 
