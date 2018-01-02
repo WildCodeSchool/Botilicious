@@ -200,27 +200,6 @@ const Chatbots = {
         };
         res.json(responseToBrowser);
       });
-
-    // request("http://api.openweathermap.org/data/2.5/forecast?q="+message[0]+"&7081077244653a5c7f8f9ab6496d6bd3", function(error, response, body){
-    //   console.log(JSON.parse(response.body));
-
-    //   let data = JSON.parse(response.body);
-
-    //   let temp = Math.round(data.list[time].main.temp-273.15);
-
-    //   console.log(temp);
-
-    //   let responseapi = {Time: data.list[time].dt_txt, City : data.city.name, Country : data.city.country, Weather : data.list[time].weather[0].description, Temperature : temp};
-    //   console.log('reponse :',responseapi);
-    //   // res.end();
-
-    //   res.json(responseapi);
-    // });
-    //   }
-    // )
-    // .catch(function(err) {
-    //   console.log('Fetch Error :-S', err);
-    // });
   },
 
   chatbotDelete(req, res) {

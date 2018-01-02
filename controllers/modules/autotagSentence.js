@@ -2,7 +2,7 @@ function autotagSentence(originalSentence, keywords, separators) {
   let splitSentence;
   const foundKeywords = [];
   const pattern = [];
-  let asAnArray = [];
+  const asAnArray = [];
   let wordsToCheck;
   let nbOfKeywords;
   // let foundIndex;
@@ -24,32 +24,23 @@ function autotagSentence(originalSentence, keywords, separators) {
         splitSentence[i] = splitSentence.splice(i, nbOfKeywords, keyword.text).join(separators[0]);
         asAnArray.push(splitSentence);
       }
-
-      // } else {
-      //   asAnArray[i] = splitSentence;
-      // }
-
-      // foundIndex = asAnArray.findIndex(element => element === splitSentence);
-      // console.log('foundIndex: ', foundIndex);
-      // if (foundIndex > -1) {
-      //   asAnArray[foundIndex] = splitSentence;
-      // } else {
-      //   asAnArray.push(splitSentence);
-      // }
-      console.log('splitSentence_mapEnd: ', splitSentence);
-      console.log('asAnArray: ', asAnArray);
-      // console.log('foundKeywords: ', foundKeywords);
       return null;
     });
     return foundKeywords;
   });
+
+  // si aucun keyword trouvé
   if (asAnArray.length === 0) {
     asAnArray[0] = splitSentence;
   }
+
+  // foundKeywords est la donnée principale.
+  // pattern et asAnArray sont seulement dérivées des deux autres.
   const myobject = {
     foundKeywords, pattern, asAnArray, originalSentence,
   };
   console.log('myobject: ', myobject);
   return myobject;
 }
+
 module.exports = autotagSentence;
