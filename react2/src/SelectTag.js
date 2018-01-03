@@ -20,14 +20,18 @@ class SelectTag extends Component {
     handleFormSubmit = (formSubmitEvent) => {
         formSubmitEvent.preventDefault();
 
-        console.log('You have selected:', this.state.selectedOption);
+        // Affiche le tag séléctionné pour chaque mot de la phrase 
+        console.log('For the word : "' + this.props.item + '" You have selected the tag : ', this.state.selectedOption);
+        
+        // Affiche l'index correspondant à chaque mots de la phrase 
+        console.log('index of : ' + this.props.item + ' is : ' + this.props.index);
     }
 
     render() {
         return (
 
 
-
+        <div className='listTag'>
             <form onSubmit={this.handleFormSubmit}>
                 <label>
                     <input type="radio" value="weather" checked={this.state.selectedOption === 'weather'} onChange={this.handleOptionChange} />
@@ -46,6 +50,7 @@ class SelectTag extends Component {
 
                 <button type="submit">Save</button>
             </form>
+        </div>
 
 
 
