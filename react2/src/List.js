@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 
-class List extends Component {
- 
+
+let listStyle = {
+  listStyleType: 'none',
+}
+
+
+class List extends Component { 
 
   render() {
     return (
-      <ul>
+      <ul style={listStyle}>
         {
           this.props.items.map((item, index) => <li key={index}>{item}</li>)
 

@@ -24,7 +24,7 @@ class SelectTag extends Component {
         console.log('For the word : "' + this.props.item + '" You have selected the tag : ', this.state.selectedOption);
         
         // Affiche l'index correspondant à chaque mots de la phrase 
-        console.log('index of : ' + this.props.item + ' is : ' + this.props.index);
+        console.log('index of : "' + this.props.item + '" is : ' + this.props.index);
     }
 
     render() {
@@ -32,6 +32,7 @@ class SelectTag extends Component {
 
 
         <div className='listTag'>
+    
             <form onSubmit={this.handleFormSubmit}>
                 <label>
                     <input type="radio" value="weather" checked={this.state.selectedOption === 'weather'} onChange={this.handleOptionChange} />

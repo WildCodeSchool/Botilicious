@@ -2,6 +2,21 @@ import React from 'react';
 import SelectTag from './SelectTag';
 
 
+const ulStyle = {
+  border :  'solid black 2px',
+  maxWidth :  '80%',
+  marginLeft:  '10%',
+  boxSizing :  'border-box', 
+};
+
+const eachWordStyle = {
+  borderRight    :  'solid black',
+  borderLeft    :  'solid black',
+  maxWidth  :  '80%',
+  minWidth  :  '150px',
+
+};
+
 const Split = props => (
 
   //  1 - SPLIT LA PHRASE EN MOTS PUIS REALISE UN MAP SUR CHAQUE MOTS
@@ -10,7 +25,7 @@ const Split = props => (
   //      UN ENSEMBLE DE BOUTON RADIO POUR SELECTIONNER LE TAG SOUHAITÉ 
   //      (cf.composant 'SelectTag')
 
-  <ul>
+  <ul style={ulStyle}>
     {
       props.items.toString().split(" ").map((item, index) =>
         
@@ -19,7 +34,7 @@ const Split = props => (
           <tbody>
             <tr>
 
-              <td>
+              <td style={eachWordStyle}>
                 {item} {/* MOT DE LA PHRASE  */}
               </td>
 
