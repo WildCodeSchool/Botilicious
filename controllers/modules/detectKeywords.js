@@ -54,11 +54,11 @@ function findPattern(blobs) {
 function detectKeywords(sentence) {
   const splitSentence = sentence.split(' ');
   const blobs = nGrams(splitSentence);
-  const promise1 = new Promise(resolve => setTimeout(() => resolve('bobo'), 1000));
-  const promise2 = new Promise(resolve => setTimeout(() => resolve('tata'), 2000));
-  const promises = Promise.all([promise1, promise2])
+  // const promise1 = new Promise(resolve => setTimeout(() => resolve('bobo'), 1000));
+  // const promise2 = new Promise(resolve => setTimeout(() => resolve('tata'), 2000));
+  // const promises = Promise.all([promise1, promise2])
   // console.log(findPattern(blobs));
-  // const promises = Promise.all(findPattern(blobs))
+  const promises = Promise.all(findPattern(blobs))
 
   // const promises = Promise.all(findPattern(blobs))
     // .then(() => Promise.all([promise1, promise2])
