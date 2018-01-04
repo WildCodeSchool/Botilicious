@@ -151,11 +151,18 @@ const Chatbots = {
                * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
                * avec les mots clés trouvés
                */
-              let foundKeywords = resultat.foundKeywords[0].tag;
+              console.log(resultat.foundKeywords);
+              let keywords='';
+              for (let index = 0; index < resultat.foundKeywords.length; index++) {
+                keywords+=resultat.foundKeywords[index].tag;
+                console.log(resultat.foundKeywords[index].tag);
+              }
+              console.log(keywords);
               // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
               
-              models.Sentence.findOne({
-                where: { text : foundKeywords},
+              models.Sentence.findAll({
+                where: { text : keywords}, 
+
               })
               /**
                * Si on a trouvé cette combinaison de mots clés
@@ -166,7 +173,7 @@ const Chatbots = {
                    * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next 
                    */
                   models.Sentence.findOne({
-                    where : { id : answer.dataValues.next }
+                    where : { id : answer[0].dataValues.next }
                   })
                   /**
                    * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
