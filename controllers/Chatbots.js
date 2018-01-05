@@ -153,7 +153,7 @@ const Chatbots = {
               console.log('results: ', results);
               if (results.length > 0) {
                 const responseToBrowser = {
-                  answer: 'pattern',
+                  answer: results[0].text,
                   text: req.body.message,
                 };
                 // setTimeout(() => {
