@@ -184,16 +184,16 @@ const Chatbots = {
               * avec les mots clés trouvés
               */
                       console.log(resultat.foundKeywords);
-                      let keywords = '';
+                      let foundKeywords = '';
                       for (let index = 0; index < resultat.foundKeywords.length; index++) {
-                        keywords += resultat.foundKeywords[index].tag;
+                        foundKeywords += resultat.foundKeywords[index].tag;
                         console.log(resultat.foundKeywords[index].tag);
                       }
                       console.log(keywords);
                       // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
 
                       models.Sentence.findAll({
-                        where: { text: keywords },
+                        where: { text: foundKeywords },
 
                       })
                       /**
@@ -223,14 +223,14 @@ const Chatbots = {
                       console.log('sentence not found, looking for a pattern...');
                       // const pattern = detectKeywords(req.body.message)
                       detectKeywords(req.body.message)
-                        .then((results) => {
+                        .then((detectKeywordsResults) => {
                           // console.log('results: ', results);
                           const responseToBrowser = {
                             answer: 'pattern',
                             text: req.body.message,
                           };
                           setTimeout(() => {
-                            console.log(results);
+                            console.log(detectKeywordsResults);
                             res.json(responseToBrowser);
                           }, 500);
                         });
