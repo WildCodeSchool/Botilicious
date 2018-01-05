@@ -119,10 +119,10 @@ const Chatbots = {
     * méthode sequelize pour trouver des données de la bdd et qui retourne un model
     * test si cest une question pour renvoyer une reponse
     */
-    // const includes = { include: [models.Sentence_has_Module] };
-    // models.Keyword.findOne({
-    //   where: { text: req.body.message },
-    // })
+    const includes = { include: [models.Sentence_has_Module] };
+    models.Sentence.findOne({
+      where: { text: req.body.message },
+    })
     /**
     * fonction qui permet de renvoyer une seule réponse
     * (dans le network de la console du navigateur)
@@ -151,10 +151,13 @@ const Chatbots = {
                * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
                * avec les mots clés trouvés
                */
-              console.log(resultat.foundKeywords);
+              // console.log(resultat.foundKeywords);
               let keywords='';
               for (let index = 0; index < resultat.foundKeywords.length; index++) {
-                keywords+=resultat.foundKeywords[index].tag;
+                let specificKeyWord = resultat.asAnArray[0].find((element)=> element==resultat.foundKeywords[index].text);
+                if(specificKeyWord){
+                  keywords+=resultat.foundKeywords[index].tag;
+                }
                 console.log(resultat.foundKeywords[index].tag);
               }
               console.log(keywords);
