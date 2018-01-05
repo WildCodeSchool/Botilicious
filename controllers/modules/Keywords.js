@@ -1,7 +1,7 @@
 const models = require('../../models');
 
 function getKeywords(where) {
-  return new Promise(((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const myparams = {
       include: [models.Tag],
     };
@@ -32,7 +32,7 @@ function getKeywords(where) {
         // console.log('records :', records);
         resolve(records);
       });
-  }));
+  });
 }
 
 module.exports = getKeywords;
