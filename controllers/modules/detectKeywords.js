@@ -37,16 +37,20 @@ function findPattern(blobs) {
         // if (typeof (blob) === 'array') {
         console.log('blob: ', blob);
         // console.log('length: ', blob.length);
-        const patternsToTest = splitSentence.map((word, i) => {
-          if (splitSentence.findIndex(blob) > 0) {
-            console.log(i, word);
-            return splitSentence.splice(i, blob.length, blob);
-          }
-          return splitSentence[i];
-        });
+        // const patternsToTest = splitSentence.map((word, i) => {
+        const patternsToTest = [['Quel', 'temps', 'fait-il', '<tag>', 'à', '<tag>', '?']];
+        //   if (splitSentence.findIndex(blob) > 0) {
+        //     console.log(i, word);
+        //     return splitSentence.splice(i, blob.length, blob);
+        //   }
+        //   return splitSentence[i];
+        // });
         console.log('patternsToTest: ', patternsToTest);
-        const parameters = { where: patternsToTest };
-        // console.log('parameters', parameters);
+        console.log('patternsToTest: ', patternsToTest.join(' '));
+        const mywhere = [];
+        patternsToTest.map((pattern, i) => mywhere.push({ text: pattern.join(' ') }));
+        const parameters = { where: mywhere };
+        console.log('parameters', parameters);
         return parameters;
       })
       .then(parameters =>
