@@ -26,48 +26,68 @@ function nGrams(splitSentence) {
 }
 
 function findPattern(blobs) {
-  let parameters;
-  let results;
-  console.log('blobs: ', blobs);
-  console.log('splitSentence: ', blobs[blobs.length - 1]);
+  // console.log('blobs: ', blobs);
+  const splitSentence = blobs[blobs.length - 1];
+  console.log('splitSentence: ', splitSentence);
   const promises = _.map(blobs, blob =>
     Promise
       .resolve()
       .then(() => {
         // console.log('blob.join( ), index: ', blob.join(' '), index);
-        parameters = { where: { text: blob.join(' ') } };
+        // if (typeof (blob) === 'array') {
+        console.log('blob: ', blob);
+        // console.log('length: ', blob.length);
+        const patternsToTest = splitSentence.map((word, i) => {
+          if (splitSentence.findIndex(blob) > 0) {
+            console.log(i, word);
+            return splitSentence.splice(i, blob.length, blob);
+          }
+          return splitSentence[i];
+        });
+        console.log('patternsToTest: ', patternsToTest);
+        const parameters = { where: patternsToTest };
+        // console.log('parameters', parameters);
+        return parameters;
+      })
+      .then(parameters =>
         models.Sentence
           .findAll(parameters)
           .then((findResults) => {
-            if (findResults.dataValues) {
-              console.log('findResults: ', findResults);
-              results.push(findResults.dataValues);
+            const results = [];
+            if (findResults[0]) {
+              console.log('findResults[0].dataValues: ', findResults[0].dataValues);
+              results.push(findResults[0].dataValues);
+              return results[0];
             }
-            return 'bibi';
-          });
-        // return 'yoyo';
+            return results;
+
+            // return results.reduce(element => element.length > 0);
+          }),
+        // }
+      )
+      .then(results =>
+        // console.log('findPattern results IN: ', results);
+        results)
+      .catch((err) => {
+        console.log(err);
+        return [];
       }));
-  // console.log('promises: ', promises);
+  console.log('promises: ', promises);
   return promises;
 }
 
 function detectKeywords(sentence) {
   const splitSentence = sentence.split(' ');
   const blobs = nGrams(splitSentence);
-  const promise1 = new Promise(resolve => setTimeout(() => resolve('bobo'), 1000));
-  const promise2 = new Promise(resolve => setTimeout(() => resolve('tata'), 2000));
-  const promises = Promise.all([promise1, promise2])
-  // console.log(findPattern(blobs));
-  // const promises = Promise.all(findPattern(blobs))
 
-  // const promises = Promise.all(findPattern(blobs))
-    // .then(() => Promise.all([promise1, promise2])
-    .then((results) => {
-      console.log('findPattern results: ', results);
-      return results;
-    });
-  // console.log('promise: ', promise);
-  return promises;
+  const promise = Promise.all(findPattern(blobs))
+    .then(results =>
+      // console.log('findPattern results OUT: ', results);
+      results.filter(element => element.length !== 0),
+      // return results;
+    );
+  console.log('promise: ', promise);
+  return promise;
 }
 
 module.exports = detectKeywords;

@@ -133,36 +133,36 @@ const Chatbots = {
     */
       .then((response) => {
         console.log('response', response);
-        if (response) {
-          models.Sentence.findOne({
-            where: { id: response.dataValues.next },
-          })
-            .then((answer) => {
-              console.log('answer', answer);
-
-              const jsontostring = {
-                answer: answer.dataValues.text,
-                text: req.body.message,
-              };
-              res.json(jsontostring);
-            });
-        // si on ne trouve pas de next, chercher un pattern
-        } else {
-          console.log('sentence not found, looking for a pattern...');
-          // const pattern = detectKeywords(req.body.message)
-          detectKeywords(req.body.message)
-            .then((results) => {
-              // console.log('results: ', results);
-              const responseToBrowser = {
-                answer: 'pattern',
-                text: req.body.message,
-              };
-              setTimeout(() => {
-                console.log(results);
-                res.json(responseToBrowser);
-              }, 500);
-            });
-        }
+        // if (response) {
+        //   models.Sentence.findOne({
+        //     where: { id: response.dataValues.next },
+        //   })
+        //     .then((answer) => {
+        //       console.log('answer', answer);
+        //
+        //       const jsontostring = {
+        //         answer: answer.dataValues.text,
+        //         text: req.body.message,
+        //       };
+        //       res.json(jsontostring);
+        //     });
+        // // si on ne trouve pas de next, chercher un pattern
+        // } else {
+        console.log('sentence not found, looking for a pattern...');
+        // const pattern = detectKeywords(req.body.message)
+        detectKeywords(req.body.message)
+          .then((results) => {
+            console.log('results: ', results);
+            const responseToBrowser = {
+              answer: 'pattern',
+              text: req.body.message,
+            };
+              // setTimeout(() => {
+            // console.log('results: ', results);
+            res.json(responseToBrowser);
+            // }, 500);
+          });
+        // }
       });
 
 
