@@ -120,7 +120,7 @@ const Chatbots = {
     * test si cest une question pour renvoyer une reponse
     */
     // const includes = { include: [models.Sentence_has_Module] };
-    models.Keyword.findOne({
+    models.Sentence.findOne({
       where: { text: req.body.message },
     })
     /**
@@ -137,7 +137,7 @@ const Chatbots = {
           })
             .then((answer) => {
               console.log('answer', answer);
-              
+
               const jsontostring = {
                 answer: answer.dataValues.text,
                 text: req.body.message,
@@ -149,75 +149,67 @@ const Chatbots = {
           console.log('sentence not found, looking for a pattern...');
           // const pattern = detectKeywords(req.body.message)
           detectKeywords(req.body.message)
-            .then((detectKeywordsResults) => {
-              if (detectKeywordsResults.length > 0) {
-                console.log('detectKeywordsResults: ', detectKeywordsResults);
-                models.Sentence.findOne({
-                  where: { id: detectKeywordsResults[0].next },
-                })
-                  .then((answer) => {
-                    console.log('answer.dataValues.text: ', answer.dataValues.text);
-
-                    const responseToBrowser = {
-                      answer: answer.dataValues.text,
-                      text: req.body.message,
-                    };
-
-                    console.log('responseToBrowser: ', responseToBrowser);
-                    res.json(responseToBrowser);
-                  });
+            .then((results) => {
+              console.log('results: ', results);
+              if (results.length > 0) {
+                const responseToBrowser = {
+                  answer: 'pattern',
+                  text: req.body.message,
+                };
+                // setTimeout(() => {
+                // console.log('results: ', results);
+                res.json(responseToBrowser);
+                // }, 500);
+                // }
               } else {
-    /**
-     * getKeywords représente quel keywords sont présents dans une base de données 
-     */
-    getKeywords()
-    /**
-     * On obtient la liste de keywords
-     */
-      .then(keywords => {
-        /**
-         * autoTags récupère la phrase du input, elle split la phrase suivant le 3eme paramètre, et cherche les mots clés
-         * listés dans keywords
-         */
-        const resultat = autoTags(req.body.message, keywords, [' ']);
-          /**
-           * si on a trouvé un mot clé dans la phrase
-           */
-            if (resultat) {
-              /**
-               * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
-               * avec les mots clés trouvés
-               */
-              // console.log(resultat.foundKeywords);
-              let keywords='';
-              for (let index = 0; index < resultat.foundKeywords.length; index++) {
-                let specificKeyWord = resultat.asAnArray[0].find((element)=> element==resultat.foundKeywords[index].text);
-                if(specificKeyWord){
-                  keywords+=resultat.foundKeywords[index].tag;
-                }
-                console.log(resultat.foundKeywords[index].tag);
-              }
-              console.log(keywords);
-              // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
-              
-              models.Sentence.findAll({
-                where: { text : keywords}, 
-              })
-              
+                /**
+          * getKeywords retourne quels keywords sont présents dans la base de données
+          */
+                getKeywords()
+                /**
+          * On obtient la liste de keywords
+          */
+                  .then((keywords) => {
+                    /**
+            * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre, et cherche les mots clés
+            * listés dans keywords
+            */
+                    const resultat = autoTags(req.body.message, keywords, [' ']);
+                    /**
+            * si on a trouvé un mot clé dans la phrase
+            */
+                    if (resultat) {
                       /**
-                      * Si on a trouvé cette combinaison de mots clés
-                      */
+              * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
+              * avec les mots clés trouvés
+              */
+                      console.log(resultat.foundKeywords);
+                      let foundKeywords = '';
+                      for (let index = 0; index < resultat.foundKeywords.length; index++) {
+                        foundKeywords += resultat.foundKeywords[index].tag;
+                        console.log(resultat.foundKeywords[index].tag);
+                      }
+                      console.log(keywords);
+                      // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
+
+                      models.Sentence.findAll({
+                        where: { text: foundKeywords },
+
+                      })
+                      /**
+              * Si on a trouvé cette combinaison de mots clés
+              */
                         .then((answer) => {
                           console.log('answer :', answer);
                           /**
-                        * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
-                        */
+                * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
+                */
                           models.Sentence.findOne({
-                            where: { id: answer.dataValues.next },
+                            where: { id: answer[0].dataValues.next },
                           })
                           /**
-                        * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
-                        */
+                * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
+                */
                             .then((nextSentence) => {
                               const jsontostring = {
                                 answer: nextSentence.dataValues.text,
@@ -242,12 +234,12 @@ const Chatbots = {
                             res.json(responseToBrowser);
                           }, 500);
                         });
-                      }
-                    });
-                }
-              });
-          }
-        });
+                    }
+                  });
+              }
+            });
+        }
+      });
     //   const message = req.body.message.split(' ');
     //   // const rand = [Math.floor(Math.random() * res.length)];
     //   let time;
@@ -303,7 +295,7 @@ const Chatbots = {
     //       res.json(responseToBrowser);
     // });
     // }
-    },
+  },
   chatbotDelete(req, res) {
     console.log(req.body);
     console.log(req.query);
