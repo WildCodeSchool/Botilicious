@@ -14,7 +14,7 @@ function apiCall(moduleName, args) {
           // if (results.arguments.length !== args.length) {
           //   reject(new Error('Erreur - pas le bon nombre d arguments'));
           // } else {
-          const url = results.dataValues.apiurl;
+          const url = JSON.parse(results.dataValues.api).url;
           console.log('url: ', url);
           axios.get(url, args)
             .then((response) => {
