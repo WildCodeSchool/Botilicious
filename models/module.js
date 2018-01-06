@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     description: DataTypes.STRING,
-    api: DataTypes.STRING,
+    api: DataTypes.TEXT,
   });
 
   Module.associate = function (models) {

@@ -18,6 +18,12 @@ module.exports = {
     },
     {
       uuid: uuidv4(),
+      text: 'token',
+      CreatedAt: faker.date.recent(),
+      UpdatedAt: faker.date.recent(),
+    },
+    {
+      uuid: uuidv4(),
       text: 'name',
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
