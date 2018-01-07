@@ -21,3 +21,15 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Module;
 };
+
+// Exemple api (type TEXT):
+
+// api: JSON.stringify({
+//   url: 'http://api.openweathermap.org/data/2.5/forecast',
+//   parameters: [
+//     { tag: 'place', text: 'q' },
+//   ],
+//   fixed: [
+//     { text: 'APPID', value: '096247cb370ee7b808f6578b219dec6c' },
+//   ],
+// }),

@@ -27,13 +27,13 @@ function apiCall(moduleName, args) {
             api.parameters.map((parameter) => {
               params[parameter.text] = args.parameters[parameter.tag];
             });
-            console.log('params: ', params);
+            // console.log('params: ', params);
 
-            // rajouter les paramètres fixes (tokens, logins, etc...)
+            // ajouter les paramètres fixes (tokens, logins, etc...)
             api.fixed.map((parameter) => {
               params[parameter.text] = parameter.value;
             });
-            console.log('params: ', params);
+            // console.log('params: ', params);
 
             // récupérer l'url de l'api (dans l'objet api issu de la bdd)
             const url = api.url;

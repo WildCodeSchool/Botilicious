@@ -1,15 +1,22 @@
 const models = require('../models');
 const getModules = require('./modules/Modules');
+const getTags = require('./modules/Tags');
 
 const Modules = {
 
   moduleGet(req, res) {
     console.log(req.body);
     console.log(req.query);
-    getModules()
+    Promise.all([getModules(), getTags()])
       .then((results) => {
-        console.log(results);
-        res.render('module/module', { modules: results });
+        console.log('results: ', results);
+        const modules = results[0];
+        results[0].map((module, i) => {
+          modules[i].api = JSON.parse(module.api);
+          console.log('modules: ', modules);
+        });
+        const tags = results[1];
+        res.render('module/module', { modules, tags });
       })
       .catch((error, data) => {
         console.log(error, data);
@@ -37,25 +44,26 @@ const Modules = {
   // Accepter les données du formulaire 'Nouveau Modules'
   modulePost(req, res) {
     console.log('body: ', req.body);
-
-    if (!req.body.name) {
+    // console.log('JSON.parse(body): ', JSON.parse(req.body));
+    const newModule = req.body;
+    if (!newModule.name) {
       res.json({ servermessage: 'Error, name length is 0', error: true });
     } else {
-      const name = req.body.name;
-      const description = req.body.description;
-      const apiurl = req.body.apiurl;
+      const where = newModule;
+      where.api = JSON.stringify(newModule.api);
+      console.log('where: ', where);
+
       // insert into
       models.Module.findOrCreate({
-        where: {
-          name,
-          description,
-          apiurl,
-        },
+        where,
       })
-        .spread((newModule, created) => {
-          console.log('module.dataValues: ', newModule.dataValues);
+        .spread((createdModule, created) => {
+          console.log('module.dataValues: ', createdModule.dataValues);
           console.log('module: ', newModule);
-          const data = { module: newModule.dataValues };
+          const data = { module: createdModule.dataValues };
+          console.log('data: ', data);
+          data.module.api = JSON.parse(createdModule.dataValues.api);
+          console.log('data: ', data);
           // set the error key
           if (created) {
             data.error = false;

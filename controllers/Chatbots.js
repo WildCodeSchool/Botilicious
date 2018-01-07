@@ -274,7 +274,7 @@ const Chatbots = {
           time,
         },
       };
-    const currentModule = 'meteo';
+    const currentModule = 'bourse';
 
     let responseToBrowser;
     apiCall(currentModule, tempArgs)
