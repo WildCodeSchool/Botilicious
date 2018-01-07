@@ -26,17 +26,17 @@ function nGrams(splitSentence) {
   return ngrams;
 }
 
-function tryPatterns(splitSentence) {
+function generatePatterns(splitSentence) {
   const patterns = [];
   let tempArray;
-  for (let i = 1; i < (2 ** splitSentence.length) - 1; i += 1) {
+  for (let i = 0; i < (2 ** splitSentence.length) - 1; i += 1) {
     tempArray = [];
     const roundNb = _.padStart((i).toString(2), 4, '0');
     // console.log(roundNb);
     for (let j = 0; j < splitSentence.length; j += 1) {
       // console.log(roundNb[j]);
       if (roundNb[j] === '1') {
-        tempArray[j] = '<tag>';
+        tempArray[j] = '%';
       } else {
         tempArray[j] = splitSentence[j];
       }
@@ -52,44 +52,55 @@ function findPattern(splitSentence) {
   const promises = Promise
     .resolve()
     .then(() => {
-      const patterns = tryPatterns(splitSentence);
-      console.log('patterns :', patterns);
-      // const patternsToTest = [['Quel', 'temps', 'fait-il', '<tag>', 'à', '<tag>', '?']];
+      const patterns = generatePatterns(splitSentence);
+      // console.log('patterns :', patterns);
 
-      // Post.findAll({
-      //   where: {
-      //     authorId: {
-      //       [Op.or]: [12, 13]
-      //     }
-      //   }
+
+      // searchFor = searchFor.map((item) => {
+      //     return {$iLike: item};
       // });
 
-
+      const toSeek = patterns.map(pattern => (
+        {
+          // $like: pattern.join(' ').replace(/<tag>/g, '%'),
+          $like: pattern.join(' '),
+        }
+      ));
       const patternsToTest = {
         where: {
-          text: {
-            [Sequelize.Op.or]: [patterns[0].join(' '), patterns[1].join(' ')],
-          },
+          $or: [
+            { text: { $or: toSeek } },
+          ],
         },
       };
+      // console.log('toSeek: ', toSeek);
+
+
+      // const patternsToTest = {
+      //   where: {
+      //     text: {
+      //       [Sequelize.Op.or]: patterns.map(pattern => pattern.join(' ')),
+      //     },
+      //   },
+      // };
+
       // Sequelize.literal('name REGEXP \expression`';`
+
       return patternsToTest;
     })
     .then(parameters =>
       models.Sentence
         .findAll(parameters)
         .then((findResults) => {
-          const results = [];
-          if (findResults[0]) {
-            console.log('findResults[0].dataValues: ', findResults[0].dataValues);
-            results.push(findResults[0].dataValues);
-            return results[0];
+          if (findResults.length > 0) {
+            // console.log('findResults map dataValues: ', findResults.map(res => res.dataValues));
+            return findResults.map(findResult => findResult.dataValues);
           }
-          return results;
+          return [];
         }))
     .then(results =>
       // console.log('findPattern results IN: ', results);
-      results)
+      results.sort((result2, result1) => (result1.text.match(/<[a-z]+>/g) || []).length - (result2.text.match(/<[a-z]+>/g) || []).length))
     .catch((err) => {
       console.log(err);
       return [];
@@ -103,9 +114,9 @@ function detectKeywords(sentence) {
   // const blobs = nGrams(splitSentence);
 
   const promise = findPattern(splitSentence)
-    .then((result) => {
-      console.log('findPattern result OUT: ', result);
-      return result;
+    .then((results) => {
+      console.log('findPattern result OUT: ', results);
+      return results;
     });
   console.log('promise: ', promise);
   return promise;

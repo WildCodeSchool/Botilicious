@@ -52,6 +52,8 @@ const Keywords = {
       Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
         .then((results) => {
           console.log('bulkCreateOrUpdate results: ', results);
+          // a ameliorer plus tard
+          // utiliser le retour de bulkCreateOrUpdate plutot que faire un findAll
           models.Keyword
             .findAll()
             .then(findResults => res.status(200).json({ keywords: findResults, message: 'Bien écrit' }));

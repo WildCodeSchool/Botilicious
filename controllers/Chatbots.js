@@ -1,6 +1,7 @@
 const models = require('../models');
 const getSentences = require('./modules/Sentences');
 const getKeywords = require('./modules/Keywords');
+const autoAddKeywords = require('./modules/autoAddKeywords');
 const getTags = require('./modules/Tags');
 const getChatbots = require('./modules/Chatbots');
 const apiCall = require('./modules/apiCall');
@@ -151,16 +152,20 @@ const Chatbots = {
           detectKeywords(req.body.message)
             .then((results) => {
               console.log('results: ', results);
-              if (results) {
-                models.Sentence.findOne({
-                  where: { id: results.next },
-                })
+              if (results.length > 0) {
+                Promise.all([
+                  models.Sentence.findOne({
+                    where: { id: results[0].next },
+                  }),
+                  autoAddKeywords(req.body.message, results[0].text),
+                ])
                   .then((answer) => {
+                    // console.log('answer: ', answer);
                     const responseToBrowser = {
-                      answer: answer.text,
+                      answer: answer[0].text,
                       text: req.body.message,
+                      addedKeywords: answer[1],
                     };
-                    // console.log('results: ', results);
                     res.json(responseToBrowser);
                   });
               } else {
