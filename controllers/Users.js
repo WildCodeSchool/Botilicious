@@ -42,7 +42,7 @@ const Users = {
         .findOne({ where: myparams })
         .then((results, status) => {
           console.log('results: ', results);
-          console.log('status: ', status);
+          // console.log('status: ', status);
           if (!results) {
             console.log('error login');
             res.redirect('/login');
@@ -76,6 +76,56 @@ const Users = {
 
   forgottenpw(req, res) {
     res.render('user/forgottenpw');
+  },
+
+  contactGet(req, res) {
+    res.render('index/contact');
+  },
+
+  contactPost(req, res) {
+    const error = [];
+    console.log('login en cours');
+    console.log(validator.isEmpty(req.body.email));
+    // console.log('bob2');
+    if (validator.isEmpty(req.body.email)) {
+      error[0] = 'Merci de renseigner votre identifiant';
+      console.log(error.length);
+    }
+    if (false) {
+      error[1] = 'Merci de renseigner votre mot de passe';
+      console.log(error.length);
+    }
+    if (error.length > 0) {
+      console.log(error);
+      res.render('index/login', { error });
+    } else {
+      const parametre = {
+        email: req.body.email,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        message: req.body.message,
+        type: 'contact',
+      };
+
+      models.User
+        .create(parametre)
+        .then((resultat) => {
+          console.log('resultat: ', resultat);
+          // console.log('status: ', status);
+          // if (!resultat) {
+          //   console.log('error login');
+          //   res.redirect('/login');
+          // } else {
+          //   req.session.connected = true;
+          //   // inscrire l'id de l'utilisateur dans req.session
+          //   req.session.userId = resultat.id;
+          //   console.log(req.session);
+          //   res.redirect('/admin/chatbotEdit');
+          // }
+          // res.json(resultat);
+          res.render('index/contact', { message: 'Votre message a bien été envoyé !' });
+        });
+    }
   },
 
 };
