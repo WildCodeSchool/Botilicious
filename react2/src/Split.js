@@ -3,17 +3,17 @@ import SelectTag from './SelectTag';
 
 
 const ulStyle = {
-  border :  'solid black 2px',
-  maxWidth :  '80%',
-  marginLeft:  '10%',
-  boxSizing :  'border-box', 
+  border: 'solid black 2px',
+  maxWidth: '80%',
+  marginLeft: '10%',
+  boxSizing: 'border-box',
 };
 
 const eachWordStyle = {
-  borderRight    :  'solid black',
-  borderLeft    :  'solid black',
-  maxWidth  :  '80%',
-  minWidth  :  '150px',
+  borderRight: 'solid black',
+  borderLeft: 'solid black',
+  maxWidth: '80%',
+  minWidth: '150px',
 
 };
 
@@ -25,43 +25,47 @@ const Split = props => (
   //      UN ENSEMBLE DE BOUTON RADIO POUR SELECTIONNER LE TAG SOUHAITÉ 
   //      (cf.composant 'SelectTag')
 
+
   <ul style={ulStyle}>
     {
-      props.items.toString().split(" ").map((item, index) =>
-        
-        <table key={index} >
-        
-          <tbody>
-            <tr>
+      props.items.toString().split(" ").map((item, index) => {
+        //if ((' ', '.', ',', ';', '-').indexOf(item) === -1) {
 
-              <td style={eachWordStyle}>
-                {item} {/* MOT DE LA PHRASE  */}
-              </td>
+        if ((' ', '.', ',', ';', '-').indexOf(item) === -1 && item !== '') {
+          return <table key={index} >
 
-              <td>
+            <tbody>
+              <tr>
 
-                {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
-                <SelectTag item={item} index={index}/>
+                <td style={eachWordStyle}>
+                  {item} {/* MOT DE LA PHRASE  */}
+                </td>
 
-                {/* On export 'item" et 'index' comme propriété dans le composant 'SelectTag' 
+                <td>
+
+                  {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
+                  <SelectTag item={item} index={index} />
+
+                  {/* On export 'item" et 'index' comme propriété dans le composant 'SelectTag' 
                     cela nous permet de les utiliser dans ce composant -->
                     cf.console.log du 'handleFormSubmit' */}
-                
-                
-                
-                
 
-              </td>
 
-            </tr>
-          </tbody>
-          
-        </table>
 
-      )
-        
 
-  }
+
+                </td>
+
+              </tr>
+            </tbody>
+
+          </table>
+        } else return console.log("ERROR");
+
+      })
+
+
+    }
 
   </ul>
 
