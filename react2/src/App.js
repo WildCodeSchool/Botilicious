@@ -8,6 +8,8 @@ import AddSentences from './AddSentences';
 // import List from './List';
 // import Split from './Split';
 
+// var __html = require('../../views/chatbot/chatbotEdit.pug');
+// var pug = { __html: __html };
 
 class App extends Component {
   constructor(props) {
@@ -18,38 +20,35 @@ class App extends Component {
           Setting an initial state at the top: an empty users array will prevent 
           the this.state.users.map from blowing up before the users are loaded. */
       users: [],
+      html: "",
 
     };
   }
 
   // PERMET LA COMUNICATION ENTRE LES DEUX SERVEURS (react et express)
   componentDidMount() {
-    fetch('http://localhost:3001/admin/message')
+  Promise.all(
+    [
+      fetch('http://localhost:3001/admin/message')
       .then(res => res.json())
       .then(users => {
         console.log(users);
-        this.setState({ users })
+        return users
+      }), 
+      fetch('http://localhost:3001/admin/chatbotEdit')
+      // .then(res => res.json())
+      .then(users => {
+        console.log(users);
+        return users.text()
       })
-  }
+    ] 
+  )
+  .then(resultat => {console.log(resultat[1].body);
+    this.setState({users:resultat[0]});
+    this.setState({html:resultat[1]})
 
-  // Lors de la soumission, affiche la phrase saisie sous forme 
-  // de liste sous le champs input
-  // onSubmit = (event) => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     term: '',
-  //     items: [...this.state.items, this.state.term],
-  //     split: [...this.state.items.toString().split(" ")],
-  //   });
-  //   console.log("toto");
-  //   console.log("this.state.items : ", this.state.items)
-  //   console.log("term : ", this.state.term)
-
-  //   console.log("toString : ", this.state.items.toString().split(" "))
-
-  // }
-
-
+  })
+}
 
   render() {
     return (
@@ -65,6 +64,7 @@ class App extends Component {
         {/* COMPOSANT QUI PERMET LA SAISIE DE PHRASE DANS UN CHAMPS INPUT */  }
         <AddSentences />
 
+        <div dangerouslySetInnerHTML={{__html:this.state.html}} />
         {/* <TagAllWords /> */}
 
         

@@ -25,10 +25,13 @@ class AddSentences extends Component {
         this.setState({ term: event.target.value })
     }
 
+<<<<<<< HEAD
     // allowSubmit = (event) => {
     //     if (this.state.term === '')
     // }
 
+=======
+>>>>>>> 7c7845cdcea82ec27def992876d41bda0d67e0de
     onSubmit = (event) => {
         event.preventDefault();
         this.setState({
@@ -37,6 +40,7 @@ class AddSentences extends Component {
             visible: true,  /*  ici this.state.visible sera egal à true 
                                 uniquement lorsqu'une phrase aura été soumise */
         });
+<<<<<<< HEAD
       
 
     }
@@ -73,10 +77,36 @@ class AddSentences extends Component {
                 {/* APPEL LA VARIABLE SPLIT (cf. render ci dessus)
                     CELLE CI CONTIENT LE COMPOSANT <Split /> */}
                 { split }
-
-            </div>
-        );
+=======
     }
+
+
+
+
+
+render() {
+    return (
+        <div>
+
+            {/* FORMULAIRE POUR LA SAISIE DE PHRASES */}
+
+            <form className="App" onSubmit={this.onSubmit}>
+                <input value={this.state.term} onChange={this.onChange} />
+                <button>Submit</button>
+            </form>
+
+            {/* AFFICHE LES PHRASES SAISIES SOUS FORME DE LISTE */}
+
+            <List items={this.state.items} />
+
+            {/* 1- DIVISE LES PHRASES EN MOTS
+                    2- AFFICHE LA LISTE DES MOTS ET UNE LISTE DE TAG POUR CHAQU'UN D'EUX  */}
+            <Split items={this.state.items} />
+>>>>>>> 7c7845cdcea82ec27def992876d41bda0d67e0de
+
+        </div>
+    );
+}
 
 }
 

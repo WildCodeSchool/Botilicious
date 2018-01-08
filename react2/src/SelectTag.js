@@ -25,7 +25,28 @@ class SelectTag extends Component {
         
         // Affiche l'index correspondant à chaque mots de la phrase 
         console.log('index of : "' + this.props.item + '" is : ' + this.props.index);
+    
+        //var self = this;
+        fetch('http://localhost:3001/admin/tag', {
+            method: 'POST',
+            data: {
+                text: 'TOTO',
+                // name: this.state.selectedOption
+                
+            }
+        })
+            // .then(function (response) {
+            //     return response.json()
+            // })
+            .then(function (data) {
+                console.log('BOB : ' + data + ' BOB') ;
+            });
+
+
+    
+    
     }
+
 
     render() {
         return (
