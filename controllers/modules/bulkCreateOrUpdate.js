@@ -23,7 +23,6 @@ function bulkCreateOrUpdate(requestObject) {
           models.Keyword.update(
             value,
             {
-              // where: { id : 1 },
               where: { text: value.text },
             },
           )
@@ -32,7 +31,9 @@ function bulkCreateOrUpdate(requestObject) {
               // console.log(data[0] == 0);
               // if (true){
               if (data[0] === 0) {
-                console.log('inserting: ', value);
+                const toInsert = value;
+                toInsert.confidence = 1;
+                console.log('inserting: ', toInsert);
                 models.Keyword
                   .create(value)
                   .then(() => console.log('inserted'));

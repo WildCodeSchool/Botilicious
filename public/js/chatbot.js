@@ -36,7 +36,6 @@ $('#addchatbot').click((event) => {
 
           // Add an event listener to the new button. With an Event Delegation
           $('#chatbots').on('click', `#deletechatbot${data.chatbot.id}`, DeleteChatbot);
-
         } else {
           $('#serverMessageChatbot').append(data.serverMessageChatbot).append(`. Connection status: ${status}`);
         }

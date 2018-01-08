@@ -1,9 +1,7 @@
 extends ../layout
 
 block content
-  a(href="/" class="btn orange") Retour à l'accueil
-  a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
-  a(href="/admin/module" class="btn gris") Gestion Module
+  include ../menu
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
@@ -48,12 +46,13 @@ block content
     br
   .tagwindow
     h2 Ici tag de mots
-    button#sentencetag Tag des mots listés
-    div#serverMessageSentenceTagging
-    table#wordsToTag(style="width:400px;border:1px solid black")
-      tr#headers
-        th Mot
-        th Tag
+    //- button#sentencetag Tag des mots listés
+    //- div#serverMessageSentenceTagging
+    div#wordsToTag
+    //- table#wordsToTag(style="width:400px;border:1px solid black")
+    //-   tr#headers
+    //-     th Mot
+    //-     th Tag
   .edittags
     h2 Edition des tags
     input#tag(type="text" name="tag" size="60")
@@ -95,12 +94,14 @@ block content
       tr
         th Keywords
         th Tag
+        th Sûr
         th Action
       each keyword in keywords
         tr(id='keyword' +keyword.id)
           td(id='keywordtext' +keyword.id)= keyword.text
           input(type='hidden' value=keyword.TagId)
           td!= keyword.tag
+          td= keyword.confidence
           td
             button(id='deletekeyword' +keyword.id) Supprimer
   section.secgris

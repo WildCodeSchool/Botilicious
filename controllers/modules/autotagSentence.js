@@ -5,6 +5,7 @@ function autotagSentence(originalSentence, keywords, separators) {
   const asAnArray = [];
   let wordsToCheck;
   let nbOfKeywords;
+  // let foundIndex;
 
   keywords.map((keyword) => {
     nbOfKeywords = keyword.text.split(' ').length;
@@ -12,7 +13,7 @@ function autotagSentence(originalSentence, keywords, separators) {
     splitSentence.map((word, i, words) => {
       wordsToCheck = words.slice(i, i + nbOfKeywords);
       // console.log('wordsToCheck: ', wordsToCheck);
-      if (wordsToCheck.join(' ') === keyword.text) {
+      if (wordsToCheck.join(separators[0]) === keyword.text) {
         foundKeywords.push({
           text: wordsToCheck.join(' '),
           TagId: keyword.TagId,
@@ -23,17 +24,23 @@ function autotagSentence(originalSentence, keywords, separators) {
         splitSentence[i] = splitSentence.splice(i, nbOfKeywords, keyword.text).join(separators[0]);
         asAnArray.push(splitSentence);
       }
-      // console.log('splitSentence_mapEnd: ', splitSentence);
-      // console.log('foundKeywords: ', foundKeywords);
       return null;
     });
     return foundKeywords;
   });
 
+  // si aucun keyword trouvé
+  if (asAnArray.length === 0) {
+    asAnArray[0] = splitSentence;
+  }
+
+  // foundKeywords est la donnée principale.
+  // pattern et asAnArray sont seulement dérivées des deux autres.
   const myobject = {
     foundKeywords, pattern, asAnArray, originalSentence,
   };
   console.log('myobject: ', myobject);
   return myobject;
 }
+
 module.exports = autotagSentence;

@@ -1,20 +1,27 @@
-'use strict';
-var faker = require('faker');
+
+const faker = require('faker');
 const uuidv4 = require('uuid/v4');
 
 module.exports = {
-  up : function (queryInterface, Sequelize) {
+  up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Modules', [{
       uuid: uuidv4(),
       name: 'meteo',
       description: 'Weather with Openweathermap',
-      apiurl: 'http://api.openweathermap.org/data/2.5/forecast',
+      api: JSON.stringify({
+        url: 'http://api.openweathermap.org/data/2.5/forecast',
+        // required paramters, given by the chatbot user
+        parameters: [
+          { tag: 'place', text: 'q' },
+        ],
+        // required parameters, to be added to the given parameters above
+        fixed: [
+          { text: 'APPID', value: '096247cb370ee7b808f6578b219dec6c' },
+        ],
+      }),
       CreatedAt: faker.date.recent(),
-      UpdatedAt: faker.date.recent()
+      UpdatedAt: faker.date.recent(),
     }], {});
   },
-// http://api.openweathermap.org/data/2.5/forecast
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Modules', null, {});
-  }
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Modules', null, {}),
 };

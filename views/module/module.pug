@@ -1,11 +1,14 @@
 extends ../layout
 
 block content
-  
-  section.sectionform
+  include ../menu
+  section#serverMessageModule
+    if error
+      p= error
+  section.sectionform(style="width:800px")
     h2 Nouveau module
-    .containerform
-      form#form(method="POST")
+    .containerform(style="width:800px")
+      form#form(method="POST" style="width:800px")
         if servermessage
           p.warning= servermessage
         .form-group
@@ -15,26 +18,66 @@ block content
           label(for='description') Description
           input#description.form-control(required='', placeholder="Description" name="description")
         .form-group
-          label(for='apiurl') URL d'une API
-          input#apiurl.form-control(placeholder="URL d'une API" name="apiurl")
-        button#addmodule.btn.gris(type='submit') Créer le module
-      div#serverMessageModule
+          label(for='apiUrl') URL d'une API
+          input#apiUrl.form-control(placeholder="URL d'une API" name="apiUrl")
+        #newParameters.form-group
+    #editParameters.editParameters
+      h3 Edition des paramètres
+      label(for='parameterTag') Tag
+      select#parameterTag(name='parameterTag')
+        option(value="")= (aucun)
+        each tag in tags
+          option(value=tag.text)= tag.text
+      label(for='parameter') Paramètre
+      input#parameter(type="text" name="parameter" size="30")
+      label(for='parameterValue') Valeur
+      input#parameterValue(type="text" name="parameterValue" size="30")
+      button#addParameter Ajouter le paramètre
+      div#servermessageParameter
+      br
+      table#parameters(style="width:600px;border:1px solid black")
+        tr
+          th Tags
+          th Paramètres
+          th Valeurs
+          th Action
+    button#addmodule.btn.gris(type='submit') Créer le module
 
   section.modulesList
     table#modules(style="width:800px;border:1px solid black")
       tr
         th Nom
         th id
-        th URL d'une API
+        th URL de l'API
         th Description
         th Action
       each module in modules
         tr(id='module' +module.id)
           td(id='moduletext' +module.id)= module.name
           td= module.id
-          td= module.apiurl
+          td= module.api.url
           td= module.description
           td
             button(id='deletemodule' +module.id) Supprimer
+            br
+  section.moduleEdit
+    each module, m in modules
+      h3= module.name + ' :'
+      table(id='parametersEdit' +m style="width:600px;border:1px solid black")
+        tr
+          th Tags
+          th Paramètres
+          th Valeurs
+        each parameter, i in module.api.parameters
+          tr(id='parameter' +i)
+            td(id='parameterTag' +i)= parameter.tag
+            td(id='parameterText' +i)= parameter.text
+            td(id='parameterValue' +i)
+        each fixed, i in module.api.fixed
+          tr(id='fixed' +i)
+            td(id='fixedTag' +i)
+            td(id='fixedText' +i)= fixed.text
+            td(id='fixedValue' +i)= fixed.value
+
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/module.js')

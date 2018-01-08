@@ -26,8 +26,8 @@ const Keywords = {
   keywordPost(req, res) {
     console.log('req.body: ', req.body);
 
-    // let dataToWrite = {tags:[{text:'test1', TagId:1}]};
-    // let dataToWrite = {tags : [{text:'test1', TagId:1},{text:'toto1', TagId:1}]};
+    // let dataToWrite = {keywords:[{text:'test1', TagId:1}]};
+    // let dataToWrite = {keywords : [{text:'test1', TagId:1},{text:'toto1', TagId:1}]};
     const dataToWrite = req.body;
     console.log('dataToWrite.keywords: ', dataToWrite.keywords);
 
@@ -50,10 +50,10 @@ const Keywords = {
     } else {
     // return Promise.all(bulkCreateOrUpdate([{text: 'baba', TagId: 2}, {text: 'toto1', TagId: 1}]))
       Promise.all(bulkCreateOrUpdate(dataToWrite.keywords))
-        .then((results, res2, res3) => {
+        .then((results) => {
           console.log('bulkCreateOrUpdate results: ', results);
-          console.log('bulkCreateOrUpdate res2: ', res2);
-          console.log('bulkCreateOrUpdate res3: ', res3);
+          // a ameliorer plus tard
+          // utiliser le retour de bulkCreateOrUpdate plutot que faire un findAll
           models.Keyword
             .findAll()
             .then(findResults => res.status(200).json({ keywords: findResults, message: 'Bien écrit' }));
