@@ -32,7 +32,7 @@ function generatePatterns(splitSentence) {
   let tempArray;
   for (let i = 0; i < (2 ** splitSentence.length) - 1; i += 1) {
     tempArray = [];
-    const roundNb = _.padStart((i).toString(2), 4, '0');
+    const roundNb = _.padStart((i).toString(2), splitSentence.length.toString(2).length, '0');
     // console.log(roundNb);
     for (let j = 0; j < splitSentence.length; j += 1) {
       // console.log(roundNb[j]);
