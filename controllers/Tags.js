@@ -5,14 +5,14 @@ const Tags = {
 
   // Obtenir la liste des tags existants
   tagGet(req, res) {
-    // console.log('Loading tags');
-    // console.log('req.query: ', req.query);
+    console.log('Loading tags');
+    console.log('req.query: ', req.query);
     let attributes;
     if (req.query.id) {
       attributes = { id: req.query.id };
     }
     getTags(attributes).then((results) => {
-      // console.log('mytags: ', results);
+      console.log('mytags: ', results);
       res.json({ Tags: results });
     });
   },

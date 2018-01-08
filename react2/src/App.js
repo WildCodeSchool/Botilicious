@@ -27,27 +27,18 @@ class App extends Component {
 
   // PERMET LA COMUNICATION ENTRE LES DEUX SERVEURS (react et express)
   componentDidMount() {
-  Promise.all(
-    [
-      fetch('http://localhost:3001/admin/message')
-      .then(res => res.json())
-      .then(users => {
-        console.log(users);
-        return users
-      }), 
-      fetch('http://localhost:3001/admin/chatbotEdit')
-      // .then(res => res.json())
-      .then(users => {
-        console.log(users);
-        return users.text()
-      })
-    ] 
-  )
-  .then(resultat => {console.log(resultat[1].body);
-    this.setState({users:resultat[0]});
-    this.setState({html:resultat[1]})
+  // Promise.all(
+    // [
+    //   fetch('http://localhost:3001/admin/message')
+    //   .then(res => res.json())
+    //   .then(users => {
+    //     console.log(users);
+    //     return users
+    //   }), 
+     
+    // ] 
+  // )
 
-  })
 }
 
   render() {
@@ -64,7 +55,7 @@ class App extends Component {
         {/* COMPOSANT QUI PERMET LA SAISIE DE PHRASE DANS UN CHAMPS INPUT */  }
         <AddSentences />
 
-        <div dangerouslySetInnerHTML={{__html:this.state.html}} />
+        {/* <div dangerouslySetInnerHTML={{__html:this.state.html}} /> */}
         {/* <TagAllWords /> */}
 
         

@@ -9,6 +9,14 @@ const router = express.Router();
 const Indexes = require('../controllers/Indexes');
 const Users = require('../controllers/Users');
 
+// Permet de faire communiquer les serveurs react et express ensemble
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+
 /* GET Affichage de la page d'erreur 404 */
 router.get('/error404', Indexes.error404);
 

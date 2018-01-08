@@ -11,23 +11,14 @@ const Sentences = require('../controllers/Sentences');
 const Users = require('../controllers/Users');
 const Tags = require('../controllers/Tags');
 
-<<<<<<< HEAD
-// Permet de faire communiquer les serveurs react et express ensemble
-=======
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
+// Permet de faire communiquer les serveurs react et express ensemble
 
->>>>>>> 7c7845cdcea82ec27def992876d41bda0d67e0de
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
-<<<<<<< HEAD
-/* Projet IAforall - Botilicious Ce fichier regroupe les routes des pages accessibles post-connexion */
-
-=======
->>>>>>> 7c7845cdcea82ec27def992876d41bda0d67e0de
 
   /* GET Affichage de la page de configuration du chatbot */
 router.get('/', Chatbots.index);
@@ -51,10 +42,7 @@ router.get('/chatbotList', Chatbots.chatbotListGet);
 // Accepter les données du formulaire 'Nouveau Chatbot'
 router.post('/chatbot', Chatbots.chatbotPost);
 router.delete('/chatbot', Chatbots.chatbotDelete);
-<<<<<<< HEAD
 
-=======
->>>>>>> 7c7845cdcea82ec27def992876d41bda0d67e0de
 router.get('/message', Chatbots.messageGet);
 router.post('/message', Chatbots.messagePost);
 
