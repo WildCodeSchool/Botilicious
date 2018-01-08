@@ -22,6 +22,7 @@ function autoAddKeywords(sentence, pattern) {
         foundKeywords.forEach((foundK, i) => {
           console.log(tags.findIndex(tag => foundK.tag === `<${tag.text}>`));
           myparams[i].TagId = tags[tags.findIndex(tag => foundK.tag === `<${tag.text}>`)].id;
+          myparams[i].confidence = 0.5;
         });
         console.log('myparams', myparams);
         models.Keyword

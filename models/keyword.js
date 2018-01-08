@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
     },
+    confidence: DataTypes.FLOAT,
   });
 
   Keyword.associate = function (models) {

@@ -20,7 +20,7 @@ const Chatbots = {
     // console.log(getSentences());
     Promise.all([getSentences(), getKeywords(), getTags()])
       .then((results) => {
-      // console.log('keywords found: ', results[1]);
+        console.log('keywords found: ', results[1]);
         res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });
       })
       .catch(error => console.log(error));
@@ -123,6 +123,7 @@ const Chatbots = {
     // const includes = { include: [models.Sentence_has_Module] };
     models.Sentence.findOne({
       where: { text: req.body.message },
+      include: { model: models.Module },
     })
     /**
     * fonction qui permet de renvoyer une seule réponse
@@ -156,6 +157,7 @@ const Chatbots = {
                 Promise.all([
                   models.Sentence.findOne({
                     where: { id: results[0].next },
+                    include: { model: models.Module },
                   }),
                   autoAddKeywords(req.body.message, results[0].text),
                 ])
@@ -169,14 +171,6 @@ const Chatbots = {
                     res.json(responseToBrowser);
                   });
               } else {
-                console.log('nothing found');
-                const responseToBrowser = {
-                  answer: 'je ne comprends pas',
-                  text: req.body.message,
-                };
-                res.json(responseToBrowser);
-
-
                 /**
           * getKeywords retourne quels keywords sont présents dans la base de données
           */
@@ -209,7 +203,7 @@ const Chatbots = {
 
                       models.Sentence.findAll({
                         where: { text: foundKeywords },
-
+                        include: { model: models.Module },
                       })
                       /**
               * Si on a trouvé cette combinaison de mots clés
@@ -221,11 +215,13 @@ const Chatbots = {
                 */
                           models.Sentence.findOne({
                             where: { id: answer[0].dataValues.next },
+                            include: { model: models.Module },
                           })
                           /**
                 * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
                 */
                             .then((nextSentence) => {
+                              console.log('nextSentence: ', nextSentence);
                               const jsontostring = {
                                 answer: nextSentence.dataValues.text,
                                 text: req.body.message,
@@ -233,14 +229,14 @@ const Chatbots = {
                               res.json(jsontostring);
                             });
                         });
-                      // si on ne trouve pas de next, chercher un pattern
+                      // si on ne trouve pas de next, abandonner
                     } else {
-                      // console.log('nothing found');
-                      // const responseToBrowser = {
-                      //   answer: 'je ne comprends pas',
-                      //   text: req.body.message,
-                      // };
-                      // res.json(responseToBrowser);
+                      console.log('nothing found');
+                      const responseToBrowser = {
+                        answer: 'je ne comprends pas',
+                        text: req.body.message,
+                      };
+                      res.json(responseToBrowser);
                     }
                   });
               }

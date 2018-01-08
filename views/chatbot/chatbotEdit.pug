@@ -94,12 +94,14 @@ block content
       tr
         th Keywords
         th Tag
+        th Sûr
         th Action
       each keyword in keywords
         tr(id='keyword' +keyword.id)
           td(id='keywordtext' +keyword.id)= keyword.text
           input(type='hidden' value=keyword.TagId)
           td!= keyword.tag
+          td= keyword.confidence
           td
             button(id='deletekeyword' +keyword.id) Supprimer
   section.secgris

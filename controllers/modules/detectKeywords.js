@@ -2,6 +2,8 @@ const models = require('../../models');
 const Sequelize = require('sequelize');
 const _ = require('lodash');
 
+// retourne tous les paquets de mots possibles pour une phrase donnée
+// pour l'instant pas utilisée
 function nGrams(splitSentence) {
   const ngrams = [];
   let ngramToAdd;
@@ -16,9 +18,6 @@ function nGrams(splitSentence) {
         ngrams.push(ngramToAdd);
         // console.log('ngrams: ', ngrams);
       }
-      // if (i < splitSentence.length) {
-      //   ngrams.push([word, splitSentence[i + 1]]);
-      // }
       return null;
     });
     // console.log('ngrams_final: ', ngrams);
@@ -26,6 +25,8 @@ function nGrams(splitSentence) {
   return ngrams;
 }
 
+// retourne les patterns possibles
+// 'Bonjour ça va' => [['<tag>', 'ça', 'va'], ['Bonjour', '<tag>', 'va'], ...]
 function generatePatterns(splitSentence) {
   const patterns = [];
   let tempArray;
@@ -100,6 +101,7 @@ function findPattern(splitSentence) {
         }))
     .then(results =>
       // console.log('findPattern results IN: ', results);
+      // trier les résultats pour donner la priorité à des phrases comportant plus de keywords
       results.sort((result2, result1) => (result1.text.match(/<[a-z]+>/g) || []).length - (result2.text.match(/<[a-z]+>/g) || []).length))
     .catch((err) => {
       console.log(err);
