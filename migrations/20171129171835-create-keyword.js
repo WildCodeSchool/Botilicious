@@ -15,6 +15,12 @@ module.exports = {
     text: {
       type: Sequelize.STRING,
     },
+    confidence: {
+      type: Sequelize.STRING,
+    },
+    TagId: {
+      type: Sequelize.STRING,
+    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE,
