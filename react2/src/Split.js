@@ -17,8 +17,11 @@ const eachWordStyle = {
 
 };
 
-const Split = props => (
 
+
+const Split = props => (
+ 
+  
   //  1 - SPLIT LA PHRASE EN MOTS PUIS REALISE UN MAP SUR CHAQUE MOTS
 
   //  2 - POUR CHAQUE MOTS LE MAP : CRÉER UN TABLEAU CONTEANT LE MOT EN QUESTION ET 
@@ -44,15 +47,14 @@ const Split = props => (
                 <td>
 
                   {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
-                  <SelectTag item={item} index={index} />
+                  <SelectTag  
+                    item     = {item} 
+                    index    = {index}  
+                  />
 
                   {/* On export 'item" et 'index' comme propriété dans le composant 'SelectTag' 
                     cela nous permet de les utiliser dans ce composant -->
                     cf.console.log du 'handleFormSubmit' */}
-
-
-
-
 
                 </td>
 

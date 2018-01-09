@@ -85,7 +85,7 @@ class SelectTag extends Component {
                 </label>
 
                     <label>
-                        <input type="radio" value="null" checked={this.state.selectedOption === 'null'} onChange={this.handleOptionChange} />
+                        <input type="radio" value="null" checked={this.props.tags} onChange={this.handleOptionChange} />
                         Null
                 </label>
 
