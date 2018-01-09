@@ -49,7 +49,7 @@ const Split = props => (
                   {/* AFFICHE LES PROPOSITIONS DE TAG POUR CHAQUE MOT DE LA PHRASE */}
                   <SelectTag  
                     item     = {item} 
-                    index    = {index}  
+                    index    = {index}
                   />
 
                   {/* On export 'item" et 'index' comme propriété dans le composant 'SelectTag' 

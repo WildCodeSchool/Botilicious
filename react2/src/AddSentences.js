@@ -17,8 +17,6 @@ class AddSentences extends Component {
             //sous forme de liste 
             term: '',   //   term to store what we passing as a value to our input
             items: [],  //   items to store every value which we passing to our todo list
-            tags: [],
-            keywords: [],
         };
     }
 
@@ -37,34 +35,7 @@ class AddSentences extends Component {
                                 uniquement lorsqu'une phrase aura été soumise */
         });
     }
-    componentDidMount = () => {
-        //  obtenir le contenu de la table tags
-       
-        Promise.all([
-            axios.get('http://localhost:3001/admin/tag'),
-            axios.get('http://localhost:3001/admin/keyword')
-        ]) 
-        
-    //  {
-    //         mode: 'no-cors'
-    //     })
-            // .then(res => {
-            //     console.log(res);
-            //     res.json()
-            // })
-
-            // results : reponse requètes axios : renvoie un tableau avec les tags (results[0]) 
-            // puis les keywords (results[1])
-            .then(results => {
-                
-                this.setState({ 
-                    tags: results[0],
-                    keywords: results[1] });
-                console.log('tags is : ', this.state.tags, 'keywords is : ', this.state.keywords);
-
-                return results
-            })
-    }
+    
 
 
 
@@ -96,7 +67,7 @@ class AddSentences extends Component {
 
                 {/* AFFICHE LES PHRASES SAISIES SOUS FORME DE LISTE */}
 
-                <List items={this.state.items}/>
+                <List items={this.state.items} />
 
                 {/* APPEL LA VARIABLE SPLIT (cf. render ci dessus)
                     CELLE CI CONTIENT LE COMPOSANT <Split /> */}

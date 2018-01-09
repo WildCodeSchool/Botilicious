@@ -1,12 +1,17 @@
 // import React from 'react';
 import React, { Component } from 'react';
 
+const axios = require('axios');
+
+
 class SelectTag extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             selectedOption: 'null',
+            tags: [],
+            keywords: [],
         };
     }
 
@@ -17,22 +22,32 @@ class SelectTag extends Component {
     }
 
     componentDidMount = () => {
+        //  obtenir le contenu de la table tags
+       
+        Promise.all([
+            axios.get('http://localhost:3001/admin/tag'),
+            axios.get('http://localhost:3001/admin/keyword')
+        ]) 
         
-        //  obtenir la liste des tags
-        fetch('http://localhost:3001/admin/tag')
-            // .then(res => res.json())
-            .then(tags => {
-                console.log('tags is : ', tags);
-                this.setState({tags: tags});
+    //  {
+    //         mode: 'no-cors'
+    //     })
+            // .then(res => {
+            //     console.log(res);
+            //     res.json()
+            // })
+
+            // results : reponse requètes axios : renvoie un tableau avec les tags (results[0]) 
+            // puis les keywords (results[1])
+            .then(results => {
                 
-                
-                return tags
+                this.setState({ 
+                    tags: results[0],
+                    keywords: results[1] });
+                console.log('tags is : ', this.state.tags, 'keywords is : ', this.state.keywords);
+
+                return results
             })
-            // .then(resultat => {console.log(resultat[1].body);
-            //     this.setState({users:resultat[0]});
-            //     this.setState({html:resultat[1]})
-            
-            //   })
     }
 
     handleFormSubmit = (formSubmitEvent) => {
