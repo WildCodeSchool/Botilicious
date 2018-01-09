@@ -4,18 +4,14 @@ block content
   a(href="/" class="btn orange") Retour à l'accueil
   a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
   a(href="/admin/module" class="btn gris") Gestion Module
+  
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
-    p input : ville nombre_de_jours nombre_d_heures
-    p (max 4 21)
-    br
-    input#message(type="text" name="message")
-    br
-    button#parler Parler
-    br
-    div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
-    br
+    #example coucou
+
+      block javascript 
+        script(src="/js/bundle.js")
     br
   .sentencewindow
     h2 Liste des phrases
