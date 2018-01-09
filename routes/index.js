@@ -53,4 +53,6 @@ router.get('/deconnection', Users.deconnection);
 router.get('/forgottenpw', Users.forgottenpw);
 
 
+router.get('/testreact', (req, res) => res.render('test-react'));
+
 module.exports = router;
