@@ -50,6 +50,10 @@ const Users = {
             req.session.connected = true;
             // inscrire l'id de l'utilisateur dans req.session
             req.session.userId = results.id;
+            // deux variables pour enregsitrer l'itineraire de l'utilisateur
+            req.session.modules = [];
+            req.session.sentences = [];
+            req.session.answers = [];
             console.log(req.session);
             res.redirect('/admin/chatbotEdit');
           }

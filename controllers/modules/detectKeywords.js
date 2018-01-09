@@ -73,6 +73,7 @@ function findPattern(splitSentence) {
             { text: { $or: toSeek } },
           ],
         },
+        include: { model: models.Module },
       };
       // console.log('toSeek: ', toSeek);
 

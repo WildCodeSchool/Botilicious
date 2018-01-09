@@ -21,6 +21,10 @@ const Chatbots = {
     Promise.all([getSentences(), getKeywords(), getTags()])
       .then((results) => {
         console.log('keywords found: ', results[1]);
+        // deux variables pour enregsitrer l'itineraire de l'utilisateur
+        req.session.modules = [];
+        req.session.sentences = [];
+        req.session.answers = [];
         res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });
       })
       .catch(error => console.log(error));
@@ -115,6 +119,8 @@ const Chatbots = {
   messagePost(req, res) {
     console.log(req.body.message);
 
+    // écrire la phrase actuelle dans la session
+    req.session.sentences.unshift(req.body.message);
 
     /**
     * méthode sequelize pour trouver des données de la bdd et qui retourne un model
@@ -132,13 +138,34 @@ const Chatbots = {
     * Il faut utiliser un models.sentence.findOne({ })
     */
       .then((response) => {
-        console.log('response', response);
         if (response) {
-          models.Sentence.findOne({
-            where: { id: response.dataValues.next },
-          })
+          console.log('response', response);
+          console.log('session: ', req.session);
+
+          // écrire le numéro actuel du module dans la session
+          let currentModule = 0;
+          if (response.dataValues.Modules[0]) {
+            currentModule = response.dataValues.Modules[0];
+          }
+          req.session.modules.unshift(currentModule);
+
+          // chercher la phrase suivante
+          models.Sentence
+            .findOne({
+              where: { id: response.dataValues.next },
+              include: { model: models.Module },
+            })
             .then((answer) => {
               console.log('answer', answer);
+
+              // écrire la réponse ou non réponse dans la session
+              let foundAnswer = {};
+              if (answer.dataValues) {
+                foundAnswer = answer.dataValues;
+              }
+              req.session.answers.unshift(foundAnswer);
+
+              console.log('session: ', req.session);
 
               const jsontostring = {
                 answer: answer.dataValues.text,
@@ -146,14 +173,25 @@ const Chatbots = {
               };
               res.json(jsontostring);
             });
-        // si on ne trouve pas de next, chercher un pattern
+        // si on ne trouve pas de phrase correspondant exactement, chercher un pattern
         } else {
           console.log('sentence not found, looking for a pattern...');
           // const pattern = detectKeywords(req.body.message)
           detectKeywords(req.body.message)
             .then((results) => {
               console.log('results: ', results);
+
+              // écrire le numéro actuel du module dans la session
+              let currentModule = 0;
+              if (results[0].Modules[0]) {
+                currentModule = results[0].Modules[0];
+              }
+              req.session.modules.unshift(currentModule);
+
+              console.log('session: ', req.session);
+
               if (results.length > 0) {
+                // chercher le next et essayer de tagger les mots
                 Promise.all([
                   models.Sentence.findOne({
                     where: { id: results[0].next },
@@ -162,7 +200,17 @@ const Chatbots = {
                   autoAddKeywords(req.body.message, results[0].text),
                 ])
                   .then((answer) => {
-                    // console.log('answer: ', answer);
+                    console.log('answer: ', answer);
+
+                    // écrire la réponse ou non réponse dans la session
+                    let foundAnswer = {};
+                    if (answer[0]) {
+                      foundAnswer = answer[0].dataValues;
+                    }
+                    req.session.answers.unshift(foundAnswer);
+
+                    console.log('session: ', req.session);
+
                     const responseToBrowser = {
                       answer: answer[0].text,
                       text: req.body.message,
@@ -170,6 +218,7 @@ const Chatbots = {
                     };
                     res.json(responseToBrowser);
                   });
+                // si on ne trouve pas de pattern, chercher seulement des keywords isolés
               } else {
                 /**
           * getKeywords retourne quels keywords sont présents dans la base de données
