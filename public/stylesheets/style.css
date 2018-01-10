@@ -21,22 +21,22 @@ Brown: #5f4548 */
     src: url('fonts/alwyn_bold-webfont.eot');
     src: url('fonts/alwyn_bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/alwyn_bold-webfont.woff2') format('woff2'), url('fonts/alwyn_bold-webfont.woff') format('woff'), url('fonts/alwyn_bold-webfont.ttf') format('truetype'), url('fonts/alwyn_bold-webfont.svg#alwynbold') format('svg');
     font-weight: normal;
-    font-style: normal; */
-}
+    font-style: normal;
+} */
 
 body {
     padding-right: 50px;
     padding-left: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 18px;
+    font-size: 20px;
     font-family: 'Sniglet', cursive;
     background-color: white;
 }
 
 .slogan {
     font-weight: bold;
-    font-family: 'Sniglet', cursive;
+    font-size: 0.7em;
 }
 
 .gris {
@@ -53,14 +53,14 @@ header {
 }
 
 .logo {
-    width: 200px;
-    border-radius: 5px;
+    width: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .textconnect {
     text-align: center;
     color: #d6a072;
-    font-weight: bold;
 }
 
 .btconnect {
@@ -78,8 +78,7 @@ header {
 
 .required {
     text-align: center;
-    color: #f7cdb7;
-    font-weight: bold;
+    color: #d6a072;
 }
 
 #form {
@@ -89,12 +88,12 @@ header {
     margin-left: 25%;
 }
 
-.secbrown {
+.secgris {
     text-align: center;
-    color: white;
-    font-size: 1.5em;
+    color: #f7cdb7;
+    font-size: 1em;
     background-color: #5f4548;
-    padding: 50px;
+    padding: 20px;
     border-radius: 15px;
     margin-bottom: 15px;
 }
@@ -108,8 +107,8 @@ header {
 
 .oubli {
     text-align: center;
-    color: white;
-    font-size: 1.2em;
+    color: #f7cdb7;
+    font-size: 1em;
     background-color: #5f4548;
     padding: 50px;
     border-radius: 15px;
@@ -152,30 +151,58 @@ header {
 
 .bologo {
     width: 80px;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1px;
 }
 
 footer {
 /*     display: flex;
     align-items: center;
     justify-content: center; */
-    background-color: #f7cdb7;
+    background-image: url(../images/footerimage200.jpg);
+/*    background-color: #f7cdb7; */
     height: 150px;
     color: white;
     border-radius: 15px;
     margin-left: 14px;
     margin-right: 14px;
-    font-family: 'Sniglet', cursive;
-    font-size: 16px;
     text-align: center;
+    padding: 20px;
+    margin-bottom: 10px;
 }
 
-.footer1 {
-    padding-top: 30px;
-}
+/* .footer1 {
+    margin-left: 30px;
+} */
 
 .footer {
-    margin-right: 30px;
+    margin-right: 15px;
+    margin-left: 15px;
 }
+
+.lienfoot1 {
+    margin-left: 5px;
+}
+
+.lienfoot2 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* Beginning Footer links behavior */
+a.lienfoot1, a.lienfoot2 {
+    color: #d6a072;
+    text-decoration: underline;
+  }
+  
+  a.lienfoot1:hover, a.lienfoot2:hover {
+    color: #f7cdb7;
+    text-decoration: none;
+  }
+  /* End Footer links behavior */
 
 
 /* Coming soon: media queries, 2 device sizes, pour remettre le formulaire en largeur 100% */
