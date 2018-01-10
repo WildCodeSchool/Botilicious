@@ -117,10 +117,9 @@ function detectKeywords(sentence) {
   // const blobs = nGrams(splitSentence);
 
   const promise = findPattern(splitSentence)
-    .then((results) => {
-      console.log('findPattern result OUT: ', results);
-      return results;
-    });
+    .then(results =>
+      // console.log('findPattern result OUT: ', results);
+      results);
   console.log('promise: ', promise);
   return promise;
 }

@@ -35,12 +35,14 @@ $('#addParameter').click((event) => {
     // Ajouter un hidden input dans le formulaire
     // input#apiUrl.form-control(placeholder="URL d'une API" name="apiUrl")
     $('#newParameters').append(`
+      <input id="newParameterType${newParameterId}" name="newParameterType" type="hidden" value=${$('#parameterType').val()}>
       <input id="newParameterTag${newParameterId}" name="newParameterTag" type="hidden" value=${$('#parameterTag').val()}>
       <input id="newParameter${newParameterId}" name="newParameter" type="hidden" value=${$('#parameter').val()}>
       <input id="newParameterValue${newParameterId}" name="newParameterValue" type="hidden" value=${$('#parameterValue').val()}>
     `);
     // Ajouter une ligne dans la liste des paramètres
     $('#parameters').append(`<tr id="Parameter${newParameterId}">
+    <td>${$('#parameterType').val()}</td>
     <td>${$('#parameterTag').val()}</td>
     <td>${$('#parameter').val()}</td>
     <td>${$('#parameterValue').val()}</td>
@@ -49,6 +51,10 @@ $('#addParameter').click((event) => {
 
     // Add an event listener to the new button. With an Event Delegation
     $('#parameters').on('click', `#deleteParameter${newParameterId}`, deleteParameter);
+
+    // vider les inputs
+    $('#parameter').val('');
+    $('#parameterValue').val('');
   }
 });
 
@@ -63,12 +69,14 @@ $('#addmodule').click((event) => {
     for (let i = 1; i < $('#newParameters').children.length + 1; i += 1) {
       if ($(`#newParameterTag${i}`).attr('value')) {
         parameters.push({
+          type: $(`#newParameterType${i}`).attr('value'),
           tag: $(`#newParameterTag${i}`).attr('value'),
           text: $(`#newParameter${i}`).val(),
         });
       }
       if ($(`#newParameterValue${i}`).val()) {
         fixed.push({
+          type: $(`#newParameterType${i}`).val(),
           text: $(`#newParameter${i}`).val(),
           value: $(`#newParameterValue${i}`).val(),
         });

@@ -23,6 +23,11 @@ block content
         #newParameters.form-group
     #editParameters.editParameters
       h3 Edition des paramètres
+      label(for='parameterType') Type
+      select#parameterType(name='parameterType')
+        option(value="out") Requête
+        option(value="in") Réponse
+      br
       label(for='parameterTag') Tag
       select#parameterTag(name='parameterTag')
         option(value="")= (aucun)
@@ -33,10 +38,14 @@ block content
       label(for='parameterValue') Valeur
       input#parameterValue(type="text" name="parameterValue" size="30")
       button#addParameter Ajouter le paramètre
+      br
+      label(for='answerTemplate') Gabarit de la réponse
+      input#answerTemplate(type="text" name="answerTemplate" size="60")
       div#servermessageParameter
       br
       table#parameters(style="width:600px;border:1px solid black")
         tr
+          th Type
           th Tags
           th Paramètres
           th Valeurs
@@ -44,6 +53,7 @@ block content
     button#addmodule.btn.gris(type='submit') Créer le module
 
   section.modulesList
+    h2 Vos modules existants
     table#modules(style="width:800px;border:1px solid black")
       tr
         th Nom
@@ -63,21 +73,27 @@ block content
   section.moduleEdit
     each module, m in modules
       h3= module.name + ' :'
+      h4 Paramètres
       table(id='parametersEdit' +m style="width:600px;border:1px solid black")
         tr
+          th Type
           th Tags
           th Paramètres
           th Valeurs
         each parameter, i in module.api.parameters
           tr(id='parameter' +i)
+            td(id='parameterType' +i)= parameter.type
             td(id='parameterTag' +i)= parameter.tag
             td(id='parameterText' +i)= parameter.text
             td(id='parameterValue' +i)
         each fixed, i in module.api.fixed
           tr(id='fixed' +i)
+            td(id='fixedType' +i)= fixed.type
             td(id='fixedTag' +i)
             td(id='fixedText' +i)= fixed.text
             td(id='fixedValue' +i)= fixed.value
+      h4 Gabarit de la réponse :
+      p(style="width:600px;border:1px solid black")=  module.api.answer
 
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/module.js')
