@@ -140,8 +140,8 @@ const Chatbots = {
           // const rand = [Math.floor(Math.random() * res.length)];
           let time;
           let errorMessage;
-          if (message.length === 5 && typeof (parseInt(message[4], 10)) === 'number' && typeof (parseInt(message[4], 10)) === 'number') {
-            time = (8 * message[2]) + Math.round(message[4] / 3);
+          if (message.length === 4 && typeof (parseInt(message[3], 10)) === 'number' && typeof (parseInt(message[3], 10)) === 'number') {
+            time = (8 * message[2]) + Math.round(message[3] / 3);
           } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
             time = 8 * message[2];
           } else {
