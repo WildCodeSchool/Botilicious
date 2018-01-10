@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import ChatWindow from './ChatWindow';
+// import AddSentences from './AddSentences';
 import registerServiceWorker from './registerServiceWorker';
 
 if(document.getElementById('root')){

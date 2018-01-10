@@ -44,6 +44,11 @@ block content
     br
   .tagwindow
     h2 Ici tag de mots
+    #root coucou
+
+      block javascript 
+        script(src="/js/bundle.js")
+
     button#sentencetag Tag des mots listés
     div#serverMessageSentenceTagging
     table#wordsToTag(style="width:400px;border:1px solid black")
