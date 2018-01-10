@@ -16,11 +16,11 @@ class SelectTag extends Component {
         };
     }
 
-    handleOptionChange = (changeEvent) => {
+    handleOptionSelect = changeEvent => {
         this.setState({
-            selectedOption: changeEvent.target.value
+            selectedOption: changeEvent.target.value,
         });
-        console.log(this.state.selectedOption);
+        console.log('OPTION = ', this.state.selectedOption, 'EVENT = ', changeEvent.target.value);
 
     }
 
@@ -67,19 +67,20 @@ class SelectTag extends Component {
         // Affiche l'index correspondant à chaque mots de la phrase 
         console.log('index of : "' + this.props.item + '" is : ' + this.props.index);
 
-        //var self = this;
-        console.log(formSubmitEvent);
 
+        //var self = this;
+       let myTag = this.state.tags.find(element => element.text == this.state.selectedOption).id;
+       console.log(myTag);
         axios.post('http://localhost:3001/admin/keyword', {
-                // keywords:[
-                //     { 
-                // text: 'bob',
-                // // tag: this.state.selectedOption,
-                // TagId:1
-                //     }
-                // ]
-                // // name: this.state.selectedOption
-                // // { keywords : [ {text:'test1', TagId:1}, {text:'toto1', TagId:2} ] }
+                keywords:[
+                    { 
+                text: this.props.item,
+                // tag: this.state.selectedOption,
+                TagId: myTag
+                    }
+                ]
+                // name: this.state.selectedOption
+                // { keywords : [ {text:'test1', TagId:1}, {text:'toto1', TagId:2} ] }
 
             
         })
@@ -107,15 +108,27 @@ class SelectTag extends Component {
             {/* <button onClick={this.myclick}>Click</button> */}
                 <form onSubmit={this.handleFormSubmit}>
 
-                {this.state.tags.map((tag, i) =>  <label key={tag.id}>
-                        <input key={tag.id} type="radio" value={tag.text} checked={this.state.selectedOption === tag.text} onChange={this.handleOptionChange} />
-                        {tag.text}
-                </label>)}
+                {this.state.tags.map((tag, i) =>  
+                    <label 
+                    key =   {tag.id}>
+
+                        <input 
+                            key     =   {tag.id} 
+                            type    =   "radio" 
+                            value   =   {tag.text} 
+                            checked =   {this.state.selectedOption === tag.text} 
+                            onChange=   {this.handleOptionSelect} />
+                    
+                    {tag.text}
+                    </label>)}
+
                 <label>
-                <input key='null' type="radio" value='null' checked={this.state.selectedOption == 'null'} onChange={this.handleOptionChange} />
-                Aucun
+                    <input key='null' type="radio" value='null' checked={this.state.selectedOption == 'null'} onChange={this.handleOptionSelect} />
+                    Aucun
                 </label>
-                    <button type="submit">Save</button>
+                
+                <button type="submit">Save</button>
+
                 </form>
             </div>
 
