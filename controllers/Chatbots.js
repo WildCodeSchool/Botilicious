@@ -113,9 +113,91 @@ const Chatbots = {
 
   // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
-    console.log(req.body.message);
+    console.log(req.body.message.split(' ')[0]);
 
+    models.Module.findOne({
+      where: { name: req.body.message.split(' ')[0] },
+    })
 
+      .then((reponse) => {
+        
+        if (reponse) {
+          let message = req.body.message.split(' ');
+          const dayWords = [{
+            text : 'après-demain',
+            time : "2",
+          }, {
+            text : 'demain',
+            time : 1,
+          }];          
+          
+          dayWords.forEach(dayWord => {
+            // console.log(dayWord);
+            message[2]= message[2].replace(dayWord.text,dayWord.time);
+            // console.log(message[2]);
+          });
+
+          // const rand = [Math.floor(Math.random() * res.length)];
+          let time;
+          let errorMessage;
+          if (message.length === 5 && typeof (parseInt(message[4], 10)) === 'number' && typeof (parseInt(message[4], 10)) === 'number') {
+            time = (8 * message[2]) + Math.round(message[4] / 3);
+          } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
+            time = 8 * message[2];
+          } else {
+            time = 0;
+            errorMessage = 'Votre syntaxe est incorrecte';
+          }
+          if (time > 39) {
+            time = 39;
+          }
+          console.log('time:', time);
+          if (isNaN(time)) {
+            errorMessage = 'Votre syntaxe est incorrecte';
+            time = 0;
+          }
+          const tempArgs =
+          {
+            parameters:
+            {
+              place: message[1],
+            },
+            input:
+            {
+              time,
+            },
+          };
+        const currentModule = req.body.message.split(' ')[0];
+        
+        let responseToBrowser;
+        apiCall(currentModule, tempArgs)
+          .then((response) => {
+            // console.log('response: ', response);
+            const data = {
+              Time: response.list[time].dt_txt,
+              City: response.city.name,
+              Country: response.city.country,
+              Weather: response.list[time].weather[0].description,
+              Temperature: Math.round(response.list[time].main.temp - 273.15),
+            };
+            responseToBrowser = {
+              text: req.body.message,
+              answer: `Weather (${data.Time} City: ${data.City} (${data.Country}) ): ${data.Weather} ${data.Temperature}°C`,
+              serverMessage: errorMessage,
+            };
+            res.json(responseToBrowser);
+          })
+          .catch((error) => {
+            console.log('API call Error: ', error.response.data.message);
+            responseToBrowser = {
+              text: req.body.message,
+              answer: `Error api: ${error.response.data.message}`,
+              error: error.response.data,
+            };
+            res.json(responseToBrowser);
+          });
+
+        } else {
     /**
     * méthode sequelize pour trouver des données de la bdd et qui retourne un model
     * test si cest une question pour renvoyer une reponse
@@ -243,8 +325,9 @@ const Chatbots = {
             });
         }
       });
-
-
+    }
+  });
+  },
     // const message = req.body.message.split(' ');
     // // const rand = [Math.floor(Math.random() * res.length)];
     // let time;
@@ -306,7 +389,7 @@ const Chatbots = {
     //     };
     //     res.json(responseToBrowser);
     //   });
-  },
+  
 
   chatbotDelete(req, res) {
     console.log(req.body);
