@@ -9,21 +9,21 @@ block content
         if error
           p.warning=error[0]
         .form-group
-          label(for='identifiant') Identifiant
-          input#email.form-control(type='email', required='', placeholder="Email" name="email")
+          label(for='Votre mail') Mail
+          input#email.form-control(type='email', required='', placeholder="Votre adresse mail" name="email")
         if error
           p.warning=error[1]
         .form-group
           label(for='motdepasse') Nom
-          input#motdepasse.form-control(type='text', required='', placeholder='Nom' name="nom")
+          input#motdepasse.form-control(type='text', required='', placeholder='Votre nom' name="nom")
         if error
           p.warning=error[2]
         .form-group
           label(for='motdepasse') Prénom
-          input#motdepasse.form-control(type='text', required='', placeholder='Prénom' name="prenom")
+          input#motdepasse.form-control(type='text', required='', placeholder='Votre prénom' name="prenom")
         if error
           p.warning=error[3]
         .form-group
           label(for='motdepasse') Message
           input#motdepasse.form-control(type='text', required='', placeholder='Votre message' name="message")
-        button.btn.bleu(type='submit') Envoyer
+        button.btn.orange(type='submit') Envoyer

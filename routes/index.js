@@ -57,4 +57,6 @@ router.get('/contact', Users.contactGet);
 /* POST : envoies des données par l'utilisateur prises en compte */
 router.post('/contact', Users.contactPost);
 
+router.get('/testreact', (req, res) => res.render('test-react'));
+
 module.exports = router;
