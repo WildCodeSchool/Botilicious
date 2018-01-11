@@ -136,7 +136,7 @@ const Chatbots = {
             time: '2',
           }, {
             text: 'demain',
-            time: 1,
+            time: '1',
           }];
 
           dayWords.forEach((dayWord) => {
@@ -148,11 +148,12 @@ const Chatbots = {
           // const rand = [Math.floor(Math.random() * res.length)];
           let time;
           let errorMessage;
-          if (message.length === 5 && typeof (parseInt(message[4], 10)) === 'number' && typeof (parseInt(message[4], 10)) === 'number') {
-            time = (8 * message[2]) + Math.round(message[4] / 3);
+          if (message.length === 4 && typeof (parseInt(message[2], 10)) === 'number' && typeof (parseInt(message[3], 10)) === 'number') {
+            time = (8 * message[2]) + Math.round(message[3] / 3);
           } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
             time = 8 * message[2];
           } else {
+            console.log('Syntaxe du time meteo incorrecte');
             time = 0;
             errorMessage = 'Votre syntaxe est incorrecte';
           }
@@ -161,6 +162,7 @@ const Chatbots = {
           }
           console.log('time:', time);
           if (isNaN(time)) {
+            console.log('NaN');
             errorMessage = 'Votre syntaxe est incorrecte';
             time = 0;
           }
@@ -174,7 +176,7 @@ const Chatbots = {
             inputs:
             [{
               tag: 'time',
-              value: 8,
+              value: time,
             }],
           };
           const currentModule = req.body.message.split(' ')[0];
@@ -203,22 +205,24 @@ const Chatbots = {
               };
               res.json(responseToBrowser);
             });
+
+        // appel de l'API meteo en dur n'est pas possible, donc on analyse un peu mieux la phrase
         } else {
           /**
-    * méthode sequelize pour trouver des données de la bdd et qui retourne un model
-    * test si cest une question pour renvoyer une reponse
-    */
+            * méthode sequelize pour trouver des données de la bdd et qui retourne un model
+            * test si cest une question pour renvoyer une reponse
+            */
           // const includes = { include: [models.Sentence_has_Module] };
           models.Sentence.findOne({
             where: { text: req.body.message },
             include: { model: models.Module },
           })
           /**
-    * fonction qui permet de renvoyer une seule réponse
-    * (dans le network de la console du navigateur)
-    * lorsqu'une string de type question est écrite dans le chat.
-    * Il faut utiliser un models.sentence.findOne({ })
-    */
+            * fonction qui permet de renvoyer une seule réponse
+            * (dans le network de la console du navigateur)
+            * lorsqu'une string de type question est écrite dans le chat.
+            * Il faut utiliser un models.sentence.findOne({ })
+            */
             .then((response) => {
               if (response) {
                 console.log('response', response);
@@ -313,26 +317,26 @@ const Chatbots = {
                       // si on ne trouve pas de pattern, chercher seulement des keywords isolés
                     } else {
                       /**
-             * getKeywords retourne quels keywords sont présents dans la base de données
-             */
+                       * getKeywords retourne quels keywords sont présents dans la base de données
+                       */
                       getKeywords()
                       /**
-             * On obtient la liste de keywords
-             */
+                       * On obtient la liste de keywords
+                       */
                         .then((keywords) => {
                           /**
-               * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre, et cherche les mots clés
-               * listés dans keywords
-               */
+                           * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre, et cherche les mots clés
+                           * listés dans keywords
+                           */
                           const resultat = autoTags(req.body.message, keywords, [' ']);
                           /**
-               * si on a trouvé un mot clé dans la phrase
-               */
+                           * si on a trouvé un mot clé dans la phrase
+                           */
                           if (resultat) {
                             /**
-                 * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
-                 * avec les mots clés trouvés
-                 */
+                             * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
+                             * avec les mots clés trouvés
+                             */
                             console.log(resultat.foundKeywords);
                             let foundKeywords = '';
                             for (let index = 0; index < resultat.foundKeywords.length; index++) {
@@ -347,22 +351,22 @@ const Chatbots = {
                               include: { model: models.Module },
                             })
                             /**
-                 * Si on a trouvé cette combinaison de mots clés
-                 */
+                             * Si on a trouvé cette combinaison de mots clés
+                             */
                               .then((answer) => {
                                 console.log('answer :', answer);
 
                                 if (answer[0].dataValues) {
                                   /**
-                   * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
-                   */
+                                   * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
+                                   */
                                   models.Sentence.findOne({
                                     where: { id: answer[0].dataValues.next },
                                     include: { model: models.Module },
                                   })
                                   /**
-                   * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
-                   */
+                                   * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
+                                   */
                                     .then((nextSentence) => {
                                       // écrire la réponse ou non réponse dans la session
                                       let foundAnswer = {};

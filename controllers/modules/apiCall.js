@@ -72,7 +72,7 @@ function apiCall(moduleName, args) {
                       .map((key) => {
                         console.log(key);
 
-                        const arrayIndexInKey = key.match(/\[[1-9]+\]/gi);
+                        const arrayIndexInKey = key.match(/\[[0-9]+\]/gi);
                         if (arrayIndexInKey) {
                           console.log('arrayIndexInKey: ', arrayIndexInKey);
 
@@ -83,6 +83,7 @@ function apiCall(moduleName, args) {
 
                           const tempArray = tempResponse[tempKey];
                           tempResponse = tempArray[actualIndex];
+                          // console.log('tempArray[actualIndex]: ', tempResponse);
                         } else {
                           console.log('key: ', key);
                           tempResponse = tempResponse[key];
