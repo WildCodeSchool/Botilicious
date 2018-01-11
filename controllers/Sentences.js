@@ -68,9 +68,9 @@ const Sentences = {
     // const sentence = req.body.sentence;
     // console.log('sentence: ', sentence);
     getKeywords().then((keywords) => {
-      // console.log('Keywords: ', keywords);
+      console.log('Keywords: ', keywords);
       const data = autotagSentence(req.body.sentence, keywords, separators);
-      // console.log('data: ', data);
+      console.log('data: ', data);
       res.json(data);
     });
   },

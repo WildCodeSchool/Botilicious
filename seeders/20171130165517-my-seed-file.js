@@ -1,9 +1,9 @@
-'use strict';
-var faker = require('faker');
+
+const faker = require('faker');
 const uuidv4 = require('uuid/v4');
 
 module.exports = {
-  up : function (queryInterface, Sequelize) {
+  up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Users', [{
       uuid: uuidv4(),
       firstname: faker.name.firstName(),
@@ -16,7 +16,7 @@ module.exports = {
       city: faker.address.city(),
       phone: faker.phone.phoneNumber(),
       CreatedAt: faker.date.recent(),
-      UpdatedAt: faker.date.recent()
+      UpdatedAt: faker.date.recent(),
     },
     {
       uuid: uuidv4(),
@@ -30,11 +30,9 @@ module.exports = {
       city: faker.address.city(),
       phone: faker.phone.phoneNumber(),
       CreatedAt: faker.date.recent(),
-      UpdatedAt: faker.date.recent()
+      UpdatedAt: faker.date.recent(),
     }], {});
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Users', null, {});
-  }
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Users', null, {}),
 };

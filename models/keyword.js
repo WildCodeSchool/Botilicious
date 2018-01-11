@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
     },
+    confidence: DataTypes.FLOAT,
+    TagId: DataTypes.STRING,
   });
 
   Keyword.associate = function (models) {

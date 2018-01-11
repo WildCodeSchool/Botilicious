@@ -3,17 +3,24 @@ import SelectTag from './SelectTag';
 
 
 const ulStyle = {
-  border: 'solid black 2px',
-  maxWidth: '80%',
-  marginLeft: '10%',
-  boxSizing: 'border-box',
+  fontFamily: 'Sniglet cursive',
+  border: 'solid black 1px',
+  maxWidth: '90%',
+  // boxSizing: 'border-box',
+  paddingLeft: '0px',
+  marginLeft: '0%',
+  marginTop: '2%',
 };
 
 const eachWordStyle = {
-  borderRight: 'solid black',
-  borderLeft: 'solid black',
-  maxWidth: '80%',
+  borderRight: 'solid black 1px',
+  borderLeft: 'solid black 1px',
+  maxWidth: '90%',
   minWidth: '150px',
+  fontWeight: 'normal',
+  fontSize: '20px',
+
+
 
 };
 

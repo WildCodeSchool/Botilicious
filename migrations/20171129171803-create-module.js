@@ -18,7 +18,7 @@ module.exports = {
     description: {
       type: Sequelize.STRING,
     },
-    apiurl: {
+    api: {
       type: Sequelize.STRING,
     },
     createdAt: {

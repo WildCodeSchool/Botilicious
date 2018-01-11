@@ -16,9 +16,12 @@ block content
         .form-group
           label(for='motdepasse') Mot de passe
           input#motdepasse.form-control(type='password', required='', placeholder='Mot de passe' name="motdepasse")
-        button.btn.bleu(type='submit') Se connecter
+        button.btn.jaune(type='submit') Se connecter
   section.oubli
-    p Pour réinitialiser votre mot de passe, cliquez sur le bouto ci-dessous
-    a(href="/forgottenpw" class="btn orange") Confirmer
+    p Nouveau sur Botilicious ?
+    a(href="/inscription" class="btn orange") Créer un compte
+    hr
+    p Pour réinitialiser votre mot de passe, cliquez sur le bouton ci-dessous
+    a(href="/forgottenpw" class="btn orange") Réinitialiser
     
   //- Section fin Le formulaire de login

@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Sentence.associate = function (models) {
+    Sentence.belongsToMany(models.Module, { foreignKey: 'sentenceId', through: 'Sentence_has_Sentence' });
     Sentence.belongsToMany(models.Module, { foreignKey: 'sentenceId', through: 'Sentence_has_Module' });
   };
   return Sentence;

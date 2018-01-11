@@ -261,7 +261,7 @@ process.umask = function() { return 0; };
 
 
 var bind = __webpack_require__(19);
-var isBuffer = __webpack_require__(49);
+var isBuffer = __webpack_require__(48);
 
 /*global toString:true*/
 
@@ -874,7 +874,7 @@ module.exports = warning;
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(47);
 
 /***/ }),
 /* 9 */
@@ -884,7 +884,7 @@ module.exports = __webpack_require__(48);
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(51);
+var normalizeHeaderName = __webpack_require__(50);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1438,7 +1438,7 @@ function toComment(sourceMap) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_util__);
 var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/SelectTag.js';
 
@@ -1657,12 +1657,12 @@ module.exports = function bind(fn, thisArg) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(52);
-var buildURL = __webpack_require__(54);
-var parseHeaders = __webpack_require__(55);
-var isURLSameOrigin = __webpack_require__(56);
+var settle = __webpack_require__(51);
+var buildURL = __webpack_require__(53);
+var parseHeaders = __webpack_require__(54);
+var isURLSameOrigin = __webpack_require__(55);
 var createError = __webpack_require__(21);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(57);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(56);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1759,7 +1759,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(58);
+      var cookies = __webpack_require__(57);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1844,7 +1844,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(53);
+var enhanceError = __webpack_require__(52);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1913,8 +1913,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatWindow__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registerServiceWorker__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatWindow__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registerServiceWorker__ = __webpack_require__(66);
 var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/index.js';
 
 
@@ -19400,9 +19400,8 @@ exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  anim
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Split__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SelectTag__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Split__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SelectTag__ = __webpack_require__(18);
 var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/AddSentences.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19418,7 +19417,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // import ReactDOM from 'react-dom';
 
-
+// import List from './List';
 
 
 
@@ -19433,7 +19432,11 @@ var AddSentences = function (_Component) {
         var _this = _possibleConstructorReturn(this, (AddSentences.__proto__ || Object.getPrototypeOf(AddSentences)).call(this, props));
 
         _this.onChange = function (event) {
-            _this.setState({ term: event.target.value });
+            _this.setState({
+                term: event.target.value,
+                items: [],
+                showSplitedTable: false // A chaque nouvelle saisie dans l'input le tableau disparait
+            });
         };
 
         _this.onSubmit = function (event) {
@@ -19441,8 +19444,9 @@ var AddSentences = function (_Component) {
             _this.setState({
                 term: '',
                 items: [].concat(_toConsumableArray(_this.state.items), [_this.state.term]),
-                visible: true /*  ici this.state.visible sera egal à true 
-                                  uniquement lorsqu'une phrase aura été soumise */
+                visible: true, /*  ici this.state.visible sera egal à true 
+                                   uniquement lorsqu'une phrase aura été soumise */
+                showSplitedTable: true
             });
         };
 
@@ -19451,7 +19455,8 @@ var AddSentences = function (_Component) {
             // Valeur de départ permettant l'ajout de phrases et le stockage de celles ci 
             //sous forme de liste 
             term: '', //   term to store what we passing as a value to our input
-            items: [] //   items to store every value which we passing to our todo list
+            items: [], //   items to store every value which we passing to our todo list
+            showSplitedTable: false
         };
         return _this;
     }
@@ -19469,10 +19474,10 @@ var AddSentences = function (_Component) {
                     SINON la variable solit n'afiche rien  */
 
             var split = void 0;
-            if (this.state.visible) {
-                split = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Split__["a" /* default */], { items: this.state.items, __source: {
+            if (this.state.visible && this.state.showSplitedTable) {
+                split = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Split__["a" /* default */], { items: this.state.items, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 54
+                        lineNumber: 60
                     },
                     __self: this
                 });
@@ -19485,7 +19490,7 @@ var AddSentences = function (_Component) {
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 60
+                        lineNumber: 66
                     },
                     __self: this
                 },
@@ -19493,13 +19498,13 @@ var AddSentences = function (_Component) {
                     'form',
                     { className: 'App', onSubmit: this.onSubmit, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 64
+                            lineNumber: 70
                         },
                         __self: this
                     },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { value: this.state.term, onChange: this.onChange, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 65
+                            lineNumber: 71
                         },
                         __self: this
                     }),
@@ -19508,19 +19513,13 @@ var AddSentences = function (_Component) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 66
+                                lineNumber: 72
                             },
                             __self: this
                         },
                         'Submit'
                     )
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__List__["a" /* default */], { items: this.state.items, __source: {
-                        fileName: _jsxFileName,
-                        lineNumber: 71
-                    },
-                    __self: this
-                }),
                 split
             );
         }
@@ -19538,72 +19537,6 @@ var AddSentences = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/List.js';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var listStyle = {
-  listStyleType: 'none'
-};
-
-var List = function (_Component) {
-  _inherits(List, _Component);
-
-  function List() {
-    _classCallCheck(this, List);
-
-    return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).apply(this, arguments));
-  }
-
-  _createClass(List, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'ul',
-        { style: listStyle, __source: {
-            fileName: _jsxFileName,
-            lineNumber: 15
-          },
-          __self: this
-        },
-        this.props.items.map(function (item, index) {
-          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'li',
-            { key: index, __source: {
-                fileName: _jsxFileName,
-                lineNumber: 17
-              },
-              __self: _this2
-            },
-            item
-          );
-        })
-      );
-    }
-  }]);
-
-  return List;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (List);
-
-/***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SelectTag__ = __webpack_require__(18);
 var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/Split.js',
     _this = this;
@@ -19612,17 +19545,22 @@ var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iafora
 
 
 var ulStyle = {
-  border: 'solid black 2px',
-  maxWidth: '80%',
-  marginLeft: '10%',
-  boxSizing: 'border-box'
+  fontFamily: 'Sniglet cursive',
+  border: 'solid black 1px',
+  maxWidth: '90%',
+  // boxSizing: 'border-box',
+  paddingLeft: '0px',
+  marginLeft: '0%',
+  marginTop: '2%'
 };
 
 var eachWordStyle = {
-  borderRight: 'solid black',
-  borderLeft: 'solid black',
-  maxWidth: '80%',
-  minWidth: '150px'
+  borderRight: 'solid black 1px',
+  borderLeft: 'solid black 1px',
+  maxWidth: '90%',
+  minWidth: '150px',
+  fontWeight: 'normal',
+  fontSize: '20px'
 
 };
 
@@ -19640,7 +19578,7 @@ var Split = function Split(props) {
       'ul',
       { style: ulStyle, __source: {
           fileName: _jsxFileName,
-          lineNumber: 32
+          lineNumber: 39
         },
         __self: _this
       },
@@ -19652,7 +19590,7 @@ var Split = function Split(props) {
             'table',
             { key: index, __source: {
                 fileName: _jsxFileName,
-                lineNumber: 38
+                lineNumber: 45
               },
               __self: _this
             },
@@ -19661,7 +19599,7 @@ var Split = function Split(props) {
               {
                 __source: {
                   fileName: _jsxFileName,
-                  lineNumber: 40
+                  lineNumber: 47
                 },
                 __self: _this
               },
@@ -19670,7 +19608,7 @@ var Split = function Split(props) {
                 {
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 41
+                    lineNumber: 48
                   },
                   __self: _this
                 },
@@ -19678,7 +19616,7 @@ var Split = function Split(props) {
                   'td',
                   { style: eachWordStyle, __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 43
+                      lineNumber: 50
                     },
                     __self: _this
                   },
@@ -19690,7 +19628,7 @@ var Split = function Split(props) {
                   {
                     __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 47
+                      lineNumber: 54
                     },
                     __self: _this
                   },
@@ -19699,7 +19637,7 @@ var Split = function Split(props) {
                     index: index,
                     __source: {
                       fileName: _jsxFileName,
-                      lineNumber: 50
+                      lineNumber: 57
                     },
                     __self: _this
                   })
@@ -19716,7 +19654,7 @@ var Split = function Split(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Split);
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -20244,7 +20182,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = __webpack_require__(46);
+exports.isBuffer = __webpack_require__(45);
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -20288,7 +20226,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = __webpack_require__(47);
+exports.inherits = __webpack_require__(46);
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -20306,10 +20244,10 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44), __webpack_require__(0)))
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports) {
 
 var g;
@@ -20336,7 +20274,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports) {
 
 module.exports = function isBuffer(arg) {
@@ -20347,7 +20285,7 @@ module.exports = function isBuffer(arg) {
 }
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports) {
 
 if (typeof Object.create === 'function') {
@@ -20376,7 +20314,7 @@ if (typeof Object.create === 'function') {
 
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20384,7 +20322,7 @@ if (typeof Object.create === 'function') {
 
 var utils = __webpack_require__(1);
 var bind = __webpack_require__(19);
-var Axios = __webpack_require__(50);
+var Axios = __webpack_require__(49);
 var defaults = __webpack_require__(9);
 
 /**
@@ -20419,14 +20357,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(23);
-axios.CancelToken = __webpack_require__(64);
+axios.CancelToken = __webpack_require__(63);
 axios.isCancel = __webpack_require__(22);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(65);
+axios.spread = __webpack_require__(64);
 
 module.exports = axios;
 
@@ -20435,7 +20373,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports) {
 
 /*!
@@ -20462,7 +20400,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20470,8 +20408,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(9);
 var utils = __webpack_require__(1);
-var InterceptorManager = __webpack_require__(59);
-var dispatchRequest = __webpack_require__(60);
+var InterceptorManager = __webpack_require__(58);
+var dispatchRequest = __webpack_require__(59);
 
 /**
  * Create a new instance of Axios
@@ -20548,7 +20486,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20567,7 +20505,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20600,7 +20538,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20628,7 +20566,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20703,7 +20641,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20763,7 +20701,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20838,7 +20776,7 @@ module.exports = (
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20881,7 +20819,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20941,7 +20879,7 @@ module.exports = (
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21000,18 +20938,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(61);
+var transformData = __webpack_require__(60);
 var isCancel = __webpack_require__(22);
 var defaults = __webpack_require__(9);
-var isAbsoluteURL = __webpack_require__(62);
-var combineURLs = __webpack_require__(63);
+var isAbsoluteURL = __webpack_require__(61);
+var combineURLs = __webpack_require__(62);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -21093,7 +21031,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21120,7 +21058,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21141,7 +21079,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21162,7 +21100,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21226,7 +21164,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21260,7 +21198,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21560,7 +21498,7 @@ var ChatWindow = function (_Component3) {
 /* harmony default export */ __webpack_exports__["a"] = (ChatWindow);
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

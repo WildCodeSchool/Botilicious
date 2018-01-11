@@ -1,20 +1,20 @@
 extends ../layout
 
 block content
-  a(href="/" class="btn orange") Retour à l'accueil
-  a(href="/admin/chatbot" class="btn gris") Gestion Chatbots
-  a(href="/admin/module" class="btn gris") Gestion Module
-  
+
+  include ../menu
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
-    
-   
     #example Fenêtre de chat: cf. ChatWindow.js
-    
-    br
+    hr
+    div
+    //#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
+
   .sentencewindow
     h2 Liste des phrases
+    p Ajoutez une p hrase puis un next. 
+    p Le next sert à relier une phrase avec l'id d'une autre phrase pour obtenir une réponse en fonction de l'id de la phrase séléctionnée.
     input#sentence(type="text" name="sentence" size="60")
     select#sentenceType(name='sentenceType')
       option(value='question') Question
@@ -24,7 +24,7 @@ block content
     button#addSentence Ajouter la phrase
     div#servermessage
     br
-    table#sentences(style="width:800px;border:1px solid black")
+    table#sentences(style="width:1400px;border:1px solid black")
       tr
         th Phrases
         th Type
@@ -43,19 +43,15 @@ block content
             button(id='tag' +sentence.id) Tag sur les mots
     br
   .tagwindow
-    h2 Ici tag de mots
+    h2 Tag des mots
+    p Ajoutez une phrase dans le champ input. 
+    p Sélectionner un tag dans la liste de droite.
     #test Ajout de phrases et tag de mots : cf. App.js
-    br
-    
 
-    button#sentencetag Tag des mots listés
-    div#serverMessageSentenceTagging
-    table#wordsToTag(style="width:400px;border:1px solid black")
-      tr#headers
-        th Mot
-        th Tag
   .edittags
     h2 Edition des tags
+    p Tagger un mot permet d'obtenir une réponse d'une phrase existante à chaque fois que ce mot sera utilisé par l'utilisateur.
+    p PS : Il faut que le tag soit ajouté dans la liste des phrases.
     input#tag(type="text" name="tag" size="60")
     button#addtag Ajouter le tag
     div#servermessagetag
@@ -83,6 +79,7 @@ block content
     
   .editkeywords
     h2 Edition des keywords
+    p Les keywords, une fois spécifié selon un type, remplacent les tags dans une phrase. Plusieurs keywords peuvent être associés au même type de tag. 
     //- button#gettags Get tags
     input#keyword(type="text" name="keyword" size="60")
     select#KeywordTag(name='KeywordTag')
@@ -95,15 +92,16 @@ block content
       tr
         th Keywords
         th Tag
+        th Sûr
         th Action
       each keyword in keywords
         tr(id='keyword' +keyword.id)
           td(id='keywordtext' +keyword.id)= keyword.text
           input(type='hidden' value=keyword.TagId)
           td!= keyword.tag
+          td= keyword.confidence
           td
             button(id='deletekeyword' +keyword.id) Supprimer
-  section.secgris
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
   script(type='text/javascript', src='/js/chat.js')
   script(type='text/javascript', src='/js/sentences.js')

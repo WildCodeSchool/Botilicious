@@ -4,13 +4,15 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = {
   up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Categories', [{
+    return queryInterface.bulkInsert('Keywords', [{
       uuid: uuidv4(),
-      name: faker.name.lastName(),
+      text: 'demain',
+      confidence: 1,
+      TagId: 1,
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
     }], {});
   },
 
-  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Categories', null, {}),
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Keywords', null, {}),
 };

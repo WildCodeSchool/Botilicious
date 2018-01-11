@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import ReactDOM from 'react-dom';
 
-import List from './List';
+// import List from './List';
 import Split from './Split';
 import SelectTag from './SelectTag';
 
@@ -18,13 +18,18 @@ class AddSentences extends Component {
             //sous forme de liste 
             term: '',   //   term to store what we passing as a value to our input
             items: [],  //   items to store every value which we passing to our todo list
+            showSplitedTable: false,
         };
     }
 
 
     // Stocke la valeur saisie par l'utilisateur dans 'term'
     onChange = (event) => {
-        this.setState({ term: event.target.value })
+        this.setState({ 
+            term: event.target.value, 
+            items: [], 
+            showSplitedTable: false, // A chaque nouvelle saisie dans l'input le tableau disparait
+        })
     }
 
     onSubmit = (event) => {
@@ -34,6 +39,7 @@ class AddSentences extends Component {
             items: [...this.state.items, this.state.term],
             visible: true,  /*  ici this.state.visible sera egal à true 
                                 uniquement lorsqu'une phrase aura été soumise */
+            showSplitedTable: true, 
         });
     }
     
@@ -50,7 +56,7 @@ class AddSentences extends Component {
                 SINON la variable solit n'afiche rien  */
 
         let split;
-        if (this.state.visible) {
+        if (this.state.visible && this.state.showSplitedTable) {
             split = <Split items={this.state.items} />;
         } else {
             split = '';
@@ -68,7 +74,7 @@ class AddSentences extends Component {
 
                 {/* AFFICHE LES PHRASES SAISIES SOUS FORME DE LISTE */}
 
-                <List items={this.state.items} />
+                
 
                 {/* APPEL LA VARIABLE SPLIT (cf. render ci dessus)
                     CELLE CI CONTIENT LE COMPOSANT <Split /> */}
