@@ -167,13 +167,15 @@ const Chatbots = {
           const tempArgs =
           {
             parameters:
-            {
-              place: message[1],
-            },
-            input:
-            {
-              time,
-            },
+            [{
+              tag: 'place',
+              value: message[1],
+            }],
+            inputs:
+            [{
+              tag: 'time',
+              value: 8,
+            }],
           };
           const currentModule = req.body.message.split(' ')[0];
 

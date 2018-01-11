@@ -24,14 +24,17 @@ function apiCall(moduleName, args) {
             const params = {};
 
             // adaptateur : mapper les arguments reçus sur le modèle attendu
-            api.parameters.map((parameter) => {
-              params[parameter.text] = args.parameters[parameter.tag];
-            });
-            // console.log('params: ', params);
+            api.parameters
+              .filter(apiParameter => apiParameter.type === 'out')
+              .map((apiParameter, i) => {
+                console.log('args.parameters[i]: ', args.parameters[i]);
+                params[apiParameter.text] = args.parameters[i].value;
+              });
+            console.log('params: ', params);
 
             // ajouter les paramètres fixes (tokens, logins, etc...)
-            api.fixed.map((parameter) => {
-              params[parameter.text] = parameter.value;
+            api.fixed.map((apiParameter) => {
+              params[apiParameter.text] = apiParameter.value;
             });
             // console.log('params: ', params);
 
@@ -49,35 +52,47 @@ function apiCall(moduleName, args) {
 
                 console.log('api: ', api);
                 // console.log(response.data.city.name);
-                console.log(args.input.time);
+                console.log(args.inputs.map(input => input));
 
 
                 api.parameters
                   .filter(parameter => parameter.type === 'in')
                   .map((parameter) => {
                     let tempResponse = response.data;
-                    parameter.value.split('.')
+                    const tempParameter = parameter;
+
+                    console.log('args.inputs.length: ', args.inputs.length);
+                    // les valeurs reçues en argument sont placées
+                    args.inputs.map((input) => {
+                      tempParameter.value = tempParameter.value.replace(input.tag, input.value);
+                      console.log('tempParameter: ', tempParameter);
+                    });
+
+                    tempParameter.value.split('.')
                       .map((key) => {
                         console.log(key);
 
-                        const tempKey = key;
-                        const arrayInKey = key.match(/\[[A-Z]+\]/gi);
-                        console.log('array: ', arrayInKey);
-                        if (!arrayInKey) {
-                        //   tempKey = arrayInKey[0].substring(1, arrayInKey[0].length - 1);
-                          // tempResponse = tempResponse[tempKey][args.input.time];
-                        // } else {
+                        const arrayIndexInKey = key.match(/\[[1-9]+\]/gi);
+                        if (arrayIndexInKey) {
+                          console.log('arrayIndexInKey: ', arrayIndexInKey);
+
+                          const actualIndex = arrayIndexInKey[0].substring(1, arrayIndexInKey[0].length - 1);
+                          console.log('actualIndex: ', actualIndex);
+                          const tempKey = key.slice(0, key.indexOf(actualIndex) - 1);
+                          console.log('tempKey: ', tempKey);
+
+                          const tempArray = tempResponse[tempKey];
+                          tempResponse = tempArray[actualIndex];
+                        } else {
+                          console.log('key: ', key);
+                          tempResponse = tempResponse[key];
                         }
-                        tempResponse = tempResponse[tempKey];
-                        console.log(tempKey);
-                        // console.log(`tempResponse ${tempKey}: `, tempResponse);
-                        console.log('-----------');
+                        // results.data => results.data.name => results.data.name.city
                         return tempResponse;
                       });
-                    const remplacePar = tempResponse;
                     console.log(tempResponse);
-                    console.log(`<${parameter.tag}>`);
-                    replyToSend.answer = replyToSend.answer.replace(`<${parameter.tag}>`, remplacePar);
+                    console.log(`<${tempParameter.tag}>`);
+                    replyToSend.answer = replyToSend.answer.replace(`<${tempParameter.tag}>`, tempResponse);
                   });
                 console.log('replyToSend: ', replyToSend);
                 // return replyToSend;

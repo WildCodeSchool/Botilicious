@@ -13,7 +13,7 @@ module.exports = {
         // required paramters, given by the chatbot user
         parameters: [
           { type: 'out', tag: 'place', text: 'q' },
-          // { type: 'in', tag: 'time', value: 'list[time].dt_txt' },
+          { type: 'in', tag: 'time', value: 'list[time].dt_txt' },
           { type: 'in', tag: 'city', value: 'city.name' },
           { type: 'in', tag: 'country', value: 'city.country' },
           // { type: 'in', tag: 'weather', value: 'list[time].weather[0].description' },
