@@ -7,6 +7,7 @@ const getChatbots = require('./modules/Chatbots');
 const apiCall = require('./modules/apiCall');
 const detectKeywords = require('./modules/detectKeywords');
 const autoTags = require('./modules/autotagSentence');
+const uuidv4 = require('uuid/v4');
 
 const Chatbots = {
 
@@ -21,10 +22,6 @@ const Chatbots = {
     Promise.all([getSentences(), getKeywords(), getTags()])
       .then((results) => {
         console.log('keywords found: ', results[1]);
-        // deux variables pour enregsitrer l'itineraire de l'utilisateur
-        req.session.modules = [];
-        req.session.sentences = [];
-        req.session.answers = [];
         res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });
       })
       .catch(error => console.log(error));
@@ -117,12 +114,15 @@ const Chatbots = {
 
   // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
+    req.session.currentMessageId += 1;
+    req.session.history[req.session.currentMessageId] = { sentence: '', answer: '', module: '' };
     const splitMessage = req.body.message.split(' ');
     console.log('splitMessage: ', splitMessage);
-
+    console.log('currentMessageId: ', req.session.currentMessageId);
     // écrire la phrase actuelle dans la session
-    req.session.sentences.unshift(req.body.message);
-    // console.log(req.session.sentences);
+    req.session.history[req.session.currentMessageId].sentence = req.body.message;
+    console.log('************************ HISTORY ************************');
+    console.log(req.session.history);
     models.Module.findOne({
       where: { name: splitMessage[0] },
     })
@@ -138,6 +138,13 @@ const Chatbots = {
           apiCall(splitMessage[0], splitMessage)
             .then((response) => {
               console.log('response: ', response);
+
+              // écrire la réponse ou non réponse dans la session
+              let foundAnswer = {};
+              if (response) {
+                foundAnswer = response;
+              }
+              req.session.history[req.session.currentMessageId].answer = foundAnswer.answer;
 
               responseToBrowser = {
                 text: req.body.message,
@@ -170,14 +177,15 @@ const Chatbots = {
             .then((response) => {
               if (response) {
                 console.log('response', response);
-                console.log('session: ', req.session);
+                console.log('req.session: ', req.session);
 
                 // écrire le numéro actuel du module dans la session
-                let currentModule = 0;
-                if (response.dataValues.Modules[0]) {
-                  currentModule = response.dataValues.Modules[0];
-                }
-                req.session.modules.unshift(currentModule);
+                // let currentModule = 0;
+                // console.log(response.dataValues.Modules);
+                // if (response.dataValues.Modules[0]) {
+                //   currentModule = response.dataValues.Modules[0];
+                // }
+                // req.session.history[req.session.currentMessageId].module = currentModule;
 
                 // chercher la phrase suivante
                 models.Sentence
@@ -193,7 +201,7 @@ const Chatbots = {
                     if (answer.dataValues) {
                       foundAnswer = answer.dataValues;
                     }
-                    req.session.answers.unshift(foundAnswer);
+                    req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
 
                     console.log('session: ', req.session);
 
@@ -209,14 +217,16 @@ const Chatbots = {
                 // const pattern = detectKeywords(req.body.message)
                 detectKeywords(req.body.message)
                   .then((results) => {
+                    // console.log(req.session.history);
+                    // console.log(results);
                     // écrire le numéro actuel du module dans la session
-                    let currentModule = 0;
-                    if (results[0].Modules[0]) {
-                      currentModule = results[0].Modules[0];
-                    }
-                    req.session.modules.unshift(currentModule);
-
-                    console.log('session: ', req.session);
+                    // let currentModule = 0;
+                    // if (results !== []) {
+                    //   currentModule = results[0].Modules[0];
+                    // }
+                    // req.session.history[req.session.currentMessageId].module = currentModule;
+                    //
+                    // console.log('session: ', req.session);
 
                     if (results.length > 0) {
                       console.log('results: ', results);
@@ -236,7 +246,7 @@ const Chatbots = {
                             if (answer[0]) {
                               foundAnswer = answer[0].dataValues;
                             }
-                            req.session.answers.unshift(foundAnswer);
+                            req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
 
                             console.log('session: ', req.session);
 
@@ -248,7 +258,7 @@ const Chatbots = {
                             res.json(responseToBrowser);
                           } else {
                             const reply = 'pattern trouvé, next pas trouvé';
-                            req.session.answers.unshift(reply);
+                            req.session.history[req.session.currentMessageId].answer = reply;
 
                             console.log(reply);
                             const responseToBrowser = {
@@ -300,7 +310,7 @@ const Chatbots = {
                               .then((answer) => {
                                 console.log('answer :', answer);
 
-                                if (answer[0].dataValues) {
+                                if (answer[0]) {
                                   /**
                                    * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
                                    */
@@ -314,10 +324,10 @@ const Chatbots = {
                                     .then((nextSentence) => {
                                       // écrire la réponse ou non réponse dans la session
                                       let foundAnswer = {};
-                                      if (answer[0]) {
-                                        foundAnswer = answer[0].dataValues;
+                                      if (nextSentence[0]) {
+                                        foundAnswer = nextSentence[0].dataValues;
                                       }
-                                      req.session.answers.unshift(foundAnswer);
+                                      req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
 
                                       console.log('nextSentence: ', nextSentence);
 
@@ -328,7 +338,7 @@ const Chatbots = {
                                         };
                                         res.json(jsontostring);
                                       } else {
-                                        req.session.answers.unshift('keywords trouvé, next pas trouvé');
+                                        req.session.history.answers.unshift('keywords trouvé, next pas trouvé');
 
                                         console.log('nothing found');
                                         const responseToBrowser = {
@@ -339,8 +349,8 @@ const Chatbots = {
                                       }
                                     });
                                 } else {
-                                  const reply = 'keywords trouvé, template comme timeplace pas trouvé';
-                                  req.session.answers.unshift(reply);
+                                  const reply = 'rien trouvé';
+                                  req.session.history[req.session.currentMessageId].answer = reply;
 
                                   console.log(reply);
                                   const responseToBrowser = {
@@ -352,7 +362,7 @@ const Chatbots = {
                               });
                             // si on ne trouve pas de next, abandonner
                           } else {
-                            req.session.answers.unshift('rien trouvé');
+                            req.session.history[req.session.currentMessageId].answer = 'keywords trouvé, template comme timeplace pas trouvé';
 
                             console.log('rien trouvé');
                             const responseToBrowser = {
