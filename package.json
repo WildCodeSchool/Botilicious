@@ -5,7 +5,9 @@
   "scripts": {
     "postinstall": "mkdir db & touch db/.gitkeep & sequelize db:migrate & sequelize db:seed:all & node ./bin/www ; opn http://localhost:3001",
     "start": "node ./bin/www ; opn http://localhost:3001",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "webpack": "NODE_ENV=development webpack --watch",
+    "webpackProd": "NODE_ENV=production webpack --watch"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -33,10 +35,20 @@
     "validator": "^9.1.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-react-app": "^3.1.0",
+    "css-loader": "^0.28.8",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1"
+    "eslint-plugin-react": "^7.5.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0"
   }
 }
