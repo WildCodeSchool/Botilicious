@@ -117,93 +117,37 @@ const Chatbots = {
 
   // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
-    console.log(req.body.message.split(' ')[0]);
-
+    const splitMessage = req.body.message.split(' ');
+    console.log('splitMessage: ', splitMessage);
 
     // écrire la phrase actuelle dans la session
     req.session.sentences.unshift(req.body.message);
-
-
+    // console.log(req.session.sentences);
     models.Module.findOne({
-      where: { name: req.body.message.split(' ')[0] },
+      where: { name: splitMessage[0] },
     })
 
       .then((reponse) => {
+        // on a trouvé un nom de module en premier mot
         if (reponse) {
-          const message = req.body.message.split(' ');
-          const dayWords = [{
-            text: 'après-demain',
-            time: '2',
-          }, {
-            text: 'demain',
-            time: '1',
-          }];
-
-          dayWords.forEach((dayWord) => {
-            // console.log(dayWord);
-            message[2] = message[2].replace(dayWord.text, dayWord.time);
-            // console.log(message[2]);
-          });
-
-          // const rand = [Math.floor(Math.random() * res.length)];
-          let time;
+          console.log('nom de module trouvé : ', splitMessage[0]);
           let errorMessage;
-          if (message.length === 4 && typeof (parseInt(message[2], 10)) === 'number' && typeof (parseInt(message[3], 10)) === 'number') {
-            time = (8 * message[2]) + Math.round(message[3] / 3);
-          } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
-            time = 8 * message[2];
-          } else {
-            console.log('Syntaxe du time meteo incorrecte');
-            time = 0;
-            errorMessage = 'Votre syntaxe est incorrecte';
-          }
-          if (time > 39) {
-            time = 39;
-          }
-          console.log('time:', time);
-          if (isNaN(time)) {
-            console.log('NaN');
-            errorMessage = 'Votre syntaxe est incorrecte';
-            time = 0;
-          }
-          const tempArgs =
-          {
-            parameters:
-            [{
-              tag: 'place',
-              value: message[1],
-            }],
-            inputs:
-            [{
-              tag: 'time',
-              value: time,
-            }],
-          };
-          const currentModule = req.body.message.split(' ')[0];
-
           let responseToBrowser;
-          apiCall(currentModule, tempArgs)
+          console.log('req.session: ', req.session);
+
+          apiCall(splitMessage[0], splitMessage)
             .then((response) => {
               console.log('response: ', response);
 
-              // const data = {
-              //   Time: response.list[time].dt_txt,
-              //   City: response.city.name,
-              //   Country: response.city.country,
-              //   Weather: response.list[time].weather[0].description,
-              //   Temperature: Math.round(response.list[time].main.temp - 273.15),
-              // };
-              // responseToBrowser = {
-              //   text: req.body.message,
-              //   answer: `Weather (${data.Time} City: ${data.City} (${data.Country}) ): ${data.Weather} ${data.Temperature}°C`,
-              //   serverMessage: errorMessage,
-              // };
               responseToBrowser = {
                 text: req.body.message,
                 answer: response.answer,
                 serverMessage: errorMessage,
               };
               res.json(responseToBrowser);
+            })
+            .catch({
+
             });
 
         // appel de l'API meteo en dur n'est pas possible, donc on analyse un peu mieux la phrase
