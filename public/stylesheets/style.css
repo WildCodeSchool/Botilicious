@@ -34,16 +34,36 @@ body {
     background-color: white;
 }
 
+h2 {
+    font-weight: normal;
+    color: #5f4548;
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 20px;
+}
+
+th {
+    font-weight: normal;
+    text-decoration-line: underline;
+    text-align: center;
+}
+
+label {
+    font-weight: normal;
+}
+
 .slogan {
     font-weight: bold;
     font-size: 0.7em;
+    color: #5f4548;
 }
 
 .gris {
     font-size: 1em;
     background-color: #5f4548;
     padding: 15px;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     color: white;
 }
 
@@ -72,7 +92,8 @@ header {
     font-size: 1.2em;
     background-color: #f7cdb7;
     padding: 50px;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     margin-bottom: 15px;
 }
 
@@ -94,16 +115,33 @@ header {
     font-size: 1em;
     background-color: #5f4548;
     padding: 20px;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
-.chatwindow {
+.chatwindow, .tagwindow, .listkeywords, .containerform, .modulesList {
   color: #5f4548;
   font-size: 1em;
   text-align: left;
-  background-color: #f7cdb7;
+  background-color: #d6a072;
+  border-top-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding : 20px;
+  margin-top: 20px;
 }
+
+.sentencewindow, .edittags, .editkeywords, .editParameters, .moduleEdit {
+    color: #5f4548;
+    font-size: 1em;
+    text-align: left;
+    background-color: #f7cdb7;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding : 20px;
+    margin-top: 20px;
+  }
 
 .oubli {
     text-align: center;
@@ -111,8 +149,9 @@ header {
     font-size: 1em;
     background-color: #5f4548;
     padding: 50px;
-    border-radius: 15px;
-    margin-bottom: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    margin-top: 15px;
     width: 50%;
     margin-left: 25%;
 }
@@ -121,8 +160,8 @@ header {
     text-align: center;
     font-size: 1.5em;
     padding: 50px;
-    border-radius: 15px;
-    height: 150px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 #s3 {
@@ -136,7 +175,8 @@ header {
     color: #5f4548;
     background-color: #f7cdb7;
     padding: 15px;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     color: #FFFAF0;
 }
 
@@ -145,8 +185,25 @@ header {
     color: #5f4548;
     background-color: #d6a072;
     padding: 15px;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     color: #f1f1f1;
+}
+
+.menu {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.modme {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.space {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .bologo {
@@ -166,12 +223,14 @@ footer {
 /*    background-color: #f7cdb7; */
     height: 150px;
     color: white;
-    border-radius: 15px;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
     margin-left: 14px;
     margin-right: 14px;
     text-align: center;
     padding: 20px;
     margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 /* .footer1 {
