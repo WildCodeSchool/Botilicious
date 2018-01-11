@@ -75,8 +75,9 @@ class ChatWindow extends Component {
         }).then((response => {
             console.log(response)
             var nextInputText = '';
-            this.setState({message: this.state.messages.concat([{ message: response.data.answer }])} );
+            this.setState({messages: this.state.messages.concat([{ message: response.data.answer }]) });
             console.log(this.state)
+            this.setState({inputText: ''})
         }))
     }
 
