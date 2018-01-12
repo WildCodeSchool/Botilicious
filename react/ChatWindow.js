@@ -7,8 +7,8 @@ class ChatMessage extends Component {
     render() {
         return (
             <p style={{
-
-                backgroundColor: 'rgb(77, 175, 111)',
+                color: 'white',
+                backgroundColor: '#5f4548',
                 borderRadius: '5px',
                 boxShadow: '0 0 6px #B2B2B2',
                 display: 'inline-block',
@@ -94,7 +94,7 @@ class ChatWindow extends Component {
      *  à chaque fois qu'un nouveau message est envoyé
      *  La méthode scrollIntoView fait défiler la page de manière à rendre la div vide visible.*/
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+        this.messagesEnd.scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
     }
 
     componentDidMount() {
@@ -109,7 +109,7 @@ class ChatWindow extends Component {
 
 
         var windowStyles = {
-            maxHeight: '30em',
+            maxHeight: '40em',
             maxWidth: '40em',
             margin: '1rem auto',
             overflowY: 'scroll',
@@ -129,7 +129,8 @@ class ChatWindow extends Component {
         };
 
         var btnStyles = {
-            backgroundColor: 'rgb(77, 175, 111)',
+            color: 'white',
+            backgroundColor: '#5f4548',
             border: 'none',
             width: '150px',
             textTransform: 'uppercase',
@@ -144,11 +145,6 @@ class ChatWindow extends Component {
                     <div style={windowStyles}>
                         <ChatMessageHistory messages={this.state.messages} />
 
-                        {   /* Div vide en bas de la fenêtre de chat
-                    --> permet de déclencher le scroll down à chaque évenement */ }
-                        <div style={{ float: "left", clear: "both" }}
-                            ref={(el) => { this.messagesEnd = el; }}>
-                        </div>
                     </div>
                 </div>
 
@@ -158,6 +154,11 @@ class ChatWindow extends Component {
                     <input style={inputStyles} type="text" onChange={this.onChange} value={this.state.inputText} />
                     <button style={btnStyles}>Send</button>
                 </form>
+                {   /* Div vide en bas de la fenêtre de chat
+            --> permet de déclencher le scroll down à chaque évenement */ }
+                <div style={{ float: "left", clear: "both" }}
+                    ref={(el) => { this.messagesEnd = el; }}>
+                </div>
 
             </div>
         );

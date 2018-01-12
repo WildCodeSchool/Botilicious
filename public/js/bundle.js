@@ -1440,7 +1440,7 @@ function toComment(sourceMap) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_util__);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/SelectTag.js';
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/SelectTag.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1915,7 +1915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatWindow__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registerServiceWorker__ = __webpack_require__(66);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/index.js';
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/index.js';
 
 
 
@@ -19279,7 +19279,7 @@ exports.push([module.i, "body {\n  margin: 0;\n  padding: 0;\n  font-family: san
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__App_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AddSentences__ = __webpack_require__(41);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/App.js';
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/App.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19402,7 +19402,7 @@ exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  anim
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Split__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SelectTag__ = __webpack_require__(18);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/AddSentences.js';
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/AddSentences.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19538,7 +19538,7 @@ var AddSentences = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SelectTag__ = __webpack_require__(18);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/Split.js',
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/Split.js',
     _this = this;
 
 
@@ -21204,7 +21204,7 @@ module.exports = function spread(callback) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/ChatWindow.js';
+var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/ChatWindow.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -21235,8 +21235,8 @@ var ChatMessage = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'p',
                 { style: {
-
-                        backgroundColor: 'rgb(77, 175, 111)',
+                        color: 'white',
+                        backgroundColor: '#5f4548',
                         borderRadius: '5px',
                         boxShadow: '0 0 6px #B2B2B2',
                         display: 'inline-block',
@@ -21359,7 +21359,7 @@ var ChatWindow = function (_Component3) {
         };
 
         _this3.scrollToBottom = function () {
-            _this3.messagesEnd.scrollIntoView({ behavior: "smooth" });
+            _this3.messagesEnd.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
         };
 
         _this3.state = {
@@ -21390,7 +21390,7 @@ var ChatWindow = function (_Component3) {
             var _this4 = this;
 
             var windowStyles = {
-                maxHeight: '30em',
+                maxHeight: '40em',
                 maxWidth: '40em',
                 margin: '1rem auto',
                 overflowY: 'scroll'
@@ -21410,7 +21410,8 @@ var ChatWindow = function (_Component3) {
             };
 
             var btnStyles = {
-                backgroundColor: 'rgb(77, 175, 111)',
+                color: 'white',
+                backgroundColor: '#5f4548',
                 border: 'none',
                 width: '150px',
                 textTransform: 'uppercase',
@@ -21424,7 +21425,7 @@ var ChatWindow = function (_Component3) {
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 142
+                        lineNumber: 143
                     },
                     __self: this
                 },
@@ -21432,7 +21433,7 @@ var ChatWindow = function (_Component3) {
                     'div',
                     { id: 'box', __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 143
+                            lineNumber: 144
                         },
                         __self: this
                     },
@@ -21440,22 +21441,13 @@ var ChatWindow = function (_Component3) {
                         'div',
                         { style: windowStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 144
+                                lineNumber: 145
                             },
                             __self: this
                         },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChatMessageHistory, { messages: this.state.messages, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 145
-                            },
-                            __self: this
-                        }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { float: "left", clear: "both" },
-                            ref: function ref(el) {
-                                _this4.messagesEnd = el;
-                            }, __source: {
-                                fileName: _jsxFileName,
-                                lineNumber: 149
+                                lineNumber: 146
                             },
                             __self: this
                         })
@@ -21465,13 +21457,13 @@ var ChatWindow = function (_Component3) {
                     'form',
                     { style: formStyles, onSubmit: this.handleSubmit, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 157
+                            lineNumber: 153
                         },
                         __self: this
                     },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { style: inputStyles, type: 'text', onChange: this.onChange, value: this.state.inputText, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 158
+                            lineNumber: 154
                         },
                         __self: this
                     }),
@@ -21479,13 +21471,22 @@ var ChatWindow = function (_Component3) {
                         'button',
                         { style: btnStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 159
+                                lineNumber: 155
                             },
                             __self: this
                         },
                         'Send'
                     )
-                )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { style: { float: "left", clear: "both" },
+                    ref: function ref(el) {
+                        _this4.messagesEnd = el;
+                    }, __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 159
+                    },
+                    __self: this
+                })
             );
         }
     }]);
