@@ -5,10 +5,10 @@ block content
   section#serverMessageModule
     if error
       p= error
-  section.sectionform(style="width:800px")
-    h2 Nouveau module
-    .containerform(style="width:800px")
-      form#form(method="POST" style="width:800px")
+  section.sectionform
+    .containerform.sectionoubli
+      h2 Nouveau module
+      form#form(method="POST")
         if servermessage
           p.warning= servermessage
         .form-group
@@ -22,12 +22,16 @@ block content
           input#apiUrl.form-control(placeholder="URL d'une API" name="apiUrl")
         #newParameters.form-group
     #editParameters.editParameters
+<<<<<<< HEAD
       h3 Edition des paramètres
       label(for='parameterType') Type
       select#parameterType(name='parameterType')
         option(value="out") Requête
         option(value="in") Réponse
       br
+=======
+      h2 Edition des paramètres
+>>>>>>> dev
       label(for='parameterTag') Tag
       select#parameterTag(name='parameterTag')
         option(value="")= (aucun)
@@ -50,10 +54,10 @@ block content
           th Paramètres
           th Valeurs
           th Action
-    button#addmodule.btn.gris(type='submit') Créer le module
+    button#addmodule.btn.gris.space(type='submit') Créer le module
 
   section.modulesList
-    h2 Vos modules existants
+    h2 Liste des modules
     table#modules(style="width:800px;border:1px solid black")
       tr
         th Nom
@@ -71,6 +75,7 @@ block content
             button(id='deletemodule' +module.id) Supprimer
             br
   section.moduleEdit
+    h2 Merci à quelqu'un de mettre un titre ici !!!
     each module, m in modules
       h3= module.name + ' :'
       h4 Paramètres

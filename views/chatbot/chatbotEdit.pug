@@ -5,16 +5,15 @@ block content
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
-    p input : ville nombre_de_jours nombre_d_heures
-    p (max 4 21)
+    p Input : ville nombre_de_jours nombre_d_heures
+    p (Max 4 21)
     br
     input#message(type="text" name="message")
     br
-    button#parler Parler
-    br
-    div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
-    br
-    br
+    button#parler(class="btn gris space") Parler
+    hr
+    div
+    #chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
   .sentencewindow
     h2 Liste des phrases
     p Ajoutez une phrase puis un next. 
