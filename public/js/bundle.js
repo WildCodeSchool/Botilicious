@@ -21260,7 +21260,7 @@ var ChatMessage = function (_Component) {
 
 ;
 
-// definit l'affichage de l'ensemble de l'historique 
+// definit l'affichage de l'ensemble de l'historique
 
 var ChatMessageHistory = function (_Component2) {
     _inherits(ChatMessageHistory, _Component2);
@@ -21324,7 +21324,7 @@ var ChatMessageHistory = function (_Component2) {
 
 ;
 
-// Englobe l'ensemble des éléments de la fenêtre de chat 
+// Englobe l'ensemble des éléments de la fenêtre de chat
 
 var ChatWindow = function (_Component3) {
     _inherits(ChatWindow, _Component3);
@@ -21346,9 +21346,9 @@ var ChatWindow = function (_Component3) {
             }).then(function (response) {
                 console.log(response);
                 var nextInputText = '';
+                _this3.setState({ inputText: '' });
                 _this3.setState({ messages: _this3.state.messages.concat([{ message: response.data.answer }]) });
                 console.log(_this3.state);
-                _this3.setState({ inputText: '' });
             });
         };
 
@@ -21369,8 +21369,8 @@ var ChatWindow = function (_Component3) {
         return _this3;
     }
 
-    /** Fonction permettant le scroll down de la fenêtre du chat 
-     *  à chaque fois qu'un nouveau message est envoyé  
+    /** Fonction permettant le scroll down de la fenêtre du chat
+     *  à chaque fois qu'un nouveau message est envoyé
      *  La méthode scrollIntoView fait défiler la page de manière à rendre la div vide visible.*/
 
 
