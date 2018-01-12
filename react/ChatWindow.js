@@ -23,7 +23,7 @@ class ChatMessage extends Component {
 };
 
 
-// definit l'affichage de l'ensemble de l'historique 
+// definit l'affichage de l'ensemble de l'historique
 class ChatMessageHistory extends Component {
     render() {
         var createMessage = function (message, index) {
@@ -49,7 +49,7 @@ class ChatMessageHistory extends Component {
 };
 
 
-// Englobe l'ensemble des éléments de la fenêtre de chat 
+// Englobe l'ensemble des éléments de la fenêtre de chat
 class ChatWindow extends Component {
     constructor(props) {
         super(props);
@@ -63,35 +63,35 @@ class ChatWindow extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         var nextMessages = this.state.messages.concat([{ message: this.state.inputText }]);
-        
+
 
         this.setState({ messages: nextMessages} );
         console.log(this.state.inputText);
         axios.post('http://localhost:3001/admin/message', {
             message: this.state.inputText
-            
+
 
 
         }).then((response => {
             console.log(response)
             var nextInputText = '';
+            this.setState({inputText: ''})
             this.setState({messages: this.state.messages.concat([{ message: response.data.answer }]) });
             console.log(this.state)
-            this.setState({inputText: ''})
         }))
     }
 
     onChange = (e) => {
-        this.setState({ 
+        this.setState({
             inputText: e.target.value,
          });
-        
+
     }
 
 
 
-    /** Fonction permettant le scroll down de la fenêtre du chat 
-     *  à chaque fois qu'un nouveau message est envoyé  
+    /** Fonction permettant le scroll down de la fenêtre du chat
+     *  à chaque fois qu'un nouveau message est envoyé
      *  La méthode scrollIntoView fait défiler la page de manière à rendre la div vide visible.*/
     scrollToBottom = () => {
         this.messagesEnd.scrollIntoView({ behavior: "smooth" });
@@ -144,7 +144,7 @@ class ChatWindow extends Component {
                     <div style={windowStyles}>
                         <ChatMessageHistory messages={this.state.messages} />
 
-                        {   /* Div vide en bas de la fenêtre de chat 
+                        {   /* Div vide en bas de la fenêtre de chat
                     --> permet de déclencher le scroll down à chaque évenement */ }
                         <div style={{ float: "left", clear: "both" }}
                             ref={(el) => { this.messagesEnd = el; }}>
@@ -165,4 +165,3 @@ class ChatWindow extends Component {
 };
 
 export default ChatWindow;
-

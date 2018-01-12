@@ -120,7 +120,7 @@ const Chatbots = {
     })
 
       .then((reponse) => {
-        
+
         if (reponse) {
           let message = req.body.message.split(' ');
           const dayWords = [{
@@ -129,8 +129,8 @@ const Chatbots = {
           }, {
             text : 'demain',
             time : 1,
-          }];          
-          
+          }];
+
           dayWords.forEach(dayWord => {
             // console.log(dayWord);
             message[2]= message[2].replace(dayWord.text,dayWord.time);
@@ -168,7 +168,7 @@ const Chatbots = {
             },
           };
         const currentModule = req.body.message.split(' ')[0];
-        
+
         let responseToBrowser;
         apiCall(currentModule, tempArgs)
           .then((response) => {
@@ -291,6 +291,7 @@ const Chatbots = {
               * Si on a trouvé cette combinaison de mots clés
               */
                         .then((answer) => {
+                          if (answer[0]){
                           console.log('answer :', answer);
                           /**
                 * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
@@ -310,6 +311,14 @@ const Chatbots = {
                               };
                               res.json(jsontostring);
                             });
+                          } else {
+                            console.log('pas de réponse trouvée');
+                            const responseToBrowser = {
+                              answer: 'je ne comprends pas',
+                              text: req.body.message,
+                            };
+                            res.json(responseToBrowser);
+                          }
                         });
                       // si on ne trouve pas de next, abandonner
                     } else {
@@ -389,7 +398,7 @@ const Chatbots = {
     //     };
     //     res.json(responseToBrowser);
     //   });
-  
+
 
   chatbotDelete(req, res) {
     console.log(req.body);
