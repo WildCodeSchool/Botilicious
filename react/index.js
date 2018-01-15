@@ -5,13 +5,12 @@ import App from './App';
 import ChatWindow from './ChatWindow';
 import registerServiceWorker from './registerServiceWorker';
 
-if(document.getElementById('root')){
-  ReactDOM.render(<App />, document.getElementById('root'));
-}
-
-//registerServiceWorker();
-
 // AFFICHAGE DE LA FENÊTRE DE CHAT : fichier ChatWindow.js
 if(document.getElementById('example')){
   ReactDOM.render(<ChatWindow />,document.getElementById('example'));
+}
+
+// AFFICHAGE DES COMPOSANTS POUR L'AJOT DE PHRASES ET LE TAG DE MOTS : fichier App.js
+if(document.getElementById('test')){
+  ReactDOM.render(<App />, document.getElementById('test'));
 }

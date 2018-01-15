@@ -7,7 +7,7 @@ const getChatbots = require('./modules/Chatbots');
 const apiCall = require('./modules/apiCall');
 const detectKeywords = require('./modules/detectKeywords');
 const autoTags = require('./modules/autotagSentence');
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 
 const Chatbots = {
 
@@ -275,101 +275,104 @@ const Chatbots = {
                        */
                       getKeywords()
                       /**
-                       * On obtient la liste de keywords
-                       */
+              * Si on a trouvé cette combinaison de mots clés
+              */
                         .then((keywords) => {
-                          /**
-                           * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre, et cherche les mots clés
+                          if (keywords[0]) {
+                            console.log('keywords :', keywords);
+                            /**
+                           * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre (ici [' ']), et cherche les mots clés
                            * listés dans keywords
                            */
-                          const resultat = autoTags(req.body.message, keywords, [' ']);
-                          /**
+                            const resultat = autoTags(req.body.message, keywords, [' ']);
+                            /**
                            * si on a trouvé un mot clé dans la phrase
                            */
-                          if (resultat) {
+                            if (resultat) {
                             /**
                              * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
                              * avec les mots clés trouvés
                              */
-                            console.log(resultat.foundKeywords);
-                            let foundKeywords = '';
-                            for (let index = 0; index < resultat.foundKeywords.length; index++) {
-                              foundKeywords += resultat.foundKeywords[index].tag;
-                              console.log(resultat.foundKeywords[index].tag);
-                            }
-                            console.log(keywords);
-                            // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
+                              console.log(resultat.foundKeywords);
+                              let foundKeywords = '';
+                              for (let index = 0; index < resultat.foundKeywords.length; index++) {
+                                foundKeywords += resultat.foundKeywords[index].tag;
+                                console.log(resultat.foundKeywords[index].tag);
+                              }
+                              console.log(keywords);
+                              // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
 
-                            models.Sentence.findAll({
-                              where: { text: foundKeywords },
-                              include: { model: models.Module },
-                            })
-                            /**
+                              models.Sentence.findAll({
+                                where: { text: foundKeywords },
+                                include: { model: models.Module },
+                              })
+                              /**
                              * Si on a trouvé cette combinaison de mots clés
                              */
-                              .then((answer) => {
-                                console.log('answer :', answer);
+                                .then((answer) => {
+                                  console.log('answer :', answer);
 
-                                if (answer[0]) {
+                                  if (answer[0]) {
                                   /**
                                    * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
                                    */
-                                  models.Sentence.findOne({
-                                    where: { id: answer[0].dataValues.next },
-                                    include: { model: models.Module },
-                                  })
-                                  /**
+                                    models.Sentence.findOne({
+                                      where: { id: answer[0].dataValues.next },
+                                      include: { model: models.Module },
+                                    })
+                                    /**
                                    * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
                                    */
-                                    .then((nextSentence) => {
+                                      .then((nextSentence) => {
                                       // écrire la réponse ou non réponse dans la session
-                                      let foundAnswer = {};
-                                      if (nextSentence[0]) {
-                                        foundAnswer = nextSentence[0].dataValues;
-                                      }
-                                      req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
+                                        let foundAnswer = {};
+                                        if (nextSentence[0]) {
+                                          foundAnswer = nextSentence[0].dataValues;
+                                        }
+                                        req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
 
-                                      console.log('nextSentence: ', nextSentence);
+                                        console.log('nextSentence: ', nextSentence);
 
-                                      if (nextSentence.dataValues) {
-                                        const jsontostring = {
-                                          answer: nextSentence.dataValues.text,
-                                          text: req.body.message,
-                                        };
-                                        res.json(jsontostring);
-                                      } else {
-                                        req.session.history.answers.unshift('keywords trouvé, next pas trouvé');
+                                        if (nextSentence.dataValues) {
+                                          const jsontostring = {
+                                            answer: nextSentence.dataValues.text,
+                                            text: req.body.message,
+                                          };
+                                          res.json(jsontostring);
+                                        } else {
+                                          req.session.history.answers.unshift('keywords trouvé, next pas trouvé');
 
-                                        console.log('nothing found');
-                                        const responseToBrowser = {
-                                          answer: 'keywords trouvé, next pas trouvé',
-                                          text: req.body.message,
-                                        };
-                                        res.json(responseToBrowser);
-                                      }
-                                    });
-                                } else {
-                                  const reply = 'rien trouvé';
-                                  req.session.history[req.session.currentMessageId].answer = reply;
+                                          console.log('nothing found');
+                                          const responseToBrowser = {
+                                            answer: 'keywords trouvé, next pas trouvé',
+                                            text: req.body.message,
+                                          };
+                                          res.json(responseToBrowser);
+                                        }
+                                      });
+                                  } else {
+                                    const reply = 'rien trouvé';
+                                    req.session.history[req.session.currentMessageId].answer = reply;
 
-                                  console.log(reply);
-                                  const responseToBrowser = {
-                                    answer: reply,
-                                    text: req.body.message,
-                                  };
-                                  res.json(responseToBrowser);
-                                }
-                              });
+                                    console.log(reply);
+                                    const responseToBrowser = {
+                                      answer: reply,
+                                      text: req.body.message,
+                                    };
+                                    res.json(responseToBrowser);
+                                  }
+                                });
                             // si on ne trouve pas de next, abandonner
-                          } else {
-                            req.session.history[req.session.currentMessageId].answer = 'keywords trouvé, template comme timeplace pas trouvé';
+                            } else {
+                              req.session.history[req.session.currentMessageId].answer = 'keywords trouvé, template comme timeplace pas trouvé';
 
-                            console.log('rien trouvé');
-                            const responseToBrowser = {
-                              answer: 'rien trouvé',
-                              text: req.body.message,
-                            };
-                            res.json(responseToBrowser);
+                              console.log('rien trouvé');
+                              const responseToBrowser = {
+                                answer: 'rien trouvé',
+                                text: req.body.message,
+                              };
+                              res.json(responseToBrowser);
+                            }
                           }
                         });
                     }
