@@ -1,7 +1,7 @@
 const models = require('../../models');
 const axios = require('axios');
 
-// simple naive arithmetic parser, many operands
+// simple naive arithmetic parser, two operands ok
 function operations(arrayOfNumbers = [], operand = '') {
   return arrayOfNumbers.reduce((acc, current) => {
     switch (operand) {
@@ -37,7 +37,8 @@ function apiCall(moduleName, splitMessage) {
           // module meteo, démo sprint 1, traitement des arguments en dur
           if (message[0] === 'meteo') {
             console.log('meteo, module en dur');
-            const dayWords = [{
+            const dayWords =
+            [{
               text: 'après-demain',
               time: '2',
             }, {
@@ -167,6 +168,7 @@ function apiCall(moduleName, splitMessage) {
                         tempResponse = tempArray[actualIndex];
                         // console.log('tempArray[actualIndex]: ', tempResponse);
                       } else {
+                        // gestion des operations arithmetiques de base
                         const re = /-|\+|\*|\//;
                         console.log('tempKey: ', tempKey);
                         console.log(tempKey.match());
@@ -181,14 +183,16 @@ function apiCall(moduleName, splitMessage) {
                           console.log('tempKey2: ', tempKey);
                           console.log('rightOperand: ', rightOperand);
                         }
+                        // cas general : pas de crochets, pas d'operateur
+                        // results.data => results.data.name => results.data.name.city
                         tempResponse = tempResponse[tempKey];
                         console.log('tempResponse: ', tempResponse);
+                        // effectuer une operation detectee plus haut
                         if (actualKey) {
                           console.log('tempKey[operatorIndex]: ', key[operatorIndex]);
-                          tempResponse = Math.round(100 * operations([tempResponse, rightOperand], key[operatorIndex])) / 100;
+                          tempResponse = Math.round(10 * operations([tempResponse, rightOperand], key[operatorIndex])) / 10;
                         }
                       }
-                      // results.data => results.data.name => results.data.name.city
                       return tempResponse;
                     });
                   console.log(tempResponse);
