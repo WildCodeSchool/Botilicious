@@ -17,8 +17,8 @@ module.exports = {
           { type: 'in', tag: 'city', value: 'city.name' },
           { type: 'in', tag: 'country', value: 'city.country' },
           { type: 'in', tag: 'weather', value: 'list[time].weather[0].description' },
-          // { type: 'in', tag: 'temperature', value: 'list[time].main.temp - 273.15' },
-          { type: 'in', tag: 'temperature', value: 'list[time].main.temp' },
+          { type: 'in', tag: 'temperature', value: 'list[time].main.temp-273' },
+          // { type: 'in', tag: 'temperature', value: 'list[time].main.temp' },
         ],
         // required parameters, to be added to the given parameters above
         fixed: [

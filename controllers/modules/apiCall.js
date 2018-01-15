@@ -1,6 +1,19 @@
 const models = require('../../models');
 const axios = require('axios');
 
+// simple naive arithmetic parser, many operands
+function operations(arrayOfNumbers = [], operand = '') {
+  return arrayOfNumbers.reduce((acc, current) => {
+    switch (operand) {
+      default: return acc + current;
+      case '+': return acc + current;
+      case '-': return acc - current;
+      case '*': return acc * current;
+      case '/': return acc / current;
+    }
+  });
+}
+
 // fonction qui retourne une promesse. Celle-ci est le call d'api.
 function apiCall(moduleName, splitMessage) {
   return new Promise(((resolve, reject) => {
@@ -138,7 +151,8 @@ function apiCall(moduleName, splitMessage) {
 
                   tempParameter.value.split('.')
                     .map((key) => {
-                      console.log(key);
+                      console.log('key: ', key);
+                      let tempKey = key;
 
                       const arrayIndexInKey = key.match(/\[[0-9]+\]/gi);
                       if (arrayIndexInKey) {
@@ -146,15 +160,33 @@ function apiCall(moduleName, splitMessage) {
 
                         const actualIndex = arrayIndexInKey[0].substring(1, arrayIndexInKey[0].length - 1);
                         console.log('actualIndex: ', actualIndex);
-                        const tempKey = key.slice(0, key.indexOf(actualIndex) - 1);
+                        tempKey = key.slice(0, key.indexOf(actualIndex) - 1);
                         console.log('tempKey: ', tempKey);
 
                         const tempArray = tempResponse[tempKey];
                         tempResponse = tempArray[actualIndex];
                         // console.log('tempArray[actualIndex]: ', tempResponse);
                       } else {
-                        console.log('key: ', key);
-                        tempResponse = tempResponse[key];
+                        const re = /-|\+|\*|\//;
+                        console.log('tempKey: ', tempKey);
+                        console.log(tempKey.match());
+                        const actualKey = tempKey.match(re);
+                        const operatorIndex = [tempKey.search(re)];
+                        const rightOperand = parseInt(tempKey.split(re).slice(1), 10);
+                        if (actualKey) {
+                          console.log('actualKey: ', actualKey);
+                          console.log('operatorIndex: ', operatorIndex);
+                          console.log('tempKey.split(//)', tempKey.split(re));
+                          tempKey = tempKey.split(re)[0];
+                          console.log('tempKey2: ', tempKey);
+                          console.log('rightOperand: ', rightOperand);
+                        }
+                        tempResponse = tempResponse[tempKey];
+                        console.log('tempResponse: ', tempResponse);
+                        if (actualKey) {
+                          console.log('tempKey[operatorIndex]: ', key[operatorIndex]);
+                          tempResponse = Math.round(100 * operations([tempResponse, rightOperand], key[operatorIndex])) / 100;
+                        }
                       }
                       // results.data => results.data.name => results.data.name.city
                       return tempResponse;
