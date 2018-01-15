@@ -24,7 +24,7 @@ module.exports = {
         fixed: [
           { type: 'out', text: 'APPID', value: '096247cb370ee7b808f6578b219dec6c' },
         ],
-        answer: 'Weather (<time> City: <city> (<country>) ): <weather> <temperature>°Kelvin',
+        answer: 'Weather (<time> City: <city> (<country>) ): <weather> <temperature> °C',
       }),
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
