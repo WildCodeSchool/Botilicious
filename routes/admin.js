@@ -14,6 +14,11 @@ const Tags = require('../controllers/Tags');
 /* Projet IAforall - Botilicious Ce fichier regroupe les routes
 des pages accessibles post-connexion */
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 /* GET Affichage de la page de configuration du chatbot */
 router.get('/', Chatbots.index);

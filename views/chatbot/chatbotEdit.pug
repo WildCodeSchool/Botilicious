@@ -1,23 +1,21 @@
 extends ../layout
 
 block content
+
   include ../menu
   .chatwindow
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
-    p Input : ville nombre_de_jours nombre_d_heures
-    p (Max 4 21)
-    br
-    input#message(type="text" name="message")
-    br
-    button#parler(class="btn gris space") Parler
+    #example Fenêtre de chat: cf. ChatWindow.js
     hr
     div
+
     //- #chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
     #chatwindow
+
   .sentencewindow
     h2 Liste des phrases
-    p Ajoutez une phrase puis un next. 
+    p Ajoutez une p hrase puis un next. 
     p Le next sert à relier une phrase avec l'id d'une autre phrase pour obtenir une réponse en fonction de l'id de la phrase séléctionnée.
     input#sentence(type="text" name="sentence" size="60")
     select#sentenceType(name='sentenceType')
@@ -48,11 +46,11 @@ block content
             button(id='tag' +sentence.id) Tag sur les mots
     br
   .tagwindow
-    div#wordsToTag
-    //- table#wordsToTag(style="width:400px;border:1px solid black")
-    //-   tr#headers
-    //-     th Mot
-    //-     th Tag
+    h2 Tag des mots
+    p Ajoutez une phrase dans le champ input. 
+    p Sélectionner un tag dans la liste de droite.
+    #test Ajout de phrases et tag de mots : cf. App.js
+
   .edittags
     h2 Edition des tags
     p Tagger un mot permet d'obtenir une réponse d'une phrase existante à chaque fois que ce mot sera utilisé par l'utilisateur.
@@ -112,3 +110,5 @@ block content
   script(type='text/javascript', src='/js/sentences.js')
   script(type='text/javascript', src='/js/tags.js')
   script(type='text/javascript', src='/js/keywords.js')
+  block javascript 
+    script(src="/js/bundle.js")
