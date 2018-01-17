@@ -217,12 +217,11 @@ $('#addSentence').click(() => {
       console.log(data);
       if (!data.error) {
         $('#sentence').val('');
-        $('#sentencenext').val('');
+        $('#sentenceInputNext').val('');
         $('#servermessage').empty();
-        $('#sentences').append(`<tr id="sentence${data.sentence.id}"><td id="sentencetext${data.sentence.id}"></td><td>${data.sentence.type}</td><td>${data.sentence.id}</td><td>${data.sentence.next}</td><td><button id=delete${data.sentence.id}>Supprimer</button><button id=duplicate${data.sentence.id}>Dupliquer</button><button id="tag${data.sentence.id}">Tag sur les mots</button></td></tr>`);
+        $('#sentences').append(`<tr id="sentence${data.sentence.id}"><td id="sentencetext${data.sentence.id}"></td><td>${data.sentence.type}</td><td>${data.sentence.id}</td><td id="sentencenext${data.sentence.id}">${data.sentence.next}</td><td><button id=deletesentence${data.sentence.id}>Supprimer</button><button id=duplicate${data.sentence.id}>Dupliquer</button><button id="tag${data.sentence.id}">Tag sur les mots</button></td></tr>`);
         // append du text et pas du HTML comme au-dessus
         $(`#sentencetext${data.sentence.id}`).append(document.createTextNode(data.sentence.text));
-        // $("#sentences").on("click", "#tag", StartTagging);
         $(`#deletesentence${data.sentence.id}`).click(DeleteSentence);
         $(`#duplicate${data.sentence.id}`).click(DuplicateSentence);
         $(`#tag${data.sentence.id}`).click(StartTagging);
