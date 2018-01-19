@@ -1,9 +1,11 @@
 extends ../layout
 
 block content
-
+  
   include ../menu
-  .chatwindow
+  
+  button(onclick="javascript:introJs().start();") Aide
+  .chatwindow(data-step="1" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
     h2 Vous êtes sur la page de configuration de votre nouveau chatbot
     br
     #example Fenêtre de chat: cf. ChatWindow.js
@@ -13,8 +15,8 @@ block content
     //- #chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
     #chatwindow
 
-  .sentencewindow
-    h2 Liste des phrases
+  .sentencewindow(data-step="2" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
+    h2(data-step="3" data-intro="Titre de l'article") Liste des phrases
     p Ajoutez une p hrase puis un next. 
     p Le next sert à relier une phrase avec l'id d'une autre phrase pour obtenir une réponse en fonction de l'id de la phrase séléctionnée.
     input#sentence(type="text" name="sentence" size="60")
