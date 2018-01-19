@@ -3,24 +3,27 @@ const models = require('../../models');
 function getSentences(id) {
   return new Promise(((resolve, reject) => {
     const records = [];
-    let myparams = {};
+    const myparams = {
+      where: {},
+      include: [{
+        model: models.Module,
+        where: {},
+        attributes: ['id', 'name', 'api'],
+        // plain: true,
+        // raw: true,
+      }],
+    };
 
     if (id) {
-      myparams = { where: { id } };
+      myparams.where.id = id;
     }
     console.log('myparams', myparams);
-    models.Sentence
+    resolve(models.Sentence
       .findAll(myparams)
-    // query ok
-      .then((results) => {
-      // console.log(results);
-        results.map((result, i) => {
-          records[i] = result.dataValues;
-          // ESLint demande de renvoyer une valeur
-          return i;
-        });
-        resolve(records);
-      });
+      // query ok
+      .then(results =>
+        // console.log('results: ', results);
+        results.map(result => result.dataValues)));
   }));
 }
 

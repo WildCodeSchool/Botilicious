@@ -21,7 +21,7 @@ const Chatbots = {
     // console.log(getSentences());
     Promise.all([getSentences(), getKeywords(), getTags()])
       .then((results) => {
-        console.log('keywords found: ', results[1]);
+        // console.log('keywords found: ', results[1]);
         res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });
       })
       .catch(error => console.log(error));

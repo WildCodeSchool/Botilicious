@@ -24,8 +24,8 @@ const Sentences = {
       models.Sentence.findOrCreate({
         where: {
           text: req.body.text,
-          type: req.body.type,
-          next: req.body.next,
+          // type: req.body.type,
+          // next: req.body.next,
         },
       })
         .spread((sentence, created) => {
