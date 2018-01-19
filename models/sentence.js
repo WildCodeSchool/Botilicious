@@ -7,11 +7,13 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING,
     type: DataTypes.STRING,
     next: DataTypes.INTEGER,
+    moduleId: DataTypes.INTEGER,
   });
 
   Sentence.associate = function (models) {
-    Sentence.belongsToMany(models.Module, { foreignKey: 'sentenceId', through: 'Sentence_has_Sentence' });
-    Sentence.belongsToMany(models.Module, { foreignKey: 'sentenceId', through: 'Sentence_has_Module' });
+    // Sentence.belongsToMany(models.Sentence, { foreignKey: 'sentenceId', through: 'Sentence_has_Sentence' });
+    // Sentence.belongsToMany(models.Module, { foreignKey: 'sentenceId', through: 'Sentence_has_Module' });
+    Sentence.belongsTo(models.Module);
   };
   return Sentence;
 };

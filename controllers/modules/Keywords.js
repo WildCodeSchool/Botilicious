@@ -3,7 +3,7 @@ const models = require('../../models');
 function getKeywords(where) {
   return new Promise((resolve, reject) => {
     const myparams = {
-      include: [models.Tag],
+      include: [{ model: models.Tag }],
     };
     // console.log('where: ', where);
     if (where) {
@@ -14,7 +14,7 @@ function getKeywords(where) {
       .findAll(myparams)
     // query ok
       .then((results) => {
-      // console.log('Keyword results: ', results);
+        console.log('Keyword results: ', results);
         const records = [];
         if (results.length > 0) {
           results.map((result, i) => {

@@ -41,7 +41,7 @@ const Users = {
       models.User
         .findOne({ where: myparams })
         .then((results, status) => {
-          console.log('results: ', results);
+          // console.log('results: ', results);
           // console.log('status: ', status);
           if (!results) {
             console.log('error login');

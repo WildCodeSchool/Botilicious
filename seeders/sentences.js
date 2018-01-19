@@ -8,6 +8,7 @@ module.exports = {
       text: 'Quel temps fait-il demain à Paris ?',
       type: 'question',
       next: 2,
+      moduleId: 1,
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
     },
@@ -16,6 +17,7 @@ module.exports = {
       text: 'Quel temps fait-il demain à San Fransisco ?',
       type: 'question',
       next: 1,
+      moduleId: 1,
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
     },
@@ -24,6 +26,7 @@ module.exports = {
       text: 'Bonjour Fransisco',
       type: 'answer',
       next: 1,
+      moduleId: 1,
       CreatedAt: faker.date.recent(),
       UpdatedAt: faker.date.recent(),
     }], {});

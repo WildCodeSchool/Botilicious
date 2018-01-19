@@ -10,11 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     confidence: DataTypes.FLOAT,
-    TagId: DataTypes.STRING,
+    TagId: DataTypes.INTEGER,
   });
 
   Keyword.associate = function (models) {
-    // Keyword.belongsTo(models.Tag, { foreignKey:"KeywordId", through:"Keyword_has_Tag" });
     Keyword.belongsTo(models.Tag);
     Keyword.belongsToMany(models.Module, { foreignKey: 'keywordId', through: 'Keyword_has_Module' });
   };

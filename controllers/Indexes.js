@@ -2,11 +2,29 @@ const nodemailer = require('nodemailer');
 const validator = require('validator');
 const models = require('../models');
 
+const seedDb = require('./modules/seedDb');
+const getKeywords = require('./modules/Keywords');
+
 const Indexes = {
 
   // route GET '/erreur404' -- Affichage de la page d'erreur 404
   error404(req, res) {
     res.render('index/error');
+  },
+
+  seedPost(req, res) {
+    console.log(seedDb());
+    // res.status(200);
+    res.send('seeded');
+  },
+
+  seedGet(req, res) {
+    getKeywords()
+      .then((keywords) => {
+        console.log('keywords: ', keywords);
+      });
+
+    // res.status(200);
   },
 
   // route GET '/' -- Affichage de la page d'inscription avec le formulaire
