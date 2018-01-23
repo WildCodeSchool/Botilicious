@@ -85,9 +85,9 @@ function findNext(splitMessage, req) {
 
                 // écrire le numéro actuel du module dans la session
                 let currentModule = 0;
-                // console.log(response.dataValues.Module);
-                if (response.dataValues.Module[0]) {
-                  currentModule = response.dataValues.Module[0];
+                console.log('response.dataValues.Module.dataValues: ', response.dataValues.Module.dataValues);
+                if (response.dataValues.Module.dataValues) {
+                  currentModule = response.dataValues.Module.dataValues.id;
                 }
                 req.session.history[req.session.currentMessageId].module = currentModule;
 
@@ -124,17 +124,19 @@ function findNext(splitMessage, req) {
                   .then((results) => {
                     // console.log(req.session.history);
                     console.log('results detectKeywords: ', results);
-                    // écrire le numéro actuel du module dans la session
-                    // let currentModule = 0;
-                    // if (results !== []) {
-                    //   currentModule = results[0].Modules[0];
-                    // }
-                    // req.session.history[req.session.currentMessageId].module = currentModule;
-                    //
-                    // console.log('session: ', req.session);
 
                     if (results.length > 0) {
                       console.log('results: ', results);
+
+                      // écrire le numéro actuel du module dans la session
+                      let currentModule = 0;
+                      if (results !== []) {
+                        currentModule = results[0].Modules[0];
+                      }
+                      req.session.history[req.session.currentMessageId].module = currentModule;
+
+                      console.log('session: ', req.session);
+
                       // chercher le next et essayer de tagger les mots
                       Promise.all([
                         models.Sentence.findOne({
@@ -149,8 +151,6 @@ function findNext(splitMessage, req) {
                             // écrire la réponse ou non réponse dans la session
                             const foundAnswer = answer[0].dataValues;
                             req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
-
-                            console.log('session: ', req.session);
 
                             const responseToBrowser = {
                               answer: answer[0].text,
@@ -302,8 +302,12 @@ const Chatbots = {
 
   // route GET '/admin/configchat' -- Affichage de la page de configuration du chatbot
   chatbotEditGet(req, res) {
-    // console.log(getSentences());
-    Promise.all([getSentences(), getKeywords(), getTags()])
+    console.log('req.query: ', req.query);
+    // use the validator instead
+    if (req.query.id) {
+      req.session.currentModule = req.query.id;
+    }
+    Promise.all([getSentences(req.query), getKeywords(), getTags()])
       .then((results) => {
         // console.log('keywords found: ', results[1]);
         res.render('chatbot/chatbotEdit', { sentences: results[0], keywords: results[1], tags: results[2] });

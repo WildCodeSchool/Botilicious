@@ -1,6 +1,6 @@
 const models = require('../../models');
 
-function getSentences(id) {
+function getSentences(where) {
   return new Promise((resolve, reject) => {
     // const records = [];
     const myparams = {
@@ -14,14 +14,17 @@ function getSentences(id) {
       }],
     };
 
-    if (id) {
-      myparams.where.id = id;
+    if (where) {
+      myparams.where.moduleId = where.id;
     }
-    console.log('myparams', myparams);
+    console.log('getSentences myparams', myparams);
     resolve(models.Sentence
       .findAll(myparams)
       // query ok
-      .then(results => results));
+      .then((results) => {
+        console.log('getSentences results: ', results);
+        return results;
+      }));
   });
 }
 

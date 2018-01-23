@@ -21,11 +21,13 @@ const Sentences = {
       res.json({ serverMessage: 'Error, Sentence length is 0', error: true });
     } else {
     // insert into
+      console.log('req.session: ', req.session);
       models.Sentence.findOrCreate({
         where: {
           text: req.body.text,
           type: req.body.type,
           next: req.body.next,
+          moduleId: req.session.currentModule,
         },
       })
         .spread((sentence, created) => {

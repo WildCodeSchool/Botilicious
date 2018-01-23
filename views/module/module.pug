@@ -70,6 +70,8 @@ block content
           td= module.description
           td
             button(id='deletemodule' +module.id) Supprimer
+            a(href='/admin/chatbotEdit?id=' +module.id)
+              button(id='trainModule' +module.id) Entraîner
             br
   section.moduleEdit
     h2 Liste des modules

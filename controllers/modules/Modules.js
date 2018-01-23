@@ -1,13 +1,13 @@
 const models = require('../../models');
 
-function getModules(id) {
+function getModules(where) {
   return new Promise(((resolve, reject) => {
-    let myparams = {};
+    const myparams = {};
 
-    if (id) {
-      myparams = { where: { id } };
+    if (where) {
+      myparams[where] = where;
     }
-    console.log('myparams', myparams);
+    console.log('getModules myparams', myparams);
     models.Module
       .findAll(myparams)
     // query ok
@@ -20,7 +20,8 @@ function getModules(id) {
           return i;
         });
         resolve(records);
-      });
+      })
+      .catch(error => reject(error));
   }));
 }
 

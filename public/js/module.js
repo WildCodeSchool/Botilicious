@@ -114,6 +114,7 @@ $('#addmodule').click((event) => {
             <td id="moduleapiurl${data.module.id}">${data.module.api.url}</td>
             <td id="moduledescription${data.module.id}">${data.module.description}</td>
             <td><button id=deletemodule${data.module.id}>Supprimer</button></td>
+            <td><a href='/admin/chatbotEdit?id=${data.module.id}'><button id=trainModule${data.module.id}>Entraîner</button></a></td>
             </tr>`);
 
           // Add an event listener to the new button. With an Event Delegation
