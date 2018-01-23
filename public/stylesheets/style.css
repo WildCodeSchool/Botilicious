@@ -265,3 +265,32 @@ a.lienfoot1, a.lienfoot2 {
 
 
 /* Coming soon: media queries, 2 device sizes, pour remettre le formulaire en largeur 100% */
+
+#allPage{
+    display: flex;
+    /* position: fixed; */
+    /* overflow: scroll; */
+    
+    /* flex-direction: row; */
+    /* align-items: flex-start; */
+    /* position: fixed; */
+}
+
+
+#chat{
+    position: fixed;
+    width: 500px;
+    max-height: 500px;
+    overflow: scroll;
+    padding-bottom: 50px;
+}
+
+
+#sentence2{
+    /* position: fixed; */
+    
+    padding-left: 550px;
+    padding-right: 0px;
+   
+    
+}

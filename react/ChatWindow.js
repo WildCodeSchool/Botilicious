@@ -109,16 +109,20 @@ class ChatWindow extends Component {
 
 
         var windowStyles = {
-            maxHeight: '40em',
+            // maxHeight: '40em',
             maxWidth: '40em',
+            overflowY: 'scroll',
             margin: '1rem auto',
             overflowY: 'scroll',
+            
         };
 
         var formStyles = {
             display: 'flex',
             margin: '1rem auto',
-            maxWidth: '40em'
+            maxWidth: '40em',
+            
+            marginBottom: '100px'
         };
 
         var inputStyles = {
@@ -139,6 +143,13 @@ class ChatWindow extends Component {
             fontSize: '0.8em'
         };
 
+      
+        // var chat = {
+        //     position:'fixed',
+        //     color: 'red'
+        // };
+
+
         return (
             <div>
                 <div id="box">
@@ -158,8 +169,11 @@ class ChatWindow extends Component {
             --> permet de déclencher le scroll down à chaque évenement */ }
                 <div style={{ float: "left", clear: "both" }}
                     ref={(el) => { this.messagesEnd = el; }}>
+                    
                 </div>
+                
 
+                
             </div>
         );
     }

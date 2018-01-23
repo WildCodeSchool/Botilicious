@@ -1440,7 +1440,7 @@ function toComment(sourceMap) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_util__);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/SelectTag.js';
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/SelectTag.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1915,7 +1915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__App__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ChatWindow__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registerServiceWorker__ = __webpack_require__(66);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/index.js';
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/index.js';
 
 
 
@@ -19279,7 +19279,7 @@ exports.push([module.i, "body {\n  margin: 0;\n  padding: 0;\n  font-family: san
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__App_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AddSentences__ = __webpack_require__(41);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/App.js';
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/App.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19402,7 +19402,7 @@ exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  anim
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Split__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__SelectTag__ = __webpack_require__(18);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/AddSentences.js';
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/AddSentences.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19538,7 +19538,7 @@ var AddSentences = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SelectTag__ = __webpack_require__(18);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/Split.js',
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/Split.js',
     _this = this;
 
 
@@ -21204,9 +21204,11 @@ module.exports = function spread(callback) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = '/home/wilder/Documents/Projet3/iaforall/react/ChatWindow.js';
+var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iaforall/react/ChatWindow.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21389,17 +21391,19 @@ var ChatWindow = function (_Component3) {
         value: function render() {
             var _this4 = this;
 
-            var windowStyles = {
-                maxHeight: '40em',
+            var windowStyles = _defineProperty({
+                // maxHeight: '40em',
                 maxWidth: '40em',
-                margin: '1rem auto',
-                overflowY: 'scroll'
-            };
+                overflowY: 'scroll',
+                margin: '1rem auto'
+            }, 'overflowY', 'scroll');
 
             var formStyles = {
                 display: 'flex',
                 margin: '1rem auto',
-                maxWidth: '40em'
+                maxWidth: '40em',
+
+                marginBottom: '100px'
             };
 
             var inputStyles = {
@@ -21420,12 +21424,18 @@ var ChatWindow = function (_Component3) {
                 fontSize: '0.8em'
             };
 
+            // var chat = {
+            //     position:'fixed',
+            //     color: 'red'
+            // };
+
+
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 143
+                        lineNumber: 154
                     },
                     __self: this
                 },
@@ -21433,7 +21443,7 @@ var ChatWindow = function (_Component3) {
                     'div',
                     { id: 'box', __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 144
+                            lineNumber: 155
                         },
                         __self: this
                     },
@@ -21441,13 +21451,13 @@ var ChatWindow = function (_Component3) {
                         'div',
                         { style: windowStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 145
+                                lineNumber: 156
                             },
                             __self: this
                         },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChatMessageHistory, { messages: this.state.messages, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 146
+                                lineNumber: 157
                             },
                             __self: this
                         })
@@ -21457,13 +21467,13 @@ var ChatWindow = function (_Component3) {
                     'form',
                     { style: formStyles, onSubmit: this.handleSubmit, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 153
+                            lineNumber: 164
                         },
                         __self: this
                     },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { style: inputStyles, type: 'text', onChange: this.onChange, value: this.state.inputText, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 154
+                            lineNumber: 165
                         },
                         __self: this
                     }),
@@ -21471,7 +21481,7 @@ var ChatWindow = function (_Component3) {
                         'button',
                         { style: btnStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 155
+                                lineNumber: 166
                             },
                             __self: this
                         },
@@ -21483,7 +21493,7 @@ var ChatWindow = function (_Component3) {
                         _this4.messagesEnd = el;
                     }, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 159
+                        lineNumber: 170
                     },
                     __self: this
                 })
