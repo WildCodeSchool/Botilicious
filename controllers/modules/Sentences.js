@@ -1,8 +1,8 @@
 const models = require('../../models');
 
 function getSentences(id) {
-  return new Promise(((resolve, reject) => {
-    const records = [];
+  return new Promise((resolve, reject) => {
+    // const records = [];
     const myparams = {
       where: {},
       include: [{
@@ -21,10 +21,8 @@ function getSentences(id) {
     resolve(models.Sentence
       .findAll(myparams)
       // query ok
-      .then(results =>
-        // console.log('results: ', results);
-        results.map(result => result.dataValues)));
-  }));
+      .then(results => results));
+  });
 }
 
 module.exports = getSentences;

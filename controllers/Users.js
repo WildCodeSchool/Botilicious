@@ -52,6 +52,7 @@ const Users = {
             req.session.userId = results.id;
             // deux variables pour enregsitrer l'itineraire de l'utilisateur
             req.session.history = [];
+            req.session.inputs = [];
             req.session.currentMessageId = -1;
 
             console.log(req.session);

@@ -47,8 +47,8 @@ function outboundParameters(api, args) {
 }
 
 // traiter la reponse post-api
-function apiResponse(api, args, response, reply) {
-  const replyToSend = reply;
+function apiResponse(api, args, response, basicReply) {
+  const reply = basicReply;
   console.log('api_res0: ', api);
   api.parameters
     .filter(parameter => parameter.type === 'in')
@@ -111,11 +111,11 @@ function apiResponse(api, args, response, reply) {
         });
       console.log('tempResponse: ', tempResponse);
       console.log(`<${tempParameter.tag}>`);
-      console.log('replyToSend0: ', replyToSend);
-      replyToSend.answer = replyToSend.answer.replace(`<${tempParameter.tag}>`, tempResponse);
-      console.log('replyToSend1: ', replyToSend);
+      console.log('reply: ', reply);
+      reply.answer = reply.answer.replace(`<${tempParameter.tag}>`, tempResponse);
+      console.log('reply (after .replace): ', reply);
     });
-  return replyToSend;
+  return reply;
 }
 
 
@@ -128,76 +128,76 @@ function apiCall(moduleName, splitMessage) {
 
       console.log('myparams', myparams);
 
+      // former l'objet params attendu par axios
+      let params = {};
+
+      let args = {
+        parameters: [],
+        inputs: [],
+      };
+
+      // if module meteo, démo sprint 1, traitement des arguments en dur
+      if (message[0] === 'meteo') {
+        console.log('meteo, module en dur');
+        const dayWords =
+        [{
+          text: 'après-demain',
+          time: '2',
+        }, {
+          text: 'demain',
+          time: '1',
+        }];
+        if (message[2]) {
+          dayWords.forEach((dayWord) => {
+          // console.log(dayWord);
+            message[2] = message[2].replace(dayWord.text, dayWord.time);
+          // console.log(message[2]);
+          });
+        }
+
+        // const rand = [Math.floor(Math.random() * res.length)];
+        let time;
+        let errorMessage;
+
+        if (message.length === 4 && typeof (parseInt(message[2], 10)) === 'number' && typeof (parseInt(message[3], 10)) === 'number') {
+          time = (8 * message[2]) + Math.round(message[3] / 3);
+        } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
+          time = 8 * message[2];
+        } else {
+          console.log('Syntaxe du time meteo incorrecte');
+          time = 0;
+          errorMessage = 'Votre syntaxe est incorrecte';
+        }
+        if (time > 39) {
+          time = 39;
+        }
+        console.log('time:', time);
+        if (isNaN(time)) {
+          console.log('NaN');
+          errorMessage = 'Votre syntaxe est incorrecte';
+          time = 0;
+        }
+        args = {
+          parameters:
+        [{
+          tag: 'place',
+          value: message[1],
+        }],
+          inputs:
+        [{
+          tag: 'time',
+          value: time,
+        }],
+        };
+      }
+      // fin du if meteo en dur
+
       models.Module
         .find(myparams)
         .then((results) => {
-          // former l'objet params attendu par axios
-          let params = {};
-
-          let args = {
-            parameters: [],
-            inputs: [],
-          };
-
-          // module meteo, démo sprint 1, traitement des arguments en dur
-          if (message[0] === 'meteo') {
-            console.log('meteo, module en dur');
-            const dayWords =
-            [{
-              text: 'après-demain',
-              time: '2',
-            }, {
-              text: 'demain',
-              time: '1',
-            }];
-            if (message[2]) {
-              dayWords.forEach((dayWord) => {
-              // console.log(dayWord);
-                message[2] = message[2].replace(dayWord.text, dayWord.time);
-              // console.log(message[2]);
-              });
-            }
-
-            // const rand = [Math.floor(Math.random() * res.length)];
-            let time;
-            let errorMessage;
-
-            if (message.length === 4 && typeof (parseInt(message[2], 10)) === 'number' && typeof (parseInt(message[3], 10)) === 'number') {
-              time = (8 * message[2]) + Math.round(message[3] / 3);
-            } else if (message.length === 3 && typeof (parseInt(message[2], 10)) === 'number') {
-              time = 8 * message[2];
-            } else {
-              console.log('Syntaxe du time meteo incorrecte');
-              time = 0;
-              errorMessage = 'Votre syntaxe est incorrecte';
-            }
-            if (time > 39) {
-              time = 39;
-            }
-            console.log('time:', time);
-            if (isNaN(time)) {
-              console.log('NaN');
-              errorMessage = 'Votre syntaxe est incorrecte';
-              time = 0;
-            }
-            args = {
-              parameters:
-            [{
-              tag: 'place',
-              value: message[1],
-            }],
-              inputs:
-            [{
-              tag: 'time',
-              value: time,
-            }],
-            };
-          } else {
-            // fin du else 'meteo', il peut se fermer aussi tout en bas
-
-            // on récupère dans la session les valeurs stockées lors de la conversation
-          }
           console.log('results.dataValues: ', results.dataValues);
+
+          // on récupère dans la session les valeurs stockées lors de la conversation
 
           // on prend le json 'api' dans la bdd
           const api = JSON.parse(results.dataValues.api);
@@ -213,17 +213,16 @@ function apiCall(moduleName, splitMessage) {
               // prendre dans la réponse les éléments listés dans la bdd
 
               // instancier la reponse a envoyer au navigateur
-              let replyToSend = { answerPattern: api.answer, answer: api.answer };
+              const basicReply = { answerPattern: api.answer, answer: api.answer };
 
               console.log('api: ', api);
               // console.log(response.data.city.name);
               console.log(args.inputs.map(input => input));
 
               // mapper les donnees du JSON recu sur nos variables dans le gabarit de reponse
-              // Est-ce sale d'assigner une valeur comme ça ? x = x + 1;
-              replyToSend = apiResponse(api, args, response, replyToSend);
+              const replyToSend = apiResponse(api, args, response, basicReply);
 
-              console.log('replyToSend_final: ', replyToSend);
+              console.log('replyToSend: ', replyToSend);
               resolve(replyToSend);
             })
             .catch((error) => {
@@ -231,8 +230,6 @@ function apiCall(moduleName, splitMessage) {
               reject(error);
             });
           // fermeture du if qui teste le nb d'arguments
-          // }
-          // fermeture du else après if meteo
           // }
         })
         .catch((error) => {

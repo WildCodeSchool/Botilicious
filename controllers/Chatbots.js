@@ -9,6 +9,273 @@ const detectKeywords = require('./modules/detectKeywords');
 const autoTags = require('./modules/autotagSentence');
 // const uuidv4 = require('uuid/v4');
 
+
+// chercher la phrase next : phrase exacte, sinon par pattern, sinon par keywords
+function findNext(splitMessage, req) {
+  return new Promise((resolve, reject) => {
+    // on prend le premier mot du message envoyé par l'utlisateur
+    // on y cherche un nom de module
+    models.Module.findOne({
+      where: { name: splitMessage[0] },
+    })
+
+      .then((reponse) => {
+        // on a trouvé un nom de module en premier mot
+        if (reponse) {
+          console.log('nom de module trouvé : ', splitMessage[0]);
+          let errorMessage;
+          let responseToBrowser;
+          console.log('req.session: ', req.session);
+
+          apiCall(splitMessage[0], splitMessage)
+            .then((response) => {
+              console.log('response: ', response);
+
+              // écrire la réponse ou non réponse dans la session
+              let foundAnswer = {};
+              if (response) {
+                foundAnswer = response;
+              }
+              req.session.history[req.session.currentMessageId].answer = foundAnswer.answer;
+
+              responseToBrowser = {
+                text: req.body.message,
+                answer: response.answer,
+                serverMessage: errorMessage,
+              };
+              resolve(responseToBrowser);
+            })
+            .catch({
+
+            });
+
+        // appel de l'API meteo en dur n'est pas possible, donc on analyse un peu mieux la phrase
+        } else {
+          /**
+            * méthode sequelize pour trouver des données de la bdd et qui retourne un model
+            * test si cest une question pour renvoyer une reponse
+            */
+          // const includes = { include: [models.Sentence_has_Module] };
+          models.Sentence.findOne({
+            where: { text: req.body.message },
+            include: { model: models.Module },
+          })
+          /**
+            * fonction qui permet de renvoyer une seule réponse
+            * (dans le network de la console du navigateur)
+            * lorsqu'une string de type question est écrite dans le chat.
+            * Il faut utiliser un models.sentence.findOne({ })
+            */
+            .then((response) => {
+              if (response) {
+                console.log('response', response);
+                console.log('req.session: ', req.session);
+
+                // écrire le numéro actuel du module dans la session
+                // let currentModule = 0;
+                // console.log(response.dataValues.Modules);
+                // if (response.dataValues.Modules[0]) {
+                //   currentModule = response.dataValues.Modules[0];
+                // }
+                // req.session.history[req.session.currentMessageId].module = currentModule;
+
+                // chercher la phrase suivante
+                models.Sentence
+                  .findOne({
+                    where: { id: response.dataValues.next },
+                    include: { model: models.Module },
+                  })
+                  .then((answer) => {
+                    console.log('answer', answer);
+
+                    // écrire la réponse ou non réponse dans la session
+                    let foundAnswer = {};
+                    if (answer.dataValues) {
+                      foundAnswer = answer.dataValues;
+                    }
+                    req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
+
+                    console.log('session: ', req.session);
+
+                    const jsontostring = {
+                      answer: answer.dataValues.text,
+                      text: req.body.message,
+                    };
+                    resolve(jsontostring);
+                  });
+                // si on ne trouve pas de phrase correspondant exactement, chercher un pattern
+              } else {
+                console.log('sentence not found, looking for a pattern...');
+                // const pattern = detectKeywords(req.body.message)
+                detectKeywords(req.body.message)
+                  .then((results) => {
+                    // console.log(req.session.history);
+                    // console.log(results);
+                    // écrire le numéro actuel du module dans la session
+                    // let currentModule = 0;
+                    // if (results !== []) {
+                    //   currentModule = results[0].Modules[0];
+                    // }
+                    // req.session.history[req.session.currentMessageId].module = currentModule;
+                    //
+                    // console.log('session: ', req.session);
+
+                    if (results.length > 0) {
+                      console.log('results: ', results);
+                      // chercher le next et essayer de tagger les mots
+                      Promise.all([
+                        models.Sentence.findOne({
+                          where: { id: results[0].next },
+                          include: { model: models.Module },
+                        }),
+                        autoAddKeywords(req.body.message, results[0].text),
+                      ])
+                        .then((answer) => {
+                          console.log('answer: ', answer);
+                          if (answer[0].dataValues) {
+                            // écrire la réponse ou non réponse dans la session
+                            let foundAnswer = {};
+                            if (answer[0]) {
+                              foundAnswer = answer[0].dataValues;
+                            }
+                            req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
+
+                            console.log('session: ', req.session);
+
+                            const responseToBrowser = {
+                              answer: answer[0].text,
+                              text: req.body.message,
+                              addedKeywords: answer[1],
+                            };
+                            resolve(responseToBrowser);
+                          } else {
+                            const reply = 'pattern trouvé, next pas trouvé';
+                            req.session.history[req.session.currentMessageId].answer = reply;
+
+                            console.log(reply);
+                            const responseToBrowser = {
+                              answer: reply,
+                              text: req.body.message,
+                            };
+                            resolve(responseToBrowser);
+                          }
+                        });
+                      // si on ne trouve pas de pattern, chercher seulement des keywords isolés
+                    } else {
+                      /**
+                       * getKeywords retourne quels keywords sont présents dans la base de données
+                       */
+                      getKeywords()
+                      /**
+              * Si on a trouvé cette combinaison de mots clés
+              */
+                        .then((keywords) => {
+                          if (keywords[0]) {
+                            console.log('keywords :', keywords);
+                            /**
+                           * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre (ici [' ']), et cherche les mots clés
+                           * listés dans keywords
+                           */
+                            const resultat = autoTags(req.body.message, keywords, [' ']);
+                            /**
+                           * si on a trouvé un mot clé dans la phrase
+                           */
+                            if (resultat) {
+                            /**
+                             * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
+                             * avec les mots clés trouvés
+                             */
+                              console.log(resultat.foundKeywords);
+                              let foundKeywords = '';
+                              for (let index = 0; index < resultat.foundKeywords.length; index++) {
+                                foundKeywords += resultat.foundKeywords[index].tag;
+                                console.log(resultat.foundKeywords[index].tag);
+                              }
+                              console.log(keywords);
+                              // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
+
+                              models.Sentence.findAll({
+                                where: { text: foundKeywords },
+                                include: { model: models.Module },
+                              })
+                              /**
+                             * Si on a trouvé cette combinaison de mots clés
+                             */
+                                .then((answer) => {
+                                  console.log('answer :', answer);
+
+                                  if (answer[0]) {
+                                  /**
+                                   * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
+                                   */
+                                    models.Sentence.findOne({
+                                      where: { id: answer[0].dataValues.next },
+                                      include: { model: models.Module },
+                                    })
+                                    /**
+                                   * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
+                                   */
+                                      .then((nextSentence) => {
+                                      // écrire la réponse ou non réponse dans la session
+                                        let foundAnswer = {};
+                                        if (nextSentence[0]) {
+                                          foundAnswer = nextSentence[0].dataValues;
+                                        }
+                                        req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
+
+                                        console.log('nextSentence: ', nextSentence);
+
+                                        if (nextSentence.dataValues) {
+                                          const jsontostring = {
+                                            answer: nextSentence.dataValues.text,
+                                            text: req.body.message,
+                                          };
+                                          resolve(jsontostring);
+                                        } else {
+                                          req.session.history.answers.unshift('keywords trouvé, next pas trouvé');
+
+                                          console.log('nothing found');
+                                          const responseToBrowser = {
+                                            answer: 'keywords trouvé, next pas trouvé',
+                                            text: req.body.message,
+                                          };
+                                          resolve(responseToBrowser);
+                                        }
+                                      });
+                                  } else {
+                                    const reply = 'rien trouvé';
+                                    req.session.history[req.session.currentMessageId].answer = reply;
+
+                                    console.log(reply);
+                                    const responseToBrowser = {
+                                      answer: reply,
+                                      text: req.body.message,
+                                    };
+                                    resolve(responseToBrowser);
+                                  }
+                                });
+                            // si on ne trouve pas de next, abandonner
+                            } else {
+                              req.session.history[req.session.currentMessageId].answer = 'keywords trouvé, template comme timeplace pas trouvé';
+
+                              console.log('rien trouvé');
+                              const responseToBrowser = {
+                                answer: 'rien trouvé',
+                                text: req.body.message,
+                              };
+                              resolve(responseToBrowser);
+                            }
+                          }
+                        });
+                    }
+                  });
+              }
+            });
+        }
+      });
+  });
+}
+
 const Chatbots = {
 
   // route GET '/admin' -- Affichage de la page de configuration du chatbot
@@ -114,272 +381,33 @@ const Chatbots = {
 
   // route POST '/admin/message' -- soumission d'un message dans la boite de dialogue du chatbot
   messagePost(req, res) {
+    // on incrémente le compteur de messages recus
     req.session.currentMessageId += 1;
+
     req.session.history[req.session.currentMessageId] = { sentence: '', answer: '', module: '' };
+
+    // on split la phrase suivant les espaces
     const splitMessage = req.body.message.split(' ');
+
     console.log('splitMessage: ', splitMessage);
     console.log('currentMessageId: ', req.session.currentMessageId);
+
     // écrire la phrase actuelle dans la session
     req.session.history[req.session.currentMessageId].sentence = req.body.message;
+
     console.log('************************ HISTORY ************************');
     console.log(req.session.history);
-    models.Module.findOne({
-      where: { name: splitMessage[0] },
-    })
 
-      .then((reponse) => {
-        // on a trouvé un nom de module en premier mot
-        if (reponse) {
-          console.log('nom de module trouvé : ', splitMessage[0]);
-          let errorMessage;
-          let responseToBrowser;
-          console.log('req.session: ', req.session);
+    // chercher la phrase next
+    findNext(splitMessage, req)
+      .then((nextSentence) => {
+        console.log('nextSentence: ', nextSentence);
 
-          apiCall(splitMessage[0], splitMessage)
-            .then((response) => {
-              console.log('response: ', response);
+        const replyToBrowser = nextSentence;
+        // on remplace dans la réponse les tags par les valeurs enregistrées lors de la conversation
+        replyToBrowser.answer = nextSentence.answer.replace('', '');
 
-              // écrire la réponse ou non réponse dans la session
-              let foundAnswer = {};
-              if (response) {
-                foundAnswer = response;
-              }
-              req.session.history[req.session.currentMessageId].answer = foundAnswer.answer;
-
-              responseToBrowser = {
-                text: req.body.message,
-                answer: response.answer,
-                serverMessage: errorMessage,
-              };
-              res.json(responseToBrowser);
-            })
-            .catch({
-
-            });
-
-        // appel de l'API meteo en dur n'est pas possible, donc on analyse un peu mieux la phrase
-        } else {
-          /**
-            * méthode sequelize pour trouver des données de la bdd et qui retourne un model
-            * test si cest une question pour renvoyer une reponse
-            */
-          // const includes = { include: [models.Sentence_has_Module] };
-          models.Sentence.findOne({
-            where: { text: req.body.message },
-            include: { model: models.Module },
-          })
-          /**
-            * fonction qui permet de renvoyer une seule réponse
-            * (dans le network de la console du navigateur)
-            * lorsqu'une string de type question est écrite dans le chat.
-            * Il faut utiliser un models.sentence.findOne({ })
-            */
-            .then((response) => {
-              if (response) {
-                console.log('response', response);
-                console.log('req.session: ', req.session);
-
-                // écrire le numéro actuel du module dans la session
-                // let currentModule = 0;
-                // console.log(response.dataValues.Modules);
-                // if (response.dataValues.Modules[0]) {
-                //   currentModule = response.dataValues.Modules[0];
-                // }
-                // req.session.history[req.session.currentMessageId].module = currentModule;
-
-                // chercher la phrase suivante
-                models.Sentence
-                  .findOne({
-                    where: { id: response.dataValues.next },
-                    include: { model: models.Module },
-                  })
-                  .then((answer) => {
-                    console.log('answer', answer);
-
-                    // écrire la réponse ou non réponse dans la session
-                    let foundAnswer = {};
-                    if (answer.dataValues) {
-                      foundAnswer = answer.dataValues;
-                    }
-                    req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
-
-                    console.log('session: ', req.session);
-
-                    const jsontostring = {
-                      answer: answer.dataValues.text,
-                      text: req.body.message,
-                    };
-                    res.json(jsontostring);
-                  });
-                // si on ne trouve pas de phrase correspondant exactement, chercher un pattern
-              } else {
-                console.log('sentence not found, looking for a pattern...');
-                // const pattern = detectKeywords(req.body.message)
-                detectKeywords(req.body.message)
-                  .then((results) => {
-                    // console.log(req.session.history);
-                    // console.log(results);
-                    // écrire le numéro actuel du module dans la session
-                    // let currentModule = 0;
-                    // if (results !== []) {
-                    //   currentModule = results[0].Modules[0];
-                    // }
-                    // req.session.history[req.session.currentMessageId].module = currentModule;
-                    //
-                    // console.log('session: ', req.session);
-
-                    if (results.length > 0) {
-                      console.log('results: ', results);
-                      // chercher le next et essayer de tagger les mots
-                      Promise.all([
-                        models.Sentence.findOne({
-                          where: { id: results[0].next },
-                          include: { model: models.Module },
-                        }),
-                        autoAddKeywords(req.body.message, results[0].text),
-                      ])
-                        .then((answer) => {
-                          console.log('answer: ', answer);
-                          if (answer[0].dataValues) {
-                            // écrire la réponse ou non réponse dans la session
-                            let foundAnswer = {};
-                            if (answer[0]) {
-                              foundAnswer = answer[0].dataValues;
-                            }
-                            req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
-
-                            console.log('session: ', req.session);
-
-                            const responseToBrowser = {
-                              answer: answer[0].text,
-                              text: req.body.message,
-                              addedKeywords: answer[1],
-                            };
-                            res.json(responseToBrowser);
-                          } else {
-                            const reply = 'pattern trouvé, next pas trouvé';
-                            req.session.history[req.session.currentMessageId].answer = reply;
-
-                            console.log(reply);
-                            const responseToBrowser = {
-                              answer: reply,
-                              text: req.body.message,
-                            };
-                            res.json(responseToBrowser);
-                          }
-                        });
-                      // si on ne trouve pas de pattern, chercher seulement des keywords isolés
-                    } else {
-                      /**
-                       * getKeywords retourne quels keywords sont présents dans la base de données
-                       */
-                      getKeywords()
-                      /**
-              * Si on a trouvé cette combinaison de mots clés
-              */
-                        .then((keywords) => {
-                          if (keywords[0]) {
-                            console.log('keywords :', keywords);
-                            /**
-                           * autoTags récupère la phrase du input, elle split la phrase suivant le 3ème paramètre (ici [' ']), et cherche les mots clés
-                           * listés dans keywords
-                           */
-                            const resultat = autoTags(req.body.message, keywords, [' ']);
-                            /**
-                           * si on a trouvé un mot clé dans la phrase
-                           */
-                            if (resultat) {
-                            /**
-                             * Alors On cherche dans la table Sentence les mots clés trouvés. La fonction autoTag renvoie un tableau foundKeywords
-                             * avec les mots clés trouvés
-                             */
-                              console.log(resultat.foundKeywords);
-                              let foundKeywords = '';
-                              for (let index = 0; index < resultat.foundKeywords.length; index++) {
-                                foundKeywords += resultat.foundKeywords[index].tag;
-                                console.log(resultat.foundKeywords[index].tag);
-                              }
-                              console.log(keywords);
-                              // resultat.foundKeywords[0].tag + ' ' + resultat.foundKeywords[1].tag
-
-                              models.Sentence.findAll({
-                                where: { text: foundKeywords },
-                                include: { model: models.Module },
-                              })
-                              /**
-                             * Si on a trouvé cette combinaison de mots clés
-                             */
-                                .then((answer) => {
-                                  console.log('answer :', answer);
-
-                                  if (answer[0]) {
-                                  /**
-                                   * On cherche la phrase ciblée avec cette combinaison de mots clés grâce au next
-                                   */
-                                    models.Sentence.findOne({
-                                      where: { id: answer[0].dataValues.next },
-                                      include: { model: models.Module },
-                                    })
-                                    /**
-                                   * Il faut alors retourner la phrase ciblée par cette combinaison de mots clés
-                                   */
-                                      .then((nextSentence) => {
-                                      // écrire la réponse ou non réponse dans la session
-                                        let foundAnswer = {};
-                                        if (nextSentence[0]) {
-                                          foundAnswer = nextSentence[0].dataValues;
-                                        }
-                                        req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
-
-                                        console.log('nextSentence: ', nextSentence);
-
-                                        if (nextSentence.dataValues) {
-                                          const jsontostring = {
-                                            answer: nextSentence.dataValues.text,
-                                            text: req.body.message,
-                                          };
-                                          res.json(jsontostring);
-                                        } else {
-                                          req.session.history.answers.unshift('keywords trouvé, next pas trouvé');
-
-                                          console.log('nothing found');
-                                          const responseToBrowser = {
-                                            answer: 'keywords trouvé, next pas trouvé',
-                                            text: req.body.message,
-                                          };
-                                          res.json(responseToBrowser);
-                                        }
-                                      });
-                                  } else {
-                                    const reply = 'rien trouvé';
-                                    req.session.history[req.session.currentMessageId].answer = reply;
-
-                                    console.log(reply);
-                                    const responseToBrowser = {
-                                      answer: reply,
-                                      text: req.body.message,
-                                    };
-                                    res.json(responseToBrowser);
-                                  }
-                                });
-                            // si on ne trouve pas de next, abandonner
-                            } else {
-                              req.session.history[req.session.currentMessageId].answer = 'keywords trouvé, template comme timeplace pas trouvé';
-
-                              console.log('rien trouvé');
-                              const responseToBrowser = {
-                                answer: 'rien trouvé',
-                                text: req.body.message,
-                              };
-                              res.json(responseToBrowser);
-                            }
-                          }
-                        });
-                    }
-                  });
-              }
-            });
-        }
+        res.json(replyToBrowser);
       });
   },
 
