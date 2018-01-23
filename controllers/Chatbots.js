@@ -13,6 +13,20 @@ const autoTags = require('./modules/autotagSentence');
 // chercher la phrase next : phrase exacte, sinon par pattern, sinon par keywords
 function findNext(splitMessage, req) {
   return new Promise((resolve, reject) => {
+    let errorMessage;
+    let responseToBrowser;
+
+    if (splitMessage[0] === 'reset') {
+      req.session.history = [];
+      req.session.inputs = [];
+      req.session.currentMessageId = -1;
+      responseToBrowser = {
+        text: req.body.message,
+        answer: 'reset',
+      };
+      resolve(responseToBrowser);
+    }
+
     // on prend le premier mot du message envoyé par l'utlisateur
     // on y cherche un nom de module
     models.Module.findOne({
@@ -23,8 +37,6 @@ function findNext(splitMessage, req) {
         // on a trouvé un nom de module en premier mot
         if (reponse) {
           console.log('nom de module trouvé : ', splitMessage[0]);
-          let errorMessage;
-          let responseToBrowser;
           console.log('req.session: ', req.session);
 
           apiCall(splitMessage[0], splitMessage)
@@ -68,25 +80,25 @@ function findNext(splitMessage, req) {
             */
             .then((response) => {
               if (response) {
-                console.log('response', response);
+                // console.log('response', response);
                 console.log('req.session: ', req.session);
 
                 // écrire le numéro actuel du module dans la session
-                // let currentModule = 0;
-                // console.log(response.dataValues.Modules);
-                // if (response.dataValues.Modules[0]) {
-                //   currentModule = response.dataValues.Modules[0];
-                // }
-                // req.session.history[req.session.currentMessageId].module = currentModule;
+                let currentModule = 0;
+                // console.log(response.dataValues.Module);
+                if (response.dataValues.Module[0]) {
+                  currentModule = response.dataValues.Module[0];
+                }
+                req.session.history[req.session.currentMessageId].module = currentModule;
 
                 // chercher la phrase suivante
                 models.Sentence
                   .findOne({
                     where: { id: response.dataValues.next },
-                    include: { model: models.Module },
+                    // include: { model: models.Module },
                   })
                   .then((answer) => {
-                    console.log('answer', answer);
+                    console.log('answer.dataValues: ', answer.dataValues);
 
                     // écrire la réponse ou non réponse dans la session
                     let foundAnswer = {};
@@ -102,7 +114,8 @@ function findNext(splitMessage, req) {
                       text: req.body.message,
                     };
                     resolve(jsontostring);
-                  });
+                  })
+                  .catch();
                 // si on ne trouve pas de phrase correspondant exactement, chercher un pattern
               } else {
                 console.log('sentence not found, looking for a pattern...');
@@ -110,7 +123,7 @@ function findNext(splitMessage, req) {
                 detectKeywords(req.body.message)
                   .then((results) => {
                     // console.log(req.session.history);
-                    // console.log(results);
+                    console.log('results detectKeywords: ', results);
                     // écrire le numéro actuel du module dans la session
                     // let currentModule = 0;
                     // if (results !== []) {
@@ -134,10 +147,7 @@ function findNext(splitMessage, req) {
                           console.log('answer: ', answer);
                           if (answer[0].dataValues) {
                             // écrire la réponse ou non réponse dans la session
-                            let foundAnswer = {};
-                            if (answer[0]) {
-                              foundAnswer = answer[0].dataValues;
-                            }
+                            const foundAnswer = answer[0].dataValues;
                             req.session.history[req.session.currentMessageId].answer = foundAnswer.text;
 
                             console.log('session: ', req.session);
@@ -149,16 +159,21 @@ function findNext(splitMessage, req) {
                             };
                             resolve(responseToBrowser);
                           } else {
-                            const reply = 'pattern trouvé, next pas trouvé';
-                            req.session.history[req.session.currentMessageId].answer = reply;
-
-                            console.log(reply);
-                            const responseToBrowser = {
-                              answer: reply,
-                              text: req.body.message,
-                            };
-                            resolve(responseToBrowser);
+                            console.log('pattern ok, next pas trouvé');
+                            reject(new Error('pattern ok, next pas trouvé'));
                           }
+                        })
+                        .catch((error) => {
+                          const reply = 'pattern trouvé, next pas trouvé';
+                          req.session.history[req.session.currentMessageId].answer = reply;
+
+                          console.log('error: ', error);
+                          console.log('reply: ', reply);
+                          const responseToBrowser = {
+                            answer: reply,
+                            text: req.body.message,
+                          };
+                          resolve(responseToBrowser);
                         });
                       // si on ne trouve pas de pattern, chercher seulement des keywords isolés
                     } else {
@@ -244,7 +259,9 @@ function findNext(splitMessage, req) {
                                       });
                                   } else {
                                     const reply = 'rien trouvé';
-                                    req.session.history[req.session.currentMessageId].answer = reply;
+                                    if (req.session.currentMessageId > -1) {
+                                      req.session.history[req.session.currentMessageId].answer = reply;
+                                    }
 
                                     console.log(reply);
                                     const responseToBrowser = {
@@ -403,6 +420,7 @@ const Chatbots = {
       .then((nextSentence) => {
         console.log('nextSentence: ', nextSentence);
 
+        // variable temporaire pour faire un replace
         const replyToBrowser = nextSentence;
         // on remplace dans la réponse les tags par les valeurs enregistrées lors de la conversation
         replyToBrowser.answer = nextSentence.answer.replace('', '');

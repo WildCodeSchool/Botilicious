@@ -29,12 +29,12 @@ function autoAddKeywords(sentence, pattern) {
           .bulkCreate(myparams)
         // query ok
           .then((results) => {
-            console.log('Keyword results: ', results);
+            // console.log('Keyword results: ', results);
             const records = [];
             if (results.length > 0) {
               results.map((result, i) => {
                 // console.log(result.dataValues.Tag.dataValues);
-                // console.log(result.dataValues);
+                // console.log('result.dataValues: ', result.dataValues);
                 records[i] = {
                   id: result.dataValues.id,
                   text: result.dataValues.text,

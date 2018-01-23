@@ -214,7 +214,7 @@ $('#addSentence').click(() => {
       next: $('#sentenceInputNext').val(),
     },
     (data, status) => {
-      console.log(data);
+      console.log('data: ', data);
       if (!data.error) {
         $('#sentence').val('');
         $('#sentenceInputNext').val('');
