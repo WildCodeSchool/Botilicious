@@ -111,7 +111,7 @@ class ChatWindow extends Component {
         var windowStyles = {
             // maxHeight: '40em',
             maxWidth: '40em',
-            overflowY: 'scroll',
+           
             margin: '1rem auto',
             overflowY: 'scroll',
             

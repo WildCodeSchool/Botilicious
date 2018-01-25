@@ -231,6 +231,8 @@ footer {
     padding: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
+    position: relative;
+    
 }
 
 /* .footer1 {
@@ -283,7 +285,18 @@ a.lienfoot1, a.lienfoot2 {
     max-height: 500px;
     overflow: scroll;
     padding-bottom: 50px;
+    
+    /* margin-bottom: 100px; */
 }
+/* 
+.scroll{
+    position: fixed;
+    width: 500px;
+    max-height: 500px;
+    overflow: scroll;
+    padding-bottom: 50px;
+    margin-bottom: 100px;
+} */
 
 
 #sentence2{
