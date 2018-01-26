@@ -6,13 +6,13 @@ block content
   
   button(onclick="javascript:introJs().start();") Aide
   #allPage
-    #chat
-      .chatwindow(data-step="1" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" " ) 
-        h2 Vous êtes sur la page de configuration de votre nouveau chatbot
-        br
+    #chat(data-step="1" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
+      .chatwindow
+        h2 Discuter avec votre Chatbot
+        
         #example Fenêtre de chat: cf. ChatWindow.js
-        hr
-        div
+        
+        
 
         //- #chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
         #chatwindow
