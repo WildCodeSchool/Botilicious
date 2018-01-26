@@ -6,7 +6,8 @@ block content
   
   button(onclick="javascript:introJs().start();") Aide
   #allPage
-    #chat(data-step="1" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
+    #chat(data-step="1" class="absolute" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
+      .relative
       .chatwindow
         h2 Discuter avec votre Chatbot
         
@@ -118,3 +119,11 @@ block content
   script(type='text/javascript', src='/js/scroll.js')
   block javascript 
     script(src="/js/bundle.js")
+    script.
+      document.onscroll= function(e){
+        if(window.pageYOffset > 400) {
+          document.querySelector("#chat").classList.remove("absolute");
+        } else { 
+          document.querySelector("#chat").classList.add("absolute");
+        }
+      };

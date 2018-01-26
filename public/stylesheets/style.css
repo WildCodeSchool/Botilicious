@@ -224,13 +224,17 @@ header {
 
 #chat{
     bottom: 170px; 
-    top: 400px;
     position: fixed;
-    width: 500px;
-    /* min-height: 320px; */
-    overflow: scroll;
-}
+    width: 300px;
+    height: 600px;
 
+    /* min-height: 320px; */
+    overflow: hidden;
+}
+#chat.absolute{
+    position: absolute;
+    top: 400px;
+}
 .example{
     min-height:550px;
    

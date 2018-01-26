@@ -21208,8 +21208,6 @@ var _jsxFileName = '/home/wilder/Bureau/WILD CODE SCHOOL/PROJETS/PROJET 3/iafora
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -21391,12 +21389,13 @@ var ChatWindow = function (_Component3) {
         value: function render() {
             var _this4 = this;
 
-            var windowStyles = _defineProperty({
-                // maxHeight: '40em',
+            var windowStyles = {
+                maxHeight: '300px',
                 maxWidth: '40em',
-                overflowY: 'scroll',
-                margin: '1rem auto'
-            }, 'overflowY', 'scroll');
+                margin: '1rem auto',
+                overflowY: 'scroll'
+
+            };
 
             var formStyles = {
                 display: 'flex',
@@ -21435,7 +21434,7 @@ var ChatWindow = function (_Component3) {
                 {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 154
+                        lineNumber: 153
                     },
                     __self: this
                 },
@@ -21443,7 +21442,7 @@ var ChatWindow = function (_Component3) {
                     'div',
                     { id: 'box', __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 155
+                            lineNumber: 154
                         },
                         __self: this
                     },
@@ -21451,13 +21450,13 @@ var ChatWindow = function (_Component3) {
                         'div',
                         { style: windowStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 156
+                                lineNumber: 155
                             },
                             __self: this
                         },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(ChatMessageHistory, { messages: this.state.messages, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 157
+                                lineNumber: 156
                             },
                             __self: this
                         })
@@ -21467,13 +21466,13 @@ var ChatWindow = function (_Component3) {
                     'form',
                     { style: formStyles, onSubmit: this.handleSubmit, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 164
+                            lineNumber: 163
                         },
                         __self: this
                     },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { style: inputStyles, type: 'text', onChange: this.onChange, value: this.state.inputText, __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 165
+                            lineNumber: 164
                         },
                         __self: this
                     }),
@@ -21481,7 +21480,7 @@ var ChatWindow = function (_Component3) {
                         'button',
                         { style: btnStyles, __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 166
+                                lineNumber: 165
                             },
                             __self: this
                         },
@@ -21493,7 +21492,7 @@ var ChatWindow = function (_Component3) {
                         _this4.messagesEnd = el;
                     }, __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 170
+                        lineNumber: 169
                     },
                     __self: this
                 })
