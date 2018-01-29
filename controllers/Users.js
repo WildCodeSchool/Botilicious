@@ -1,80 +1,131 @@
 const validator = require('validator');
-const models = require("../models");
+const models = require('../models');
 
-var Users = {
+const Users = {
 
   // route GET '/confirmationinscription' -- Affichage de la page de confirmation d'inscription
-  registered: function (req, res, next) {
+  registered(req, res) {
     res.render('user/registered');
   },
 
   // route GET '/connexion' -- Affichage de la page de login
-  loginGet: function (req, res, next) {
+  loginGet(req, res) {
     res.render('index/login');
   },
 
   // route POST '/connexion' -- Prise en compte du login
-  loginPost: function (req, res, next) {
-    let error=[];
-    console.log('bob');
+  loginPost(req, res) {
+    // initalisation du tableau qui listera les erreurs
+    const error = [];
+    console.log('login en cours');
     console.log(validator.isEmpty(req.body.email));
-    console.log('bob2');
-    if(validator.isEmpty(req.body.email) ){
-      error[0] = "Merci de renseigner votre identifiant";
+    // console.log('bob2');
+    if (validator.isEmpty(req.body.email)) {
+      error[0] = 'Merci de renseigner votre identifiant';
       console.log(error.length);
     }
-    if(validator.isEmpty(req.body.motdepasse) ){
-      error[1] = "Merci de renseigner votre mot de passe";
+    if (validator.isEmpty(req.body.motdepasse)) {
+      error[1] = 'Merci de renseigner votre mot de passe';
       console.log(error.length);
     }
-    if(error.length>0){
+    if (error.length > 0) {
       console.log(error);
-      res.render('index/login', {error: error});
+      res.render('index/login', { error });
     } else {
-      req.session.connected = true;
-      res.redirect('admin/chatbot');
+      const myparams = {
+        email: req.body.email,
+        password: req.body.motdepasse,
+      };
+      console.log(myparams);
+
+      models.User
+        .findOne({ where: myparams })
+        .then((results, status) => {
+          console.log('results: ', results);
+          // console.log('status: ', status);
+          if (!results) {
+            console.log('error login');
+            res.redirect('/login');
+          } else {
+            req.session.connected = true;
+            // inscrire l'id de l'utilisateur dans req.session
+            req.session.userId = results.id;
+            console.log(req.session);
+            res.redirect('/admin/chatbotEdit');
+          }
+        });
     }
   },
-  /* console.log('login en cours');
-  console.log(req.body);
-  let login = req.body.email;
-  let pass = req.body.motdepasse;
-  console.log(login, pass); */
-
-  // requête sequelize sur la table Users
-  // connection.query('SELECT * FROM users WHERE email = ? AND password = ? ;',[login, pass],function (error, results, fields) {
-  //   if (error) throw error;
-  //   if (results.length === 0) {
-  //     console.log('error login');
-  //     res.redirect('/connexion');
-  //   } else {
-  // req.session.connected = true;
-
-  // inscrire l'id de l'utilisateur dans req.session
-  // req.session.user = results[0].id;
-  //console.log(req.session);
-  //res.redirect('/main/');
-  //},
 
 
   // route GET '/admin/miseajour' -- Affichage de la page de mise à jour des infos personnelles
   // !!!!! La views 'update' n'existe pas encore
-  update: function(req, res, next){
+  update(req, res) {
     res.render('user/update');
   },
 
   // route GET '/admin/updateconfirmation' -- Affichage de la page de confirmation de mise à jour
-  updateconfirmation: function(req, res, next){
+  updateconfirmation(req, res) {
     res.render('user/updateconfirmation');
   },
 
   // route GET 'user/deconnection' -- Affichage de la page de déconnexion
-  deconnection: function (req, res, next) {
+  deconnection(req, res) {
     res.render('index/deconnection');
   },
 
-  forgottenpw: function (req, res, next) {
+  forgottenpw(req, res) {
     res.render('user/forgottenpw');
+  },
+
+  contactGet(req, res) {
+    res.render('index/contact');
+  },
+
+  contactPost(req, res) {
+    const error = [];
+    console.log('login en cours');
+    console.log(validator.isEmpty(req.body.email));
+    // console.log('bob2');
+    if (validator.isEmpty(req.body.email)) {
+      error[0] = 'Merci de renseigner votre identifiant';
+      console.log(error.length);
+    }
+    if (false) {
+      error[1] = 'Merci de renseigner votre mot de passe';
+      console.log(error.length);
+    }
+    if (error.length > 0) {
+      console.log(error);
+      res.render('index/login', { error });
+    } else {
+      const parametre = {
+        email: req.body.email,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        message: req.body.message,
+        type: 'contact',
+      };
+
+      models.User
+        .create(parametre)
+        .then((resultat) => {
+          console.log('resultat: ', resultat);
+          // console.log('status: ', status);
+          // if (!resultat) {
+          //   console.log('error login');
+          //   res.redirect('/login');
+          // } else {
+          //   req.session.connected = true;
+          //   // inscrire l'id de l'utilisateur dans req.session
+          //   req.session.userId = resultat.id;
+          //   console.log(req.session);
+          //   res.redirect('/admin/chatbotEdit');
+          // }
+          // res.json(resultat);
+          res.render('index/contact', { message: 'Votre message a bien été envoyé !' });
+        });
+    }
   },
 
 };

@@ -1,5 +1,6 @@
 tmp/
 node_modules/
-db/
 package-lock.json
 .vscode
+.DS_STORE
+db/

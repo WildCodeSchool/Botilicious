@@ -1,9 +1,14 @@
 extends ../layout
 
 block content
+  //- section facultative qui affiche le détail des erreurs
+  //section
+    h1= message
+    h2= error.status
+    pre #{error.stack}
   section.secgris
     p Oups ! Il n'y a rien sur cette adresse
     if connected
-      a(href="/admin/chatbot" class="btn orange") Retour à votre accueil
+      a(href="/admin/chatbotEdit" class="btn orange") Retour à votre accueil
     else if true
       a(href="/" class="btn orange") Retour à l'accueil

@@ -1,55 +1,31 @@
 extends ../layout
 
 block content
-  a(href="/" class="btn orange") Retour à l'accueil
-  .chatwindow
-    h2 Vous êtes sur la page de configuration de votre nouveau chatbot
-    br
-    p input : ville nombre_de_jours nombre_d_heures
-    p (max 4 21)
-    br
-    input#message(type="text" name="message")
-    br
-    button#parler Parler
-    br
-    div#chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
-      p Le testeur de chatbot :    
-    br
-    br
-  .tagwindow
-    h2 Ici tag de mots
-    button#sentencetag Tag the sentence
-    table#wordsToTag(style="width:400px;border:1px solid black")
-      tr#headers
-        th Mot
-        th Tag
-  .sentencewindow
-    h2 Liste des phrases
-    input#sentence(type="text" name="sentence" size="60")
-    select#sentenceType(name='sentenceType')
-      option(value='question') Question
-      option(value='answer') Answer
-    br
-    button#addSentence Ajouter la phrase
-    div#servermessage
-    br
-    table#sentences(style="width:800px;border:1px solid black")
+  include ../menu
+  section.sectionform
+    h2 Nouveau Chatbot
+    .containerform
+      form#form(method="POST")
+        if servermessage
+          p.warning= servermessage
+        .form-group
+          label(for='name') Nom du chatbot
+          input#chatbot.form-control(required='', placeholder="Nom du chatbot" name="name")
+        button#addchatbot(type='submit') Créer le chatbot
+      div#serverMessageChatbot
+
+  section.chatbotsList
+    //- table#chatbots(style="width:800px;border:1px solid black")
+    table#chatbots
       tr
-        th Phrases
-        th Type
+        th Nom
         th id
         th Action
-      each sentence in sentences
-        tr(id='sentence' +sentence.id)
-          td(id='sentencetext' +sentence.id)= sentence.text
-          td= sentence.type
-          td= sentence.id
+      each chatbot in chatbots
+        tr(id='chatbot' +chatbot.id)
+          td(id='chatbottext' +chatbot.id)= chatbot.name
+          td= chatbot.id
           td
-            button(id='delete' +sentence.id) Delete
-            button(id='duplicate' +sentence.id) Duplicate
-            button(id='tag' +sentence.id) Tag words
-    br
-  section.secgris
+            button(id='deletechatbot' +chatbot.id) Supprimer
   script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
-  script(type='text/javascript', src='/js/chat.js')
-  script(type='text/javascript', src='/js/sentences.js')
+  script(type='text/javascript', src='/js/chatbot.js')

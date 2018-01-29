@@ -1,10 +1,10 @@
 extends ../layout
 
 block content
-  p.textconnect Déjà client ? Vous pouvez vous connecter en cliquant sur le bouton ci-joint  
-    a(href="/login" class="btn jaune btconnect") Se connecter
+  //p.textconnect Déjà client ? Vous pouvez vous connecter en cliquant sur le bouton ci-joint  
+    a(href="/" class="btn orange btconnect") Se connecter
   section.sectioninscription
-    p Avec le formulaire ci-dessous, vous pouvez vous inscrire pour découvrir notre plateforme de création de chatbots.
+    p Ce formulaire vous permet de vous inscrire pour découvrir notre générateur de chatbots
   //- Section fin Inscription texte d'accueil
   //- Section début Le formulaire d'inscription
   section.sectionform
@@ -13,40 +13,52 @@ block content
         p.required Tous les champs obligatoires sont signalés par une *.
         p.required Merci de veiller à bien les renseigner.
         if error
-          p.warning=error[0]
-      
+          p.warning= error[0]
+        //- A transformer en mixin
         .form-group
-          label(for='prenom') Prénom *
-          input#prenom.form-control(type='text', placeholder='Votre prénom', name="prenom")
+          label(for='firstname') Prénom *
+          input#firstname.form-control(value=(body ? body.firstname : false) type='text', placeholder='Votre prénom', name="firstname")
           if error
-            p.warning=error[1]
+            p.warning= error[1]
         .form-group 
-          label(for='nom') Nom *
-          input#nom.form-control(type='text', placeholder='Votre nom', name='nom')
+          label(for='name') Nom *
+          input#name.form-control(value=(body ? body.name : false) type='text', placeholder='Votre nom', name='name')
           if error
-            p.warning=error[2]
+            p.warning= error[2]
         .form-group
-          label(for='identifiant') Identifiant *
-          input#email.form-control(type='email', placeholder="Votre identifiant c'est votre email", name="email")
+          label(for='email') Identifiant *
+          input#email.form-control(value=(body ? body.email : false) type='email', placeholder="Votre email est votre identifiant", name="email")
           if error
-            p.warning=error[3]
+            p.warning= error[3]
         .form-group
-          label(for='motdepasse') Mot de passe *
-          input#motdepasse.form-control(type='password', placeholder='Choisissez votre mot de passe', name="motdepasse")
+          label(for='password') Mot de passe *
+          input#password.form-control(value=(body ? body.password : false) type='password', placeholder='Choisissez votre mot de passe', name="password")
+          if error
+            p.warning= error[4]
         .form-group
-          label(for='naissance') Entreprise
-          input#naissance.form-control(type='text', placeholder='Votre entreprise', name="naissance")
+          label(for='dateofbirth') Entreprise
+          input#dateofbirth.form-control(value=(body ? body.dateofbirth : false) type='text', placeholder='Votre entreprise', name="dateofbirth")
+          if error
+            p.warning= error[5]
         .form-group
-          label(for='adresse') Adresse
-          input#adresse.form-control(type='text', placeholder="Adresse", name="adresse")
+          label(for='address') Adresse
+          input#address.form-control(value=(body ? body.address : false) type='text', placeholder="Adresse", name="address")
+          if error
+            p.warning= error[6]
         .form-group
-          label(for='codepostal') Code postal
-          input#codepostal.form-control(type='text', placeholder='Code postal', name="codepostal")
+          label(for='zipcode') Code postal
+          input#zipcode.form-control(value=(body ? body.zipcode : false) type='text', placeholder='Code postal', name="zipcode")
+          if error
+            p.warning= error[7]
         .form-group
-          label(for='ville') Ville
-          input#ville.form-control(type='text', placeholder='Ville', name="ville")
+          label(for='city') Ville
+          input#city.form-control(value=(body ? body.city : false) type='text', placeholder='Ville', name="city")
+          if error
+            p.warning= error[8]
         .form-group
-          label(for='Telephone') Téléphone
-          input#ville.form-control(type='text', placeholder='Téléphone', name="telephone")
+          label(for='phone') Téléphone
+          input#phone.form-control(value=(body ? body.phone : false) type='text', placeholder='Téléphone', name="phone")
+          if error
+            p.warning= error[9]
         button.btn.orange(type='submit') Inscription
         //- Section fin Le formulaire d'inscription

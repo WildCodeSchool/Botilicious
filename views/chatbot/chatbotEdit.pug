@@ -1,0 +1,128 @@
+extends ../layout
+
+block content
+  
+  include ../menu
+  
+  button(onclick="javascript:introJs().start();") Aide
+  #allPage
+    #chat(data-step="1" data-intro="" class="absolute")
+      .relative
+      .chatwindow
+        h2 Discuter avec votre Chatbot
+        
+        #example Fenêtre de chat: cf. ChatWindow.js
+        
+        
+
+        //- #chatwindow(style="width:800px;max-height=500px;overflow:auto;border:1px solid black")
+        #chatwindow
+
+    #sentence2
+      .sentencewindow(data-step="2" data-intro="")
+        h2 Liste des phrases
+        p Ajoutez une p hrase puis un next. 
+        p Le next sert à relier une phrase avec l'id d'une autre phrase pour obtenir une réponse en fonction de l'id de la phrase séléctionnée.
+        input#sentence(type="text" name="sentence" size="40")
+        select#sentenceType(name='sentenceType')
+          option(value='question') Question
+          option(value='answer') Answer
+        input#sentenceInputNext(type="text" size="20")
+        br
+        button#addSentence Ajouter la phrase
+        div#servermessage
+        br
+        //- table#sentences
+        table#sentences(style="width:100%;border:1px solid black")
+          tr
+            th(data-step="3" data-intro="") Phrases
+            th Type 
+            th(data-step="4" data-intro="") id 
+            th(data-step="5" data-intro="") next
+            th(data-step="6" data-intro="") Action
+          each sentence in sentences
+            tr(id='sentence' +sentence.id)
+              td(id='sentencetext' +sentence.id)= sentence.text
+              td= sentence.type
+              td= sentence.id
+              td(id='sentencenext' +sentence.id)= sentence.next
+              td
+                button(id='deletesentence' +sentence.id) Supprimer
+                button(id='duplicate' +sentence.id) Dupliquer
+        br
+      .tagwindow(data-step="7" data-intro="")
+        h2 Tag des mots
+        p Ajoutez une phrase dans le champ input. 
+        p Sélectionner un tag dans la liste de droite.
+        #test Ajout de phrases et tag de mots : cf. App.js
+
+      .edittags(data-step="8" data-intro="")
+        h2 Edition des tags
+        p Tagger un mot permet d'obtenir une réponse d'une phrase existante à chaque fois que ce mot sera utilisé par l'utilisateur.
+        p PS : Il faut que le tag soit ajouté dans la liste des phrases.
+        input#tag(type="text" name="tag" size="60")
+        button#addtag Ajouter le tag
+        div#servermessagetag
+        br
+        table#tags(style="width:600px;border:1px solid black")
+          tr
+            th Tags
+            th id
+            th Action
+          each tag in tags
+            tr(id='tag' +tag.id)
+              td(id='tagtext' +tag.id)= tag.text
+              td= tag.id
+              td
+                button(id='deletetag' +tag.id) Supprimer
+                button( id='listkeywords' +tag.id) Liste des mots-clés
+      .listkeywords(data-step="9" data-intro="")
+        h2 Liste des keywords associés à un tag
+        div#servermessagelistkeyword
+        br
+        table#listkeywords(style="width:600px;border:1px solid black")
+          tr
+            th Keywords
+            th Tag
+        
+      .editkeywords(data-step="10" data-intro="")
+        h2 Edition des keywords
+        p Les keywords, une fois spécifié selon un type, remplacent les tags dans une phrase. Plusieurs keywords peuvent être associés au même type de tag. 
+        //- button#gettags Get tags
+        input#keyword(type="text" name="keyword" size="60")
+        select#KeywordTag(name='KeywordTag')
+          each tag in tags
+            option(value=tag.text)= tag.text
+        button#addkeyword Ajouter le keyword
+        div#servermessagekeyword
+        br
+        table#keywords(style="width:600px;border:1px solid black")
+          tr
+            th Keywords
+            th Tag
+            th Sûr
+            th Action
+          each keyword in keywords
+            tr(id='keyword' +keyword.id)
+              td(id='keywordtext' +keyword.id)= keyword.text
+              input(type='hidden' value=keyword.TagId)
+              td!= keyword.tag
+              td= keyword.confidence
+              td
+                button(id='deletekeyword' +keyword.id) Supprimer
+  script(type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js")
+  script(type='text/javascript', src='/js/chat.js')
+  script(type='text/javascript', src='/js/sentences.js')
+  script(type='text/javascript', src='/js/tags.js')
+  script(type='text/javascript', src='/js/keywords.js')
+  script(type='text/javascript', src='/js/scroll.js')
+  block javascript 
+    script(src="/js/bundle.js")
+    script.
+      document.onscroll= function(e){
+        if(window.pageYOffset > 400) {
+          document.querySelector("#chat").classList.remove("absolute");
+        } else { 
+          document.querySelector("#chat").classList.add("absolute");
+        }
+      };

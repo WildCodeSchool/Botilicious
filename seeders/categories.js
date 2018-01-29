@@ -1,16 +1,16 @@
-'use strict';
-var faker = require('faker');
+
+const faker = require('faker');
+const uuidv4 = require('uuid/v4');
 
 module.exports = {
-  up : function (queryInterface, Sequelize) {
+  up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('Categories', [{
+      uuid: uuidv4(),
       name: faker.name.lastName(),
       CreatedAt: faker.date.recent(),
-      UpdatedAt: faker.date.recent()
+      UpdatedAt: faker.date.recent(),
     }], {});
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Categories', null, {});
-  }
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('Categories', null, {}),
 };
