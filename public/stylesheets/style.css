@@ -215,6 +215,40 @@ header {
     padding: 1px;
 }
 
+/* CSS permettant le positionnement de la feneêtre de chat à gauche  */
+
+#allPage{
+    display: flex;
+}
+
+
+#chat{
+    bottom: 170px; 
+    position: fixed;
+    width: 300px;
+    height: 600px;
+
+    /* min-height: 320px; */
+    overflow: hidden;
+}
+#chat.absolute{
+    position: absolute;
+    top: 400px;
+}
+.example{
+    min-height:550px;
+   
+}
+
+#sentence2{   
+    padding-left: 550px;
+    padding-right: 0px;
+}
+
+/* fin du CSS permettant le positionnement de la feneêtre de chat à gauche  */
+
+
+
 footer {
 /*     display: flex;
     align-items: center;
@@ -231,6 +265,8 @@ footer {
     padding: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
+    position: relative;
+    
 }
 
 /* .footer1 {
@@ -264,4 +300,8 @@ a.lienfoot1, a.lienfoot2 {
   /* End Footer links behavior */
 
 
+
+
 /* Coming soon: media queries, 2 device sizes, pour remettre le formulaire en largeur 100% */
+
+
