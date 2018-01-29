@@ -6,7 +6,7 @@ block content
   
   button(onclick="javascript:introJs().start();") Aide
   #allPage
-    #chat(data-step="1" class="absolute" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
+    #chat(data-step="1" data-intro="" class="absolute")
       .relative
       .chatwindow
         h2 Discuter avec votre Chatbot
@@ -19,8 +19,8 @@ block content
         #chatwindow
 
     #sentence2
-      .sentencewindow(data-step="2" data-intro="Ici vous pouvez communiquer dirrectement avec le chatbot - ex: \"salut comment ça va ?\" ")
-        h2(data-step="3" data-intro="Titre de l'article") Liste des phrases
+      .sentencewindow(data-step="2" data-intro="")
+        h2 Liste des phrases
         p Ajoutez une p hrase puis un next. 
         p Le next sert à relier une phrase avec l'id d'une autre phrase pour obtenir une réponse en fonction de l'id de la phrase séléctionnée.
         input#sentence(type="text" name="sentence" size="40")
@@ -35,11 +35,11 @@ block content
         //- table#sentences
         table#sentences(style="width:100%;border:1px solid black")
           tr
-            th Phrases
-            th Type
-            th id
-            th next
-            th Action
+            th(data-step="3" data-intro="") Phrases
+            th Type 
+            th(data-step="4" data-intro="") id 
+            th(data-step="5" data-intro="") next
+            th(data-step="6" data-intro="") Action
           each sentence in sentences
             tr(id='sentence' +sentence.id)
               td(id='sentencetext' +sentence.id)= sentence.text
@@ -49,15 +49,14 @@ block content
               td
                 button(id='deletesentence' +sentence.id) Supprimer
                 button(id='duplicate' +sentence.id) Dupliquer
-                button(id='tag' +sentence.id) Tag sur les mots
         br
-      .tagwindow
+      .tagwindow(data-step="7" data-intro="")
         h2 Tag des mots
         p Ajoutez une phrase dans le champ input. 
         p Sélectionner un tag dans la liste de droite.
         #test Ajout de phrases et tag de mots : cf. App.js
 
-      .edittags
+      .edittags(data-step="8" data-intro="")
         h2 Edition des tags
         p Tagger un mot permet d'obtenir une réponse d'une phrase existante à chaque fois que ce mot sera utilisé par l'utilisateur.
         p PS : Il faut que le tag soit ajouté dans la liste des phrases.
@@ -76,8 +75,8 @@ block content
               td= tag.id
               td
                 button(id='deletetag' +tag.id) Supprimer
-                button(id='listkeywords' +tag.id) Liste des mots-clés
-      .listkeywords
+                button( id='listkeywords' +tag.id) Liste des mots-clés
+      .listkeywords(data-step="9" data-intro="")
         h2 Liste des keywords associés à un tag
         div#servermessagelistkeyword
         br
@@ -86,7 +85,7 @@ block content
             th Keywords
             th Tag
         
-      .editkeywords
+      .editkeywords(data-step="10" data-intro="")
         h2 Edition des keywords
         p Les keywords, une fois spécifié selon un type, remplacent les tags dans une phrase. Plusieurs keywords peuvent être associés au même type de tag. 
         //- button#gettags Get tags

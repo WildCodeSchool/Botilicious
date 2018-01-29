@@ -225,7 +225,7 @@ header {
 #chat{
     bottom: 170px; 
     position: fixed;
-    width: 300px;
+    width: 450px;
     height: 600px;
 
     /* min-height: 320px; */
