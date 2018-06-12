@@ -1,4 +1,4 @@
-<p align="center"><img src="https://s26.postimg.org/ezpatu2y1/botiliciouslogo200.png" alt="Botilicious ReadMe logo")</p>
+<p align="center"><img src="https://s26.postimg.cc/ezpatu2y1/botiliciouslogo200.png" alt="Botilicious ReadMe logo")</p>
 
 # 🇬🇧 The Botilicious project
 
