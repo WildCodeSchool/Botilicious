@@ -29,3 +29,10 @@ Un chatbot de test  devait être réalisé avec une API externe de météo 🌦�
 Important : il faut supprimer le répertoire db avant de lancer le serveur de backend
 
 *Avertissement : ce projet n'a pas d'objectif commercial.*
+
+___
+
+<h2 align="center">My name is HAL, what's yours? :wink:</h2>
+<p align="center"><img src="https://media.giphy.com/media/11XWQAetk8DqLK/giphy.gif" alt="HAL"/></p>
+  
+---
